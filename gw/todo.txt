@@ -1,0 +1,67 @@
+[ ] non-block main loop
+	solved by using PERSIST timeout event
+	here're new questions:
+	[ ] Is there any problem if I used too much time in timeout event? will it cause list overflow?
+[ ] unit test
+[ ] handle pool
+[ ] better cleaning work, close and reset `fd_'
+[O] session time control
+[O] GetDevList
+[O] GetDevInfo
+[O] SetDevInfo
+[ ] {en,de}coding methods for inner messages(like ZInnerGetDevListReq, etc.)
+[ ] all error path response
+[ ] session timeout response
+[ ] interface
+	[ ] update id list
+	[ ] string parameter
+[ ] cupsole header field by using encode/decode/getlen
+[ ] bluebooth support
+[ ] version control for id-info
+[ ] does ZigBee message header need a sequence field?
+[ ] use smart pointer instead of raw pointer
+[ ] release session
+[ ] better string search algorithm
+[ ] how to test a random generating algorithm? or a simpler one, how to test a function which will randomly return you one of the element from a set
+[ ] memory leakage!
+[ ] protocol improvement
+[ ] PUSH support
+[ ] config library
+[ ] better timeout function
+[ ] ZDispatcher event check
+[ ] common database interface
+    [ ] easy api
+    [ ] auto connecting with database
+[ ] use CMake instead of Makefile
+[ ] auto re-register if network structure has been changed
+[ ] 重新整理接口文档
+[O] android client
+[ ] 不依赖cookie机制, 参考OAuth2机制, 进行更好的鉴权
+[O] linaro下编译, 会自动优化掉assert, 即使我没有使用NDBUG宏
+	mysql_config 捣的鬼
+[O] tornado 日志机制
+[ ] 串口波特率可以调高到 115200, 而不是现在的 38400
+[ ] 数据库断连
+[ ] 支持多线程
+[ ] 性能问题
+[ ] 页面开发
+	[ ] 注册
+	[ ] 绑定
+[ ] 单线程内部消息发送的问题, 可能导致死循环
+
+[ ] 接口变更:
+	[ ] 注册携带需要更新的ID个数
+	[ ] ID更新时, 携带更新时间, device-name
+	[ ] 客户端请求设备list时, 返回设备支持的id个数
+	[ ] 客户端新增ID更新请求, 支持cache, 请求携带最近一次更新时间, 如果服务端判断无需更新, 直接返回304
+
+
+Python Version
+
+[ ] 消息格式定义
+	{
+		"type": 1,
+		msg: data,
+	}
+	
+[ ] handler间消息发送格式
