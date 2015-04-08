@@ -32,9 +32,31 @@ int UploadWorker::send(ZInnerMsg *msg) {
 }
 
 int UploadWorker::handleUploadReq(ZInnerUploadReq *req) {
-  return FAIL;
+  int rv;
+  if (sendingQueueIsFull()) {
+    Z_LOG_W("sending queue is full, try save to local storage");
+    rv = save(req);
+    if (rv != OK) {
+      Z_LOG_E("failed to save upload request to local storage: %d", rv);
+      return FAIL;
+    }
+  }
+
+  return addToSendingQueue(req);
 }
 
 int UploadWorker::handleConfigReq(ZInnerConfigReq *req) {
   return FAIL;
+}
+
+bool UploadWorker::sendingQueueIsFull() {
+  return false;
+}
+
+int UploadWorker::save(ZInnerUploadReq *req) {
+  return 0;
+}
+
+int UploadWorker::addToSendingQueue(ZInnerUploadReq *req) {
+  return 0;
 }

@@ -26,6 +26,12 @@ private:
   int handleUploadReq(ZInnerUploadReq * req);
 
   int handleConfigReq(ZInnerConfigReq *req);
+
+  bool sendingQueueIsFull();
+
+  int save(ZInnerUploadReq *req);
+
+  int addToSendingQueue(ZInnerUploadReq *req);
 };
 
 
