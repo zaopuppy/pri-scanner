@@ -9,9 +9,6 @@
 enum {
   Z_INVALID = -1,
 
-  // TODO: remove it
-  Z_TRANSPORT_MSG,
-
   Z_ZB_GET_DEV_LIST_REQ,
   Z_ZB_GET_DEV_LIST_RSP,
 
@@ -26,52 +23,29 @@ enum {
 
   Z_ZB_BIND_REQ,
   Z_ZB_BIND_RSP,
+
+  Z_ZB_UPLOAD_REQ,
+  Z_ZB_UPLOAD_RSP,
+
+  Z_ZB_CONFIG_REQ,
+  Z_ZB_CONFIG_RSP,
 };
-
-////////////////////////////////////////////////////
-// Transport
-// class ZTransportMsg : public ZInnerMsg {
-//  public:
-//   ZTransportMsg()
-//     : ZInnerMsg(Z_TRANSPORT_MSG), data_(NULL) { }
-//   ~ZTransportMsg() {
-//     if (data_) {
-//       delete []data_;
-//       data_ = NULL;
-//     }
-//   }
-
-//  public:
-//   void set(char *data, uint32_t data_len) {
-//     if (data_) {
-//       delete []data_;
-//       data_ = NULL;
-//     }
-//     data_len_ = data_len;
-//     data_ = new char[data_len_];
-//     memcpy(data_, data, data_len_);
-//   }
-
-//  public:
-//   char *data_;
-//   uint32_t data_len_;
-// };
 
 ////////////////////////////////////////////////////
 // GetDevList
 class ZInnerGetDevListReq : public ZInnerMsg {
- public:
+public:
   ZInnerGetDevListReq()
-    : ZInnerMsg(Z_ZB_GET_DEV_LIST_REQ) { }
- public:
+      : ZInnerMsg(Z_ZB_GET_DEV_LIST_REQ) { }
+public:
   std::string uid_;
   std::string fgw_;
 };
 
 class ZInnerGetDevListRsp : public ZInnerMsg {
- public:
+public:
   ZInnerGetDevListRsp()
-    : ZInnerMsg(Z_ZB_GET_DEV_LIST_RSP) { }
+      : ZInnerMsg(Z_ZB_GET_DEV_LIST_RSP) { }
   ~ZInnerGetDevListRsp()
   {
     // delete infos
@@ -81,7 +55,7 @@ class ZInnerGetDevListRsp : public ZInnerMsg {
     info_list_.clear();
   }
 
- public:
+public:
   int32_t status_;
   std::vector<ZZBDevInfo*> info_list_;
 };
@@ -89,11 +63,11 @@ class ZInnerGetDevListRsp : public ZInnerMsg {
 ////////////////////////////////////////////////////
 // GetDevInfo
 class ZInnerGetDevInfoReq : public ZInnerMsg {
- public:
+public:
   ZInnerGetDevInfoReq()
-    : ZInnerMsg(Z_ZB_GET_DEV_REQ) { }
+      : ZInnerMsg(Z_ZB_GET_DEV_REQ) { }
 
- public:
+public:
   std::string fgw_;
   std::string uid_;
   uint16_t addr_;
@@ -101,11 +75,11 @@ class ZInnerGetDevInfoReq : public ZInnerMsg {
 };
 
 class ZInnerGetDevInfoRsp : public ZInnerMsg {
- public:
+public:
   ZInnerGetDevInfoRsp()
-    : ZInnerMsg(Z_ZB_GET_DEV_RSP) { }
+      : ZInnerMsg(Z_ZB_GET_DEV_RSP) { }
 
- public:
+public:
   int32_t status_;
   std::vector<ZItemPair> dev_infos_;
 };
@@ -113,11 +87,11 @@ class ZInnerGetDevInfoRsp : public ZInnerMsg {
 ////////////////////////////////////////////////////
 // SetDevInfo
 class ZInnerSetDevInfoReq : public ZInnerMsg {
- public:
+public:
   ZInnerSetDevInfoReq()
-    : ZInnerMsg(Z_ZB_SET_DEV_REQ) { }
+      : ZInnerMsg(Z_ZB_SET_DEV_REQ) { }
 
- public:
+public:
   std::string fgw_;
   std::string uid_;
   uint16_t addr_;
@@ -125,51 +99,85 @@ class ZInnerSetDevInfoReq : public ZInnerMsg {
 };
 
 class ZInnerSetDevInfoRsp : public ZInnerMsg {
- public:
+public:
   ZInnerSetDevInfoRsp()
-    : ZInnerMsg(Z_ZB_SET_DEV_RSP) { }
+      : ZInnerMsg(Z_ZB_SET_DEV_RSP) { }
 
- public:
+public:
   uint8_t status_;
 };
 
 ////////////////////////////////////////////////////
 // PreBind
 class ZInnerPreBindReq : public ZInnerMsg {
- public:
+public:
   ZInnerPreBindReq()
-    : ZInnerMsg(Z_ZB_PRE_BIND_REQ) { }
+      : ZInnerMsg(Z_ZB_PRE_BIND_REQ) { }
 
- public:
+public:
   std::string fgw_;
 };
 
 class ZInnerPreBindRsp : public ZInnerMsg {
- public:
+public:
   ZInnerPreBindRsp()
-    : ZInnerMsg(Z_ZB_PRE_BIND_RSP) { }
+      : ZInnerMsg(Z_ZB_PRE_BIND_RSP) { }
 
- public:
+public:
   uint8_t result_;
 };
 
 ////////////////////////////////////////////////////
 // Bind
 class ZInnerBindReq : public ZInnerMsg {
- public:
+public:
   ZInnerBindReq()
-    : ZInnerMsg(Z_ZB_BIND_REQ) { }
+      : ZInnerMsg(Z_ZB_BIND_REQ) { }
 
- public:
+public:
   std::string fgw_;
 };
 
 class ZInnerBindRsp : public ZInnerMsg {
- public:
+public:
   ZInnerBindRsp()
-    : ZInnerMsg(Z_ZB_BIND_RSP) { }
+      : ZInnerMsg(Z_ZB_BIND_RSP) { }
 
- public:
+public:
+  uint8_t result_;
+};
+
+class ZInnerUploadReq: public ZInnerMsg {
+public:
+  ZInnerUploadReq()
+      : ZInnerMsg(Z_ZB_UPLOAD_REQ) {}
+
+public:
+  std::vector<std::string> data_list_;
+};
+
+class ZInnerUploadRsp: public ZInnerMsg {
+public:
+  ZInnerUploadRsp()
+      : ZInnerMsg(Z_ZB_UPLOAD_RSP) {}
+
+public:
+  uint8_t result_;
+};
+
+class ZInnerConfigReq: public ZInnerMsg {
+public:
+  ZInnerConfigReq()
+      : ZInnerMsg(Z_ZB_CONFIG_REQ) {}
+};
+
+
+class ZInnerConfigRsp: public ZInnerMsg {
+public:
+  ZInnerConfigRsp()
+      : ZInnerMsg(Z_ZB_CONFIG_RSP) {}
+
+public:
   uint8_t result_;
 };
 

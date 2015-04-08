@@ -3,6 +3,7 @@
 //
 
 #include "upload_worker.h"
+#include "zinner_message_ex.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -21,8 +22,19 @@ int UploadWorker::send(ZInnerMsg *msg) {
   }
 
   switch (msg->msg_type_) {
+    case Z_ZB_UPLOAD_REQ:
+      return handleUploadReq((ZInnerUploadReq*)msg);
+    case Z_ZB_CONFIG_REQ:
+      return handleConfigReq((ZInnerConfigReq*)msg);
     default:
       return FAIL;
   }
 }
 
+int UploadWorker::handleUploadReq(ZInnerUploadReq *req) {
+  return FAIL;
+}
+
+int UploadWorker::handleConfigReq(ZInnerConfigReq *req) {
+  return FAIL;
+}

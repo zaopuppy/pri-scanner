@@ -8,6 +8,7 @@
 
 #include <libframework/thread.h>
 #include <libframework/zinner_message.h>
+#include "zinner_message_ex.h"
 
 class UploadWorker: public Z::Thread {
 
@@ -22,6 +23,9 @@ protected:
 private:
   bool stop_;
 
+  int handleUploadReq(ZInnerUploadReq * req);
+
+  int handleConfigReq(ZInnerConfigReq *req);
 };
 
 
