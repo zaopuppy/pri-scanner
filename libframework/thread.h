@@ -16,7 +16,6 @@ public:
 
   bool start();
 
-protected:
   virtual void run() = 0;
 
 private:

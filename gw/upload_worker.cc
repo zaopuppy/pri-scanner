@@ -50,7 +50,7 @@ int UploadWorker::handleConfigReq(ZInnerConfigReq *req) {
 }
 
 bool UploadWorker::sendingQueueIsFull() {
-  return false;
+  return sendingQueue_.size() >= max_sending_queue_length_;
 }
 
 int UploadWorker::save(ZInnerUploadReq *req) {
@@ -58,5 +58,6 @@ int UploadWorker::save(ZInnerUploadReq *req) {
 }
 
 int UploadWorker::addToSendingQueue(ZInnerUploadReq *req) {
+  sendingQueue_.push_back(req);
   return 0;
 }

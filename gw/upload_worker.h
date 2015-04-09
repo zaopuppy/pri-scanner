@@ -13,16 +13,13 @@
 class UploadWorker: public Z::Thread {
 
 public:
-  UploadWorker(): stop_(false) {}
+  UploadWorker(): stop_(false), max_sending_queue_length_(4096) {}
 
   int send(ZInnerMsg *msg);
 
-protected:
   void run();
 
 private:
-  bool stop_;
-
   int handleUploadReq(ZInnerUploadReq * req);
 
   int handleConfigReq(ZInnerConfigReq *req);
@@ -32,6 +29,11 @@ private:
   int save(ZInnerUploadReq *req);
 
   int addToSendingQueue(ZInnerUploadReq *req);
+
+private:
+  bool stop_;
+  const int max_sending_queue_length_;
+  std::vector<ZInnerUploadReq*> sendingQueue_;
 };
 
 
