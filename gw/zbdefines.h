@@ -24,6 +24,12 @@ const uint8_t Z_ID_ZB_BROADCAST_IND = 0x04;
 const uint8_t Z_ID_ZB_BIND_REQ = 0x05;
 const uint8_t Z_ID_ZB_BIND_RSP = 0x85;
 
+const uint8_t Z_ID_ZB_UPLOAD_REQ = 0x06;
+const uint8_t Z_ID_ZB_UPLOAD_RSP = 0x86;
+
+const uint8_t Z_ID_ZB_CONFIG_REQ = 0x07;
+const uint8_t Z_ID_ZB_CONFIG_RSP = 0x87;
+
 const uint8_t Z_ID_ZB_UPDATE_ID_REQ = 0x0A;
 const uint8_t Z_ID_ZB_UPDATE_ID_RSP = 0x8A;
 

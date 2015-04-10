@@ -24,7 +24,6 @@ CXXFILES := \
 	fgw_client_handler.cc \
 	msg_factory.cc \
 	zb_stream.cc \
-	zb_codec.cc \
 	zbdevice_manager.cc \
 	zzigbee_message.cc \
 	push_msg.cc \

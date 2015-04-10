@@ -108,75 +108,88 @@ int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
   // uint8_t msg_type = ZZigBeeMsg::getMsgType(buf, buf_len);
   // switch (msg_type) {
   switch (hdr.cmd_) {
+    case Z_ID_ZB_UPLOAD_REQ:
+    {
+      Z_LOG_D("Z_ID_ZB_UPLOAD_REQ");
+      ZZBUploadReq msg;
+      int rv = msg.decode(buf, buf_len);
+      if (rv < 0) {
+        Z_LOG_E("failed to decode message");
+      } else {
+        Z_LOG_D("decoded successfully");
+        processMsg(msg);
+      }
+      break;
+    };
     case Z_ID_ZB_REG_REQ:
-      {
-        Z_LOG_D("Z_ID_ZB_REG_REQ");
-        ZZBRegReq msg;
-        int rv = msg.decode(buf, buf_len);
-        if (rv < 0) {
-          Z_LOG_D("Failed to decode message");
-        } else {
-          Z_LOG_D("decoding success");
-          processMsg(msg);
-        }
-        break;
+    {
+      Z_LOG_D("Z_ID_ZB_REG_REQ");
+      ZZBRegReq msg;
+      int rv = msg.decode(buf, buf_len);
+      if (rv < 0) {
+        Z_LOG_E("Failed to decode message");
+      } else {
+        Z_LOG_D("decoding success");
+        processMsg(msg);
       }
+      break;
+    }
     case Z_ID_ZB_GET_RSP:
-      {
-        Z_LOG_D("Z_ID_ZB_GET_RSP");
-        ZZBGetRsp msg;
-        int rv = msg.decode(buf, buf_len);
-        if (rv < 0) {
-          Z_LOG_D("Failed to decode message");
-        } else {
-          Z_LOG_D("decoding success");
-          processMsg(msg);
-        }
-        break;
+    {
+      Z_LOG_D("Z_ID_ZB_GET_RSP");
+      ZZBGetRsp msg;
+      int rv = msg.decode(buf, buf_len);
+      if (rv < 0) {
+        Z_LOG_D("Failed to decode message");
+      } else {
+        Z_LOG_D("decoding success");
+        processMsg(msg);
       }
+      break;
+    }
     case Z_ID_ZB_SET_RSP:
-      {
-        Z_LOG_D("Z_ID_ZB_SET_RSP");
-        ZZBSetRsp msg;
-        int rv = msg.decode(buf, buf_len);
-        if (rv < 0) {
-          Z_LOG_D("Failed to decode message");
-        } else {
-          Z_LOG_D("decoding success");
-          processMsg(msg);
-        }
-        break;
+    {
+      Z_LOG_D("Z_ID_ZB_SET_RSP");
+      ZZBSetRsp msg;
+      int rv = msg.decode(buf, buf_len);
+      if (rv < 0) {
+        Z_LOG_D("Failed to decode message");
+      } else {
+        Z_LOG_D("decoding success");
+        processMsg(msg);
       }
+      break;
+    }
     case Z_ID_ZB_UPDATE_ID_REQ:
-      {
-        Z_LOG_D("Z_ID_ZB_UPDATE_ID_REQ");
-        ZZBUpdateIdInfoReq msg;
-        int rv = msg.decode(buf, buf_len);
-        if (rv < 0) {
-          Z_LOG_D("Failed to decode message");
-        } else {
-          Z_LOG_D("decoding success");
-          processMsg(msg);
-        }
-        break;
+    {
+      Z_LOG_D("Z_ID_ZB_UPDATE_ID_REQ");
+      ZZBUpdateIdInfoReq msg;
+      int rv = msg.decode(buf, buf_len);
+      if (rv < 0) {
+        Z_LOG_D("Failed to decode message");
+      } else {
+        Z_LOG_D("decoding success");
+        processMsg(msg);
       }
+      break;
+    }
     case Z_ID_ZB_BIND_RSP:
-      {
-        Z_LOG_D("Z_ID_ZB_BIND_RSP");
-        ZZBBindRsp msg;
-        int rv = msg.decode(buf, buf_len);
-        if (rv < 0) {
-          Z_LOG_E("Failed to decode ZZBBindRsp");
-        } else {
-          Z_LOG_D("decoding success");
-          processMsg(msg);
-        }
+    {
+      Z_LOG_D("Z_ID_ZB_BIND_RSP");
+      ZZBBindRsp msg;
+      int rv = msg.decode(buf, buf_len);
+      if (rv < 0) {
+        Z_LOG_E("Failed to decode ZZBBindRsp");
+      } else {
+        Z_LOG_D("decoding success");
+        processMsg(msg);
       }
+    }
     default:
-      {
-        Z_LOG_D("Unknow message: %u", hdr.cmd_);
-        break;
-      }
+    {
+      Z_LOG_D("Unknow message: %u", hdr.cmd_);
+      break;
+    }
   }
 
   return OK;
@@ -614,3 +627,6 @@ int ZZigBeeHandler::processMsg(ZZBUpdateIdInfoReq &msg)
 }
 
 
+int ZZigBeeHandler::processMsg(ZZBUploadReq &msg) {
+  return 0;
+}

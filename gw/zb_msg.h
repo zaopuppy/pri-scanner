@@ -1,7 +1,7 @@
 #ifndef _ZB_MSG_H__
 #define _ZB_MSG_H__
 
-#include "zb_codec.h"
+#include "libframework/zframework.h"
 
 #ifdef __cplusplus
 extern "C" {

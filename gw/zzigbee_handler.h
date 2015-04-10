@@ -57,6 +57,7 @@ class ZZigBeeHandler : public ZClientHandler {
   int processMsg(ZZBSetRsp &msg);
   int processMsg(ZZBBindRsp &msg);
   int processMsg(ZZBUpdateIdInfoReq &msg);
+  int processMsg(ZZBUploadReq &msg);
 
   int processMsg(ZInnerGetDevListReq *msg);
   int processMsg(ZInnerGetDevInfoReq *msg);

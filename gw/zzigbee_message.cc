@@ -4,11 +4,22 @@
 #include <assert.h>
 
 
-#define ZMSG_ENCODE_BEGIN() int rv, encode_len = 0
+#define ZMSG_ENCODE_BEGIN() int rv, encode_len = 0; len_ = getBodyLen()
 #define ZMSG_ENCODE_END() return encode_len
 
 #define ZMSG_DECODE_BEGIN() int rv, decode_len = 0
 #define ZMSG_DECODE_END() return decode_len
+
+#define ZMSG_ENCODE_SUPER() \
+do { \
+  rv = super_::encode(buf, buf_len); \
+  if (rv < 0) { \
+    return rv; \
+  } \
+  buf += rv; \
+  buf_len -= rv; \
+  encode_len += rv; \
+} while (false)
 
 #define ZMSG_ENCODE(_field) \
 do { \
@@ -19,6 +30,17 @@ do { \
   buf += rv; \
   buf_len -= rv; \
   encode_len += rv; \
+} while (false)
+
+#define ZMSG_DECODE_SUPER() \
+do { \
+  rv = super_::decode(buf, buf_len); \
+  if (rv < 0) { \
+    return rv; \
+  } \
+  buf += rv; \
+  buf_len -= rv; \
+  decode_len += rv; \
 } while (false)
 
 #define ZMSG_DECODE(_field) \
@@ -42,7 +64,7 @@ int ZZigBeeMsg::encode(char* buf, uint32_t buf_len)
   // IMP
   // child class must call getEncodeLen() to update length field
 
-  // XXX: temporary using
+  // FIXME: move this out of protocol stack
   {
     const char *sync_bytes = "ZZZZZZZZ";
     const uint32_t sync_bytes_len = sizeof("ZZZZZZZZ") - 1;
@@ -92,69 +114,25 @@ ZZBRegReq::ZZBRegReq() : ZZigBeeMsg()
 
 int ZZBRegReq::encode(char* buf, uint32_t buf_len)
 {
-  // update length field
-  len_ = getBodyLen();
+  ZMSG_ENCODE_BEGIN();
 
-  int rv = super_::encode(buf, buf_len);
-  if (rv < 0) {
-    return rv;
-  }
+  ZMSG_ENCODE_SUPER();
 
-  buf += rv;
-  buf_len -= rv;
-
-  int encode_len = rv;
-
-  if (sizeof(mac_.data) > buf_len) {
-    return -1;
-  }
-
-  // encode
-  memcpy(buf, mac_.data, sizeof(mac_.data));
-  buf += sizeof(mac_.data);
-  buf_len -= sizeof(mac_.data);
-
-  encode_len += sizeof(mac_.data);
-
+  ZMSG_ENCODE(mac_);
   ZMSG_ENCODE(dev_type_);
-  // ZMSG_ENCODE(name_);
-  // ZMSG_ENCODE(desc_);
 
-  return encode_len;
+  ZMSG_ENCODE_END();
 }
 
 int ZZBRegReq::decode(char* buf, uint32_t buf_len)
 {
-  int decode_len = 0;
+  ZMSG_DECODE_BEGIN();
+  ZMSG_DECODE_SUPER();
 
-  int rv = super_::decode(buf, buf_len);
-  if (rv < 0) {
-    return rv;
-  }
-
-  buf += rv;
-  buf_len -= rv;
-  decode_len += rv;
-
-  if (buf_len < len_) {
-    return -1;
-  }
-
-  if (len_ < sizeof(mac_.data)) {
-    return -1;
-  }
-
-  // mac_.assign(buf, mac_len_);
-  memcpy(&mac_.data, buf, sizeof(mac_.data));
-  buf += sizeof(mac_.data);
-  buf_len -= sizeof(mac_.data);
-  decode_len += sizeof(mac_.data);
-
+  ZMSG_DECODE(mac_);
   ZMSG_DECODE(dev_type_);
-  // ZMSG_DECODE(name_);
-  // ZMSG_DECODE(desc_);
 
-  return decode_len;
+  ZMSG_DECODE_END();
 }
 
 ///////////////////////////////////////////////////////////////
@@ -166,62 +144,20 @@ ZZBRegRsp::ZZBRegRsp() : ZZigBeeMsg()
 
 int ZZBRegRsp::encode(char* buf, uint32_t buf_len)
 {
-  uint32_t old_buf_len = buf_len;
-  // uint16_t enc_len = getEncodeLen();
-  // if (buf_len < enc_len) {
-  //  return -1;
-  // }
+  ZMSG_ENCODE_BEGIN();
+  ZMSG_ENCODE_SUPER();
 
-  len_ = getBodyLen();
+  ZMSG_ENCODE(status_);
 
-  int rv = super_::encode(buf, buf_len);
-  if (rv < 0) {
-    return rv;
-  }
-
-  buf += rv;
-  buf_len -= rv;
-
-  // status_
-  rv = z_encode_byte((char)status_, buf, buf_len);
-  if (rv < 0) {
-    return rv;
-  }
-  buf += rv;
-  buf_len -= rv;
-
-  return old_buf_len - buf_len;
+  ZMSG_ENCODE_END();
 }
 
 int ZZBRegRsp::decode(char* buf, uint32_t buf_len)
 {
-  int len = 0;
-
-  int rv = super_::decode(buf, buf_len);
-  if (rv < 0) {
-    Z_LOG_D("failed to call super_::decode()");
-    return rv;
-  }
-
-  buf += rv;
-  buf_len -= rv;
-  len += rv;
-
-  if (buf_len < len_) {
-    Z_LOG_D("No enough buffer: %u, %u", len_, buf_len);
-    return -1;
-  }
-
-  // status_
-  rv = z_decode_byte((char*)&status_, buf, buf_len);
-  if (rv < 0) {
-    return rv;
-  }
-  buf += rv;
-  buf_len -= rv;
-  len += rv;
-
-  return len;
+  ZMSG_DECODE_BEGIN();
+  ZMSG_DECODE_SUPER();
+  ZMSG_DECODE(status_);
+  ZMSG_DECODE_END();
 }
 
 
@@ -236,96 +172,23 @@ ZZBGetReq::ZZBGetReq():
 int ZZBGetReq::encode(char* buf, uint32_t buf_len) {
   Z_LOG_D("ZZBGetReq::encode()");
 
-  // check buf length
-  // int enc_len = getEncodeLen();
-  // if ((int)buf_len < enc_len) {
-  //   Z_LOG_D("No enough buffer length: %u, %u", enc_len, buf_len);
-  //   return -1;
-  // }
-  uint32_t old_buf_len = buf_len;
+  ZMSG_ENCODE_BEGIN();
+  ZMSG_ENCODE_SUPER();
 
-  // update len_ first
-  len_ = getBodyLen();
-  
-  // super::encode()
-  int rv = super_::encode(buf, buf_len);
-  if (rv < 0) {
-    Z_LOG_D("failed to call super_::encode()");
-    return rv;
-  }
+  ZMSG_ENCODE(items_);
 
-  buf += rv;
-  buf_len -= rv;
-
-  // itemCount_
-  rv = z_encode_byte((char)(items_.size()), buf, buf_len);
-  if (rv < 0) {
-    return rv;
-  }
-  buf += rv;
-  buf_len -= rv;
-
-  size_t item_count = items_.size();
-  for (size_t i = 0; i < item_count; ++i) {
-    rv = z_encode_byte((char)items_[i], buf, buf_len);
-    if (rv < 0) {
-      return rv;
-    }
-    buf += rv;
-    buf_len -= rv;
-  }
-
-  // return enc_len;
-  return old_buf_len - buf_len;
+  ZMSG_ENCODE_END();
 }
 
 int ZZBGetReq::decode(char* buf, uint32_t buf_len) {
   Z_LOG_D("ZZBGetReq::decode()");
 
-  // check buf length
-  // int enc_len = getEncodeLen();
-  // if (buf_len < enc_len) {
-  //  Z_LOG_D("No enough buffer length");
-  //  return -1;
-  // }
+  ZMSG_DECODE_BEGIN();
+  ZMSG_DECODE_SUPER();
 
-  // super::decode()
-  int len = 0;
-  
-  int rv = super_::decode(buf, buf_len);
-  if (rv < 0) {
-    Z_LOG_D("failed to call super_::decode()");
-    return rv;
-  }
+  ZMSG_DECODE(items_);
 
-  buf += rv;
-  buf_len -= rv;
-  len += rv;
-
-  if (buf_len < len_) {
-    Z_LOG_D("No enough buffer: %u, %u", len_, buf_len);
-    return -1;
-  }
-
-  // itemCount_
-  uint8_t item_count;
-  rv = z_decode_byte((char*)(&item_count), buf, buf_len);
-  if (rv < 0) {
-    return rv;
-  }
-
-  buf += rv;
-  buf_len -= rv;
-  len += rv;
-
-  for (size_t i = 0; i < item_count; ++i) {
-    items_.push_back(*((uint8_t*)buf));
-    buf += 1;
-    buf_len -= 1;
-    len += 1;
-  }
-
-  return len;
+  ZMSG_DECODE_END();
 }
 
 ///////////////////////////////////////////////////////////////
@@ -339,112 +202,24 @@ ZZBGetRsp::ZZBGetRsp():
 int ZZBGetRsp::encode(char* buf, uint32_t buf_len) {
   Z_LOG_D("ZZBGetRsp::encode()");
 
-  // check buf length
-  int enc_len = getEncodeLen();
-  if ((int)buf_len < enc_len) {
-    Z_LOG_D("No enough buffer length: %u, %u", enc_len, buf_len);
-    return -1;
-  }
+  ZMSG_ENCODE_BEGIN();
+  ZMSG_ENCODE_SUPER();
 
-  // update len_ first
-  len_ = getBodyLen();
-  
-  // super::encode()
-  int rv = super_::encode(buf, buf_len);
-  if (rv < 0) {
-    Z_LOG_D("failed to call super_::encode()");
-    return rv;
-  }
+  ZMSG_ENCODE(items_);
 
-  buf += rv;
-  buf_len -= rv;
+  ZMSG_ENCODE_END();
 
-  // itemCount_
-  rv = z_encode_byte((char)(items_.size()), buf, buf_len);
-  if (rv < 0) {
-    return rv;
-  }
-  buf += rv;
-  buf_len -= rv;
-
-  size_t item_count = items_.size();
-  struct ZItemPair itemPair;
-  for (size_t i = 0; i < item_count; ++i) {
-    itemPair = items_[i];
-    // id
-    rv = z_encode_byte((char)itemPair.id, buf, buf_len);
-    if (rv < 0) {
-      return rv;
-    }
-    buf += rv;
-    buf_len -= rv;
-    // value
-    rv = z_encode_integer16(itemPair.val, buf, buf_len);
-    if (rv < 0) {
-      return rv;
-    }
-    buf += rv;
-    buf_len -= rv;
-  }
-
-  return enc_len;
 }
 
 int ZZBGetRsp::decode(char* buf, uint32_t buf_len) {
   Z_LOG_D("ZZBGetRsp::decode()");
 
-  // super::decode()
-  int len = 0;
-  
-  int rv = super_::decode(buf, buf_len);
-  if (rv < 0) {
-    Z_LOG_D("failed to call super_::decode()");
-    return rv;
-  }
+  ZMSG_DECODE_BEGIN();
+  ZMSG_DECODE_SUPER();
 
-  buf += rv;
-  buf_len -= rv;
-  len += rv;
+  ZMSG_DECODE(items_);
 
-  if (buf_len < len_) {
-    Z_LOG_D("No enough buffer: %u, %u", len_, buf_len);
-    return -1;
-  }
-
-  // itemCount_
-  uint8_t item_count;
-  rv = z_decode_byte((char*)(&item_count), buf, buf_len);
-  if (rv < 0) {
-    return rv;
-  }
-
-  buf += rv;
-  buf_len -= rv;
-  len += rv;
-
-  struct ZItemPair itemPair;
-  for (size_t i = 0; i < item_count; ++i) {
-    // id
-    rv = z_decode_byte((char*)(&itemPair.id), buf, buf_len);
-    if (rv < 0) {
-      return rv;
-    }
-    buf += rv;
-    buf_len -= rv;
-    len += rv;
-    // val
-    rv = z_decode_integer16(&itemPair.val, buf, buf_len);
-    if (rv < 0) {
-      return rv;
-    }
-    buf += rv;
-    buf_len -= rv;
-    len += rv;
-    // push
-    items_.push_back(itemPair);
-  }
-
-  return len;
+  ZMSG_DECODE_END();
 }
 
 ///////////////////////////////////////////////////////////////
@@ -458,109 +233,23 @@ ZZBSetReq::ZZBSetReq():
 int ZZBSetReq::encode(char* buf, uint32_t buf_len) {
   Z_LOG_D("ZZBSetReq::encode()");
 
-  uint32_t old_buf_len = buf_len;
-  // // check buf length
-  // int enc_len = getEncodeLen();
-  // if ((int)buf_len < enc_len) {
-  //  Z_LOG_D("No enough buffer length: %u, %u", enc_len, buf_len);
-  //  return -1;
-  // }
+  ZMSG_ENCODE_BEGIN();
+  ZMSG_ENCODE_SUPER();
 
-  // update len_ first
-  len_ = getBodyLen();
+  ZMSG_ENCODE(items_);
 
-  // super::encode()
-  int rv = super_::encode(buf, buf_len);
-  if (rv < 0) {
-    Z_LOG_D("failed to call super_::encode()");
-    return rv;
-  }
-
-  buf += rv;
-  buf_len -= rv;
-
-  // itemCount_
-  rv = z_encode_byte((char)(items_.size()), buf, buf_len);
-  if (rv < 0) {
-    return rv;
-  }
-  buf += rv;
-  buf_len -= rv;
-
-  size_t item_count = items_.size();
-  struct ZItemPair itemPair;
-  for (size_t i = 0; i < item_count; ++i) {
-    itemPair = items_[i];
-    rv = z_encode_byte((char)itemPair.id, buf, buf_len);
-    if (rv < 0) {
-      return rv;
-    }
-    buf += rv;
-    buf_len -= rv;
-    rv = z_encode_integer16((uint16_t)itemPair.val, buf, buf_len);
-    if (rv < 0) {
-      return rv;
-    }
-    buf += rv;
-    buf_len -= rv;
-  }
-
-  return old_buf_len - buf_len;
+  ZMSG_ENCODE_END();
 }
 
 int ZZBSetReq::decode(char* buf, uint32_t buf_len) {
   Z_LOG_D("ZZBSetReq::decode()");
 
-  int len = 0;
-  
-  int rv = super_::decode(buf, buf_len);
-  if (rv < 0) {
-    Z_LOG_D("failed to call super_::decode()");
-    return rv;
-  }
+  ZMSG_DECODE_BEGIN();
+  ZMSG_DECODE_SUPER();
 
-  buf += rv;
-  buf_len -= rv;
-  len += rv;
+  ZMSG_DECODE(items_);
 
-  if (buf_len < len_) {
-    Z_LOG_D("No enough buffer: %u, %u", len_, buf_len);
-    return -1;
-  }
-
-  // itemCount_
-  uint8_t item_count;
-  rv = z_decode_byte((char*)(&item_count), buf, buf_len);
-  if (rv < 0) {
-    return rv;
-  }
-
-  buf += rv;
-  buf_len -= rv;
-  len += rv;
-
-  struct ZItemPair itemPair;
-  for (size_t i = 0; i < item_count; ++i) {
-    // id
-    rv = z_decode_byte((char*)(&itemPair.id), buf, buf_len);
-    if (rv < 0) {
-      return rv;
-    }
-    buf += rv;
-    buf_len -= rv;
-    len += rv;
-    // val
-    rv = z_decode_integer16(&itemPair.val, buf, buf_len);
-    if (rv < 0) {
-      return rv;
-    }
-    buf += rv;
-    buf_len -= rv;
-    len += rv;
-    // push
-    items_.push_back(itemPair);
-  }
-  return len;
+  ZMSG_DECODE_END();
 }
 
 ///////////////////////////////////////////////////////////////
@@ -574,77 +263,23 @@ ZZBSetRsp::ZZBSetRsp():
 int ZZBSetRsp::encode(char* buf, uint32_t buf_len) {
   Z_LOG_D("ZZBSetRsp::encode()");
 
-  // check buf length
-  uint32_t old_buf_len = buf_len;
-  // int enc_len = getEncodeLen();
-  // if ((int)buf_len < enc_len) {
-  //  Z_LOG_D("No enough buffer length: %u, %u", enc_len, buf_len);
-  //  return -1;
-  // }
+  ZMSG_ENCODE_BEGIN();
+  ZMSG_ENCODE_SUPER();
 
-  // update len_ first
-  len_ = getBodyLen();
-  
-  // super::encode()
-  int rv = super_::encode(buf, buf_len);
-  if (rv < 0) {
-    Z_LOG_D("failed to call super_::encode()");
-    return rv;
-  }
+  ZMSG_ENCODE(status_);
 
-  buf += rv;
-  buf_len -= rv;
-
-  // status_
-  rv = z_encode_byte((char)status_, buf, buf_len);
-  if (rv < 0) {
-    return rv;
-  }
-  buf += rv;
-  buf_len -= rv;
-
-  return old_buf_len - buf_len;
+  ZMSG_ENCODE_END();
 }
 
 int ZZBSetRsp::decode(char* buf, uint32_t buf_len) {
   Z_LOG_D("ZZBSetRsp::decode()");
 
-  // check buf length
-  // int enc_len = getEncodeLen();
-  // if (buf_len < enc_len) {
-  //  Z_LOG_D("No enough buffer length");
-  //  return -1;
-  // }
+  ZMSG_DECODE_BEGIN();
+  ZMSG_DECODE_SUPER();
 
-  // super::decode()
-  int len = 0;
-  
-  int rv = super_::decode(buf, buf_len);
-  if (rv < 0) {
-    Z_LOG_D("failed to call super_::decode()");
-    return rv;
-  }
+  ZMSG_DECODE(status_);
 
-  buf += rv;
-  buf_len -= rv;
-  len += rv;
-
-  if (buf_len < len_) {
-    Z_LOG_D("No enough buffer: %u, %u", len_, buf_len);
-    return -1;
-  }
-
-  // status_
-  rv = z_decode_byte((char*)(&status_), buf, buf_len);
-  if (rv < 0) {
-    return rv;
-  }
-
-  buf += rv;
-  buf_len -= rv;
-  len += rv;
-
-  return len;
+  ZMSG_DECODE_END();
 }
 
 //////////////////////////////////////////////////////////////////
@@ -659,41 +294,20 @@ int ZZBBindReq::encode(char *buf, uint32_t buf_len)
 {
   Z_LOG_D("ZZBBindReq::encode()");
 
-  uint32_t old_buf_len = buf_len;
+  ZMSG_ENCODE_BEGIN();
+  ZMSG_ENCODE_SUPER();
 
-  // update len_ first
-  len_ = getBodyLen();
-
-  // super::encode()
-  int rv = super_::encode(buf, buf_len);
-  if (rv < 0) {
-    Z_LOG_D("failed to call super_::encode()");
-    return rv;
-  }
-
-  buf += rv;
-  buf_len -= rv;
-
-  return old_buf_len - buf_len;
+  ZMSG_ENCODE_END();
 }
 
 int ZZBBindReq::decode(char *buf, uint32_t buf_len)
 {
   Z_LOG_D("ZZBBindReq::decode()");
 
-  int len = 0;
-  
-  int rv = super_::decode(buf, buf_len);
-  if (rv < 0) {
-    Z_LOG_D("failed to call super_::decode()");
-    return rv;
-  }
+  ZMSG_DECODE_BEGIN();
+  ZMSG_DECODE_SUPER();
 
-  buf += rv;
-  buf_len -= rv;
-  len += rv;
-
-  return len;
+  ZMSG_DECODE_END();
 }
 
 //////////////////////////////////////////////////////////////////
@@ -707,12 +321,7 @@ ZZBBindRsp::ZZBBindRsp()
 int ZZBBindRsp::encode(char *buf, uint32_t buf_len)
 {
   ZMSG_ENCODE_BEGIN();
-
-  rv = super_::encode(buf, buf_len);
-  if (rv < 0) return rv;
-  buf += rv;
-  buf_len -= rv;
-  encode_len += rv;
+  ZMSG_ENCODE_SUPER();
 
   ZMSG_ENCODE_END();
 }
@@ -720,15 +329,7 @@ int ZZBBindRsp::encode(char *buf, uint32_t buf_len)
 int ZZBBindRsp::decode(char *buf, uint32_t buf_len)
 {
   ZMSG_DECODE_BEGIN();
-
-  len_ = getBodyLen();
-
-  // TODO: clean it up
-  rv = super_::decode(buf, buf_len);
-  if (rv < 0) return rv;
-  buf += rv;
-  buf_len -= rv;
-  decode_len += rv;
+  ZMSG_DECODE_SUPER();
 
   ZMSG_DECODE_END();
 }
@@ -745,13 +346,7 @@ ZZBUpdateIdInfoReq::ZZBUpdateIdInfoReq()
 int ZZBUpdateIdInfoReq::encode(char *buf, uint32_t buf_len)
 {
   ZMSG_ENCODE_BEGIN();
-
-  // TODO: clean it up
-  rv = super_::encode(buf, buf_len);
-  if (rv < 0) return rv;
-  buf += rv;
-  buf_len -= rv;
-  encode_len += rv;
+  ZMSG_ENCODE_SUPER();
 
   ZMSG_ENCODE(id_list_);
 
@@ -761,15 +356,7 @@ int ZZBUpdateIdInfoReq::encode(char *buf, uint32_t buf_len)
 int ZZBUpdateIdInfoReq::decode(char *buf, uint32_t buf_len)
 {
   ZMSG_DECODE_BEGIN();
-
-  len_ = getBodyLen();
-
-  // TODO: clean it up
-  rv = super_::decode(buf, buf_len);
-  if (rv < 0) return rv;
-  buf += rv;
-  buf_len -= rv;
-  decode_len += rv;
+  ZMSG_DECODE_SUPER();
 
   ZMSG_DECODE(id_list_);
 
@@ -785,13 +372,8 @@ ZZBUpdateIdInfoRsp::ZZBUpdateIdInfoRsp()
 int ZZBUpdateIdInfoRsp::encode(char *buf, uint32_t buf_len)
 {
   ZMSG_ENCODE_BEGIN();
+  ZMSG_ENCODE_SUPER();
 
-  // TODO: clean it up
-  rv = super_::encode(buf, buf_len);
-  if (rv < 0) return rv;
-  buf += rv;
-  buf_len -= rv;
-  encode_len += rv;
   ZMSG_ENCODE(status_);
 
   ZMSG_ENCODE_END();
@@ -800,15 +382,7 @@ int ZZBUpdateIdInfoRsp::encode(char *buf, uint32_t buf_len)
 int ZZBUpdateIdInfoRsp::decode(char *buf, uint32_t buf_len)
 {
   ZMSG_DECODE_BEGIN();
-
-  len_ = getBodyLen();
-
-  // TODO: clean it up
-  rv = super_::decode(buf, buf_len);
-  if (rv < 0) return rv;
-  buf += rv;
-  buf_len -= rv;
-  decode_len += rv;
+  ZMSG_DECODE_SUPER();
 
   ZMSG_DECODE(status_);
 
@@ -824,48 +398,47 @@ ZZBBroadcastInd::ZZBBroadcastInd(): ZZigBeeMsg()
 
 int ZZBBroadcastInd::encode(char *buf, uint32_t buf_len)
 {
-  uint32_t old_buf_len = buf_len;
+  ZMSG_ENCODE_BEGIN();
+  ZMSG_ENCODE_SUPER();
 
-  len_ = getBodyLen();
+  ZMSG_ENCODE(what_);
 
-  int rv = super_::encode(buf, buf_len);
-  if (rv < 0) { return rv; }
-  buf += rv;
-  buf_len -= rv;
-
-  // what
-  rv = z_encode_integer16(what_, buf, buf_len);
-  if (rv < 0) { return rv; }
-  buf += rv;
-  buf_len -= rv;
-
-  return old_buf_len - buf_len;
+  ZMSG_ENCODE_END();
 }
 
 int ZZBBroadcastInd::decode(char *buf, uint32_t buf_len)
 {
-  int len = 0;
+  ZMSG_DECODE_BEGIN();
+  ZMSG_DECODE_SUPER();
 
-  int rv = super_::decode(buf, buf_len);
-  if (rv < 0) { return rv; }
-  buf += rv;
-  buf_len -= rv;
-  len += rv;
+  ZMSG_DECODE(what_);
 
-  if (buf_len < len_) {
-    Z_LOG_D("No enough buffer: %u, %u", len_, buf_len);
-    return -1;
-  }
-
-  // what
-  rv = z_decode_integer16(&what_, buf, buf_len);
-  if (rv < 0) { return rv; }
-
-  buf += rv;
-  buf_len -= rv;
-  len += rv;
-
-  return len;
+  ZMSG_DECODE_END();
 }
 
 
+ZZBUploadReq::ZZBUploadReq()
+: ZZigBeeMsg()
+{
+  cmd_ = Z_ID_ZB_UPLOAD_REQ;
+}
+
+int ZZBUploadReq::encode(char *buf, uint32_t buf_len) {
+  ZMSG_ENCODE_BEGIN();
+  ZMSG_ENCODE_SUPER();
+
+  ZMSG_ENCODE(device_id_);
+  ZMSG_ENCODE(data_);
+
+  ZMSG_ENCODE_END();
+}
+
+int ZZBUploadReq::decode(char *buf, uint32_t buf_len) {
+  ZMSG_DECODE_BEGIN();
+  ZMSG_DECODE_SUPER();
+
+  ZMSG_DECODE(device_id_);
+  ZMSG_DECODE(data_);
+
+  ZMSG_DECODE_END();
+}

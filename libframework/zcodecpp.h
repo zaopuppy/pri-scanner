@@ -144,7 +144,7 @@ inline int getlen(const std::string &v)
 // rewrite a better version
 typedef struct {
   char *data; // don't forget to free memory
-  uint32_t len;
+  uint16_t len;
 } fixed_binary_t;
 
 template<>

@@ -4,6 +4,7 @@
 
 #include "zbdefines.h"
 
+
 ///////////////////////////////////////////////////////////////
 // zb_item_id_info_t
 template<>
@@ -190,6 +191,89 @@ inline int getlen(const ZZBHeader &v)
     + getlen(v.len_)
     + getlen(v.cmd_)
     + getlen(v.addr_);
+}
+
+template<>
+inline int encode(const zb_mac_type_t &v, char *buf, uint32_t buf_len)
+{
+  uint32_t len = sizeof(v.data);
+  if (buf_len < len) {
+    return -1;
+  }
+
+  memcpy(buf, (void*)v.data, len);
+
+  return len;
+}
+
+template<>
+inline int decode(zb_mac_type_t &v, char *buf, uint32_t buf_len)
+{
+  uint32_t len = sizeof(v.data);
+  if (buf_len < len) {
+    return -1;
+  }
+
+  memcpy((void*)v.data, buf, len);
+
+  return len;
+}
+
+template<>
+inline int getlen(const zb_mac_type_t &v)
+{
+  return (int)sizeof(v.data);
+}
+
+template<>
+inline int encode(const ZItemPair &v, char *buf, uint32_t buf_len)
+{
+  int rv, len = 0;
+
+  rv = encode(v.id, buf, buf_len);
+  if (rv < 0) return rv;
+  buf += rv;
+  buf_len -= rv;
+  len += rv;
+
+  rv = encode(v.val, buf, buf_len);
+  if (rv < 0) return rv;
+  buf += rv;
+  buf_len -= rv;
+  len += rv;
+
+  return len;
+}
+
+template<>
+inline int decode(ZItemPair &v, char *buf, uint32_t buf_len)
+{
+  int rv, len = 0;
+
+  rv = decode(v.id, buf, buf_len);
+  if (rv < 0) return rv;
+  buf += rv;
+  buf_len -= rv;
+  len += rv;
+
+  rv = decode(v.val, buf, buf_len);
+  if (rv < 0) return rv;
+  buf += rv;
+  buf_len -= rv;
+  len += rv;
+
+  return len;
+}
+
+template<>
+inline int getlen(const ZItemPair &v)
+{
+  int len = 0;
+
+  len += getlen(v.id);
+  len += getlen(v.val);
+
+  return len;
 }
 
 
