@@ -56,9 +56,6 @@ set(SOURCE_FILES
     gw/upload_worker.h
     gw/webapi_msg.cc
     gw/webapi_msg.h
-    gw/zb_codec.c
-    gw/zb_codec.h
-    gw/zb_msg.h
     gw/zb_stream.cc
     gw/zb_stream.h
     gw/zb_transfer_layer.h

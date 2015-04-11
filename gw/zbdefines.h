@@ -8,6 +8,8 @@
 
 #include "libframework/zframework.h"
 
+const uint8_t Z_ZB_VERSION = 1;
+
 const uint32_t MAX_ID_PER_ZB_DEV = 256;
 
 const uint8_t Z_ID_ZB_REG_REQ = 0x01;

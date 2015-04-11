@@ -12,7 +12,7 @@
 
 class ZZigBeeMsg {
  public:
-  ZZigBeeMsg(): ver_(1)
+  ZZigBeeMsg(): ver_(Z_ZB_VERSION)
   {
     // syn_.len = 8;
     // syn_.data = new char[8];
