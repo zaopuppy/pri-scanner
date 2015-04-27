@@ -93,7 +93,7 @@ void ZSerial::onConnected(evutil_socket_t fd, short events)
   size_t buf_len = sizeof(buf_);
 
   do {
-    rv = read(fd, buf_ + offset, buf_len);
+    rv = read(buf_ + offset, (int) buf_len);
     Z_LOG_D("read %d bytes", rv);
     if (rv > 0) {
       buf_len -= rv;

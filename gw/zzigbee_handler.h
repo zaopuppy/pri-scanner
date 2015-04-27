@@ -33,17 +33,16 @@ class ZZigBeeHandler : public ZClientHandler {
   virtual int onRead(char *buf, uint32_t buf_len);
   virtual int onInnerMsg(ZInnerMsg *msg);
 
-  virtual int send(const char *buf, uint32_t buf_len) {
-    // for serial device, use write only, don't use send
-    if (fd_ <= 0) {
-      Z_LOG_D("Invalid fd, return");
-      return 0;
-    }
-
-    Z_LOG_D("now sending:");
-    trace_bin(buf, buf_len);
-    return ::write(fd_, buf, buf_len);
-  }
+  //virtual int send(const char *buf, uint32_t buf_len) {
+  //  if (fd_ <= 0) {
+  //    Z_LOG_D("Invalid fd, return");
+  //    return 0;
+  //  }
+  //
+  //  Z_LOG_D("now sending:");
+  //  trace_bin(buf, buf_len);
+  //  return ::write(fd_, buf, buf_len);
+  //}
 
   virtual void routine(long delta);
 

@@ -28,8 +28,8 @@ public:
   virtual int onInnerMsg(ZInnerMsg *msg);
   virtual void routine(long delta);
 
-  virtual int send(const char *buf, uint32_t buf_len);
-  virtual int sendJson(json_t *jmsg);
+  //virtual int send(const char *buf, uint32_t buf_len);
+  //virtual int sendJson(json_t *jmsg);
 
   virtual void onConnected();
 

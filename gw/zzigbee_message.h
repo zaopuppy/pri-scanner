@@ -11,7 +11,7 @@
 #include "zzigbee_codec.h"
 
 class ZZigBeeMsg {
- public:
+public:
   ZZigBeeMsg(): ver_(Z_ZB_VERSION)
   {
     // syn_.len = 8;
@@ -24,7 +24,7 @@ class ZZigBeeMsg {
     // delete []syn_.data;
     // syn_.data = NULL;
   }
-  
+
   virtual int encode(char *buf, uint32_t buf_len);
   virtual int decode(char *buf, uint32_t buf_len);
 
@@ -36,22 +36,22 @@ class ZZigBeeMsg {
   virtual uint16_t getBodyLen() {
     return 0;
   }
-  
+
   uint16_t getHeaderLen() {
     return /* getlen(syn_) + */
-           getlen(ver_) +
-           getlen(len_) +
-           getlen(cmd_) +
-           getlen(addr_);
+        getlen(ver_) +
+        getlen(len_) +
+        getlen(cmd_) +
+        getlen(addr_);
   }
-  
- public:
+
+public:
   static uint32_t getMinimumLen() {
     return /* 8 + // synchronize bytes */
-           1 + // ver
-           2 + // len
-           1 + // cmd
-           2;
+        1 + // ver
+        2 + // len
+        1 + // cmd
+        2;
   }
   static uint8_t getMsgType(char *buf, uint32_t buf_len) {
     if (buf_len < getMinimumLen()) {
@@ -75,7 +75,7 @@ class ZZigBeeMsg {
     return len;
   }
 
- public:
+public:
   // ZZBHeader hdr_;
   // fixed_binary_t syn_;
   // uint8_t  syn_;
@@ -88,24 +88,24 @@ class ZZigBeeMsg {
 //////////////////////////////////////////////////////////////////
 // REG
 class ZZBRegReq : public ZZigBeeMsg {
- public:
+public:
   ZZBRegReq();
 
   typedef ZZigBeeMsg super_;
 
- public:
+public:
   virtual int encode(char* buf, uint32_t buf_len);
   virtual int decode(char* buf, uint32_t buf_len);
 
- protected:
+protected:
   virtual uint16_t getBodyLen() {
     return sizeof(mac_.data)
-      + getlen(dev_type_);
-      // + getlen(name_)
-      // + getlen(desc_);
+           + getlen(dev_type_);
+    // + getlen(name_)
+    // + getlen(desc_);
   }
 
- public:
+public:
   // const uint16_t mac_len_;
   // std::string mac_;
   zb_mac_type_t mac_;
@@ -116,21 +116,21 @@ class ZZBRegReq : public ZZigBeeMsg {
 };
 
 class ZZBRegRsp : public ZZigBeeMsg {
- public:
+public:
   ZZBRegRsp();
 
   typedef ZZigBeeMsg super_;
 
- public:
+public:
   virtual int encode(char* buf, uint32_t buf_len);
   virtual int decode(char* buf, uint32_t buf_len);
 
- protected:
+protected:
   virtual uint16_t getBodyLen() {
     return getlen(status_);
   }
 
- public:
+public:
   // uint8_t addr_;
   uint8_t status_;
 };
@@ -138,40 +138,40 @@ class ZZBRegRsp : public ZZigBeeMsg {
 //////////////////////////////////////////////////////////////////
 // GET
 class ZZBGetReq : public ZZigBeeMsg {
- public:
+public:
   ZZBGetReq();
 
   typedef ZZigBeeMsg super_;
 
- public:
-  
+public:
+
   virtual int encode(char* buf, uint32_t buf_len);
   virtual int decode(char* buf, uint32_t buf_len);
-  
+
   virtual uint16_t getBodyLen() {
     return 1 + items_.size() * 1;
   }
 
- public:
+public:
   std::vector<uint8_t> items_;
 };
 
 class ZZBGetRsp : public ZZigBeeMsg {
- public:
+public:
   ZZBGetRsp();
 
   typedef ZZigBeeMsg super_;
 
- public:
+public:
 
   virtual int encode(char* buf, uint32_t buf_len);
   virtual int decode(char* buf, uint32_t buf_len);
-  
+
   virtual uint16_t getBodyLen() {
     return 1 + items_.size() * (1 + 2);
   }
 
- public:
+public:
   uint8_t status_;
   // uint8_t itemCount_;
   std::vector<struct ZItemPair> items_;
@@ -180,32 +180,32 @@ class ZZBGetRsp : public ZZigBeeMsg {
 //////////////////////////////////////////////////////////////////
 // SET
 class ZZBSetReq : public ZZigBeeMsg {
- public:
+public:
   ZZBSetReq();
 
   typedef ZZigBeeMsg super_;
 
- public:
+public:
 
   virtual int encode(char* buf, uint32_t buf_len);
   virtual int decode(char* buf, uint32_t buf_len);
-  
+
   virtual uint16_t getBodyLen() {
     return 1 + items_.size() * (1 + 2);
   }
 
- public:
+public:
   // uint8_t itemCount_;
   std::vector<ZItemPair> items_;
 };
 
 class ZZBSetRsp : public ZZigBeeMsg {
- public:
+public:
   ZZBSetRsp();
 
   typedef ZZigBeeMsg super_;
 
- public:
+public:
 
   virtual int encode(char* buf, uint32_t buf_len);
   virtual int decode(char* buf, uint32_t buf_len);
@@ -214,7 +214,7 @@ class ZZBSetRsp : public ZZigBeeMsg {
     return 1;
   }
 
- public:
+public:
   uint8_t status_;
 };
 
@@ -228,12 +228,12 @@ public:
 public:
   virtual int encode(char* buf, uint32_t buf_len);
   virtual int decode(char* buf, uint32_t buf_len);
-  
+
   virtual uint16_t getBodyLen() {
     return 0;
   }
 
- public:
+public:
 };
 
 //////////////////////////////////////////////////////////////////
@@ -246,63 +246,63 @@ public:
 public:
   virtual int encode(char* buf, uint32_t buf_len);
   virtual int decode(char* buf, uint32_t buf_len);
-  
+
   virtual uint16_t getBodyLen() {
     return 0;
   }
 
- public:
+public:
 };
 
 //////////////////////////////////////////////////////////////////
 // Update
 class ZZBUpdateIdInfoReq : public ZZigBeeMsg {
- public:
+public:
   ZZBUpdateIdInfoReq();
 
   typedef ZZigBeeMsg super_;
 
- public:
+public:
 
   virtual int encode(char *buf, uint32_t buf_len);
   virtual int decode(char *buf, uint32_t buf_len);
-  
+
   virtual uint16_t getBodyLen() {
     return getlen(id_list_);
   }
 
- public:
+public:
   std::vector<zb_item_id_info_t> id_list_;
 };
 
 class ZZBUpdateIdInfoRsp : public ZZigBeeMsg {
- public:
+public:
   ZZBUpdateIdInfoRsp();
 
   typedef ZZigBeeMsg super_;
 
- public:
+public:
 
   virtual int encode(char *buf, uint32_t buf_len);
   virtual int decode(char *buf, uint32_t buf_len);
-  
+
   virtual uint16_t getBodyLen() {
     return getlen(status_);
   }
 
- public:
+public:
   uint8_t status_;
 };
 
 //////////////////////////////////////////////////////////////////
 // broadcast
 class ZZBBroadcastInd : public ZZigBeeMsg {
- public:
+public:
   ZZBBroadcastInd();
 
   typedef ZZigBeeMsg super_;
 
- public:
+public:
 
   virtual int encode(char *buf, uint32_t buf_len);
   virtual int decode(char *buf, uint32_t buf_len);
@@ -311,7 +311,7 @@ class ZZBBroadcastInd : public ZZigBeeMsg {
     return getlen(what_);
   }
 
- public:
+public:
   uint16_t what_;
 };
 
@@ -330,7 +330,7 @@ public:
 
   virtual uint16_t getBodyLen() {
     return getlen(device_id_)
-        + getlen(data_);
+           + getlen(data_);
   }
 
 public:

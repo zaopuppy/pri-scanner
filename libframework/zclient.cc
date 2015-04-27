@@ -226,7 +226,7 @@ void ZClient::scheduleReconnect() {
 void ZClient::onConnected(evutil_socket_t fd, short events) {
   assert(fd >= 0);
 
-  int rv = recv(fd, buf_, sizeof(buf_), 0);
+  int rv = read(buf_, sizeof(buf_));
   if (rv == 0) {
     Z_LOG_D("peer closed");
     state_ = STATE_DISCONNECTED;

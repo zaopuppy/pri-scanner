@@ -111,7 +111,7 @@ public:
       return;
     }
 
-    handler_->send(out_buf, rv);
+    handler_->getModule()->write(out_buf, rv);
 
     close();
   }

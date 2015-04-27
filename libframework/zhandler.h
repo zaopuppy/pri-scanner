@@ -21,7 +21,7 @@ public:
   virtual int onInnerMsg(ZInnerMsg *msg) = 0;
   virtual void routine(long delta) = 0;
 
-  virtual int send(const char *buf, uint32_t buf_len) = 0;
+  // virtual int send(const char *buf, uint32_t buf_len) = 0;
 
   // // @override from ZTimer::TimerCallback
   // virtual void onTimeout(int handler_id) {}

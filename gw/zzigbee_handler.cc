@@ -86,7 +86,7 @@ void ZZigBeeHandler::onConnected()
     return;
   }
 
-  rv = send(buf_, rv);
+  rv = getModule()->write(buf_, rv);
   if (rv <= 0) {
     assert(false);
     Z_LOG_E("!!! Failed to send notify to zb module, any problem?");
@@ -112,7 +112,7 @@ int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
     {
       Z_LOG_D("Z_ID_ZB_UPLOAD_REQ");
       ZZBUploadReq msg;
-      int rv = msg.decode(buf, buf_len);
+      rv= msg.decode(buf, buf_len);
       if (rv < 0) {
         Z_LOG_E("failed to decode message");
       } else {
@@ -125,7 +125,7 @@ int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
     {
       Z_LOG_D("Z_ID_ZB_REG_REQ");
       ZZBRegReq msg;
-      int rv = msg.decode(buf, buf_len);
+      rv= msg.decode(buf, buf_len);
       if (rv < 0) {
         Z_LOG_E("Failed to decode message");
       } else {
@@ -138,7 +138,7 @@ int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
     {
       Z_LOG_D("Z_ID_ZB_GET_RSP");
       ZZBGetRsp msg;
-      int rv = msg.decode(buf, buf_len);
+      rv = msg.decode(buf, buf_len);
       if (rv < 0) {
         Z_LOG_D("Failed to decode message");
       } else {
@@ -151,7 +151,7 @@ int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
     {
       Z_LOG_D("Z_ID_ZB_SET_RSP");
       ZZBSetRsp msg;
-      int rv = msg.decode(buf, buf_len);
+      rv = msg.decode(buf, buf_len);
       if (rv < 0) {
         Z_LOG_D("Failed to decode message");
       } else {
@@ -164,7 +164,7 @@ int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
     {
       Z_LOG_D("Z_ID_ZB_UPDATE_ID_REQ");
       ZZBUpdateIdInfoReq msg;
-      int rv = msg.decode(buf, buf_len);
+      rv = msg.decode(buf, buf_len);
       if (rv < 0) {
         Z_LOG_D("Failed to decode message");
       } else {
@@ -177,7 +177,7 @@ int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
     {
       Z_LOG_D("Z_ID_ZB_BIND_RSP");
       ZZBBindRsp msg;
-      int rv = msg.decode(buf, buf_len);
+      rv = msg.decode(buf, buf_len);
       if (rv < 0) {
         Z_LOG_E("Failed to decode ZZBBindRsp");
       } else {
@@ -217,7 +217,7 @@ int ZZigBeeHandler::processMsg(ZZBRegReq &msg)
     return -1;
   }
 
-  send(buf_, rv);
+  getModule()->write(buf_, rv);
 
   // // TODO:
   // // 2. send query request(with item id zero (means all))
@@ -444,7 +444,7 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq *msg)
     return -1;
   }
 
-  send(buf_, rv);
+  getModule()->write(buf_, rv);
 
   // save session
   {
@@ -510,7 +510,7 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
 
   trace_bin(buf_, rv);
 
-  rv = send(buf_, rv);
+  rv = getModule()->write(buf_, rv);
   if (rv <= 0) {
     perror("send");
     Z_LOG_D("Failed to send");
@@ -548,7 +548,7 @@ int ZZigBeeHandler::processMsg(ZInnerBindReq *msg)
 
   trace_bin(buf_, rv);
 
-  rv = send(buf_, rv);
+  rv = getModule()->write(buf_, rv);
   if (rv <= 0) {
     perror("send");
     Z_LOG_E("Failed to send");
@@ -615,7 +615,7 @@ int ZZigBeeHandler::processMsg(ZZBUpdateIdInfoReq &msg)
 
   // trace_bin(buf_, rv);
 
-  rv = send(buf_, rv);
+  rv = getModule()->write(buf_, rv);
   if (rv <= 0) {
     perror("send");
     Z_LOG_D("Failed to send");

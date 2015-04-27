@@ -9,18 +9,18 @@
 #include "zzigbee_handler.h"
 #include "zb_stream.h"
 
-class ZSerial : public ZModule {
- public:
+class ZSerial: public ZModule {
+public:
   ZSerial(event_base* base, const char *serial_dev)
-    : ZModule(MODULE_SERIAL)
-    , base_(base), fd_(-1), serial_dev_(serial_dev)
+      : ZModule(MODULE_SERIAL)
+      , base_(base), fd_(-1), serial_dev_(serial_dev)
   {
     handler_ = new ZZigBeeHandler(1, this, base);
   }
 
   typedef ZModule super_;
 
- public:
+public:
   virtual int init();
   virtual void close();
   // virtual int sendMsg(ZInnerMsg *msg);
@@ -29,7 +29,14 @@ class ZSerial : public ZModule {
 
   int event(evutil_socket_t fd, short events);
 
- private:
+  virtual int read(char *buf, int buf_len) {
+    return (int) ::read(fd_, buf, (size_t) buf_len);
+  }
+  virtual int write(char const *buf, int buf_len) {
+    return (int) ::write(fd_, buf, (size_t) buf_len);
+  }
+
+private:
   // int onWaitingForConnect(evutil_socket_t fd, short events);
   void onConnected(evutil_socket_t fd, short events);
   int onDisconnected(evutil_socket_t fd, short events);
@@ -38,14 +45,14 @@ class ZSerial : public ZModule {
   int connect();
   void scheduleReconnect();
 
- private:
+private:
   enum STATE {
     STATE_CONNECTED,
     STATE_DISCONNECTED,
     STATE_FINISHED,
   };
 
- private:
+private:
   event_base *base_;
   evutil_socket_t fd_;
   struct event* read_event_;

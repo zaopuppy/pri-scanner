@@ -39,7 +39,16 @@ class ZClient : public ZModule {
     server_port_ = server_port;
   }
 
- protected:
+  virtual int read(char *buf, int buf_len) {
+    return (int)::recv(fd_, buf, (size_t) buf_len, 0);
+  }
+
+  virtual int write(char const *buf, int buf_len) {
+    return (int) ::send(fd_, buf, buf_len, 0);
+  }
+
+
+protected:
   // for state-transient
   int onWaitingForConnect(evutil_socket_t fd, short events);
   void onConnected(evutil_socket_t fd, short events);

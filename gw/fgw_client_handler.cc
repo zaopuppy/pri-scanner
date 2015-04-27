@@ -10,7 +10,6 @@
 #include "protobuf_convert.h"
 
 using namespace com::letsmidi::monsys::protocol::push;
-// namespace ns_push = com::letsmidi::monsys::protocol::push;
 
 void FGWClientHandler::setState(int new_state)
 {
@@ -33,22 +32,16 @@ int FGWClientHandler::onRead(char *buf, uint32_t buf_len)
   Z_LOG_D("FGWClientHandler::onRead()");
   trace_bin(buf, buf_len);
 
-  int rv = FAIL;
   switch (state_) {
     case STATE_UNREGISTERED:
-      rv = onRead_Unregistered(buf, buf_len);
-      break;
+      return onRead_Unregistered(buf, buf_len);
     case STATE_WAIT_FOR_SERVER:
-      rv = onRead_WaitForServer(buf, buf_len);
-      break;
+      return onRead_WaitForServer(buf, buf_len);
     case STATE_REGISTERED:
-      rv = onRead_Registered(buf, buf_len);
-      break;
+      return onRead_Registered(buf, buf_len);
     default:
-      rv = FAIL;
+      return FAIL;
   }
-
-  return rv;
 }
 
 int FGWClientHandler::onInnerMsg(ZInnerMsg *msg)
@@ -118,7 +111,7 @@ void FGWClientHandler::fgwLogin()
     return;
   }
 
-  send(out_buf_, rv);
+  getModule()->write(out_buf_, rv);
 
   state_ = STATE_WAIT_FOR_SERVER;
 
@@ -238,26 +231,28 @@ int FGWClientHandler::onRead_Registered(char *buf, uint32_t buf_len)
   return OK;
 }
 
-int FGWClientHandler::send(const char *buf, uint32_t buf_len)
-{
-  Z_LOG_D("FGWClientHandler::send(%d)", fd_);
-  return ::send(fd_, buf, buf_len, 0);
-}
+//int FGWClientHandler::send(const char *buf, uint32_t buf_len)
+//{
+//  Z_LOG_D("FGWClientHandler::send(%d)", fd_);
+//  return ::send(fd_, buf, buf_len, 0);
+//}
 
-int FGWClientHandler::sendJson(json_t *jmsg)
-{
-  Z_LOG_D("FGWClientHandler::sendJson()");
-
-  char *str_dump = json_dumps(jmsg, 0);
-
-  int rv = send(str_dump, strlen(str_dump));
-  trace_bin(str_dump, strlen(str_dump));
-
-  free(str_dump);
-  json_decref(jmsg);
-
-  return rv;
-}
+//int FGWClientHandler::sendJson(json_t *jmsg)
+//{
+//  Z_LOG_D("FGWClientHandler::sendJson()");
+//
+//  char *str_dump = json_dumps(jmsg, 0);
+//
+//  trace_bin(str_dump, (uint32_t) strlen(str_dump));
+//
+//  int rv = getModule()->write(str_dump, (int) strlen(str_dump));
+//
+//
+//  free(str_dump);
+//  json_decref(jmsg);
+//
+//  return rv;
+//}
 
 void FGWClientHandler::onConnected()
 {
@@ -272,7 +267,7 @@ void FGWClientHandler::onConnected()
 void FGWClientHandler::sendRsp(const char *text_msg, int status)
 {
   Z_LOG_D("FGWClientHandler::sendRsp");
-  int rv = send(text_msg, strlen(text_msg));
+  int rv = getModule()->write(text_msg, (int) strlen(text_msg));
   Z_LOG_D("sent %d bytes", rv);
 }
 

@@ -25,7 +25,7 @@ class FGWServerHandler : public ZServerHandler {
   // virtual int onInnerMsgEx(ZInnerMsg *msg);
   virtual void routine(long delta);
 
-  virtual int send(const char *buf, uint32_t buf_len);
+  //virtual int send(const char *buf, uint32_t buf_len);
 
   typedef ZSessionCtrl2Key<uint32_t, uint32_t, FGWSession> SESSION_CTRL_TYPE;
   // typedef ZSessionCtrl<uint32_t, ZSession> SESSION_CTRL_TYPE;

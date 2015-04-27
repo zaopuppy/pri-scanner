@@ -4,11 +4,11 @@
 #include "msg_factory.h"
 
 static const int MIN_HEAD_LEN = 1   // ver_(1)
-                              + 2;  // len_(2);
+                                + 2;  // len_(2);
 static const int HEAD_LEN = 1   // ver_(1)
-                          + 2   // len_(2)
-                          + 1   // cmd_(1)
-                          + 2;  // addr_(2)
+                            + 2   // len_(2)
+                            + 1   // cmd_(1)
+                            + 2;  // addr_(2)
 
 static const int RESET_INTERVAL = 1; // 1 second
 
@@ -27,7 +27,7 @@ int ZBStream::read(char *buf, int buf_len) {
 
   if (data->data_len > buf_len) {
     Z_LOG_D("buffer is not big enough:(, data_len=%d, buf_len=%d",
-      data->data_len, buf_len);
+            data->data_len, buf_len);
 
     read_len = buf_len;
 
@@ -228,8 +228,8 @@ int ZBStream::doWaitingForData(char *buf, int buf_len)
 void ZBStream::setState(int state)
 {
   Z_LOG_D("ZBStream::setState([%s] -> [%s])",
-    getStateName(state_),
-    getStateName(state));
+          getStateName(state_),
+          getStateName(state));
   state_ = state;
 }
 

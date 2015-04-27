@@ -28,12 +28,12 @@ public:
   virtual int onInnerMsgEx(ZInnerMsg *msg) { return 0; }
   virtual void routine(long delta) {}
 
-  virtual int send(const char *buf, uint32_t buf_len) {
-    Z_LOG_D("EchoHandler::send(%d)", getFd());
-    int rv = ::send(getFd(), buf, buf_len, 0);
-    Z_LOG_D("rv: %d", rv);
-    return OK;
-  }
+  //virtual int send(const char *buf, uint32_t buf_len) {
+  //  Z_LOG_D("EchoHandler::send(%d)", getFd());
+  //  int rv = ::send(getFd(), buf, buf_len, 0);
+  //  Z_LOG_D("rv: %d", rv);
+  //  return OK;
+  //}
 };
 
 void EchoServer::onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned short port)

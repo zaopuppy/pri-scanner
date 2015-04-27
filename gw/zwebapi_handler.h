@@ -29,13 +29,13 @@ class ZWebApiHandler : public ZServerHandler {
   virtual int onInnerMsg(ZInnerMsg *msg);
   virtual void routine(long delta);
 
-  virtual int send(const char *buf, uint32_t buf_len) {
-    Z_LOG_D("ZWebApiHandler::send(fd=%d)", getFd());
-    return ::send(getFd(), buf, buf_len, 0);
-  }
+  //virtual int send(const char *buf, uint32_t buf_len) {
+  //  Z_LOG_D("ZWebApiHandler::send(fd=%d)", getFd());
+  //  return ::send(getFd(), buf, buf_len, 0);
+  //}
 
 public:
-  int send(json_t *msg);
+  //int send(json_t *msg);
 
   // typedef ZSessionCtrl<uint32_t, ZWebApiSession*> SESSIONCTRL_TYPE;
 private:
