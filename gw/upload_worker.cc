@@ -9,6 +9,26 @@
 #include <unistd.h>
 #include <libframework/zerrno.h>
 
+
+class ScanRecord {
+public:
+  int gw_id_;
+  int scanner_id_;
+  long time_; // can we get this
+  int type_;
+  std::string data_;
+};
+
+class ScanDataManager {
+public:
+  int size() { return (int) queue_.size(); }
+  void push(ScanRecord *rec) { return queue_.push(rec); }
+  ScanRecord* pop() { return queue_.front(); }
+
+private:
+  std::queue<ScanRecord*> queue_;
+};
+
 void UploadWorker::run() {
   for (; !stop_;) {
     sleep(1);
@@ -20,6 +40,8 @@ int UploadWorker::send(ZInnerMsg *msg) {
   if (msg == NULL) {
     return FAIL;
   }
+
+  msg_queue_.push_back(msg);
 
   switch (msg->msg_type_) {
     case Z_ZB_UPLOAD_REQ:
@@ -60,4 +82,20 @@ int UploadWorker::save(ZInnerUploadReq *req) {
 int UploadWorker::addToSendingQueue(ZInnerUploadReq *req) {
   sendingQueue_.push_back(req);
   return 0;
+}
+
+bool UploadWorker::init() {
+  if (!super_::init()) {
+    return false;
+  }
+
+  if (!loadFromDisk()) {
+    return false;
+  }
+
+  return true;
+}
+
+bool UploadWorker::loadFromDisk() {
+  return false;
 }

@@ -11,13 +11,16 @@
 #include "zinner_message_ex.h"
 
 class UploadWorker: public Z::Thread {
-
 public:
+  typedef Z::Thread super_;
+
+  virtual bool init() override;
+
   UploadWorker(): stop_(false), max_sending_queue_length_(4096) {}
 
   int send(ZInnerMsg *msg);
 
-  void run();
+  virtual void run();
 
 private:
   int handleUploadReq(ZInnerUploadReq * req);
@@ -30,10 +33,18 @@ private:
 
   int addToSendingQueue(ZInnerUploadReq *req);
 
+  bool loadFromDisk();
+
 private:
   bool stop_;
+
+  std::vector<ZInnerMsg*> msg_queue_;
+
+
+
   const int max_sending_queue_length_;
   std::vector<ZInnerUploadReq*> sendingQueue_;
+
 };
 
 

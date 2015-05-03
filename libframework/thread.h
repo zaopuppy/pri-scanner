@@ -12,9 +12,9 @@ namespace Z {
 class Thread {
 
 public:
-  bool init() { return true; }
+  virtual bool init() { return true; }
 
-  bool start();
+  virtual bool start();
 
   virtual void run() = 0;
 
