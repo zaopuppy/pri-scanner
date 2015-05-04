@@ -66,16 +66,16 @@ int main(int argc, char *argv[])
       }
     }
 
-    UploadWorker worker;
-    if (!worker.init()) {
-      Z_LOG_E("failed to initialize upload worker");
-      break;
-    }
-
-    if (!worker.start()) {
-      Z_LOG_E("failed to start upload worker");
-      break;
-    }
+    //UploadWorker worker;
+    //if (!worker.init()) {
+    //  Z_LOG_E("failed to initialize upload worker");
+    //  break;
+    //}
+    //
+    //if (!worker.start()) {
+    //  Z_LOG_E("failed to start upload worker");
+    //  break;
+    //}
 
     while (!g_stop) {
       event_base_loop(base, EVLOOP_ONCE);
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
       client->checkMsgQueue();
     }
 
-    worker.stop();
+    // worker.stop();
 
     rv = OK;
   } while (0);

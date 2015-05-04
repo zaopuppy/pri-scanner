@@ -52,8 +52,8 @@ set(SOURCE_FILES
     gw/unittest.cc
     gw/unittest_main.cc
     gw/unittest_main.h
-    gw/upload_worker.cc
-    gw/upload_worker.h
+#    gw/upload_worker.cc
+#    gw/upload_worker.h
     gw/webapi_msg.cc
     gw/webapi_msg.h
     gw/zb_stream.cc
@@ -89,6 +89,7 @@ set(SOURCE_FILES
     gw/zzigbee_message.cc
     gw/zzigbee_message.h
     gw/zzigbee_session.h
+    gw/errno_ex.h
     libframework/algorithm/base64.cc
     libframework/algorithm/prac.cc
     libframework/algorithm/prac.h
@@ -127,7 +128,9 @@ set(SOURCE_FILES
     libframework/ztimer.h
     libframework/ztypes.h
     libframework/zutil.cc
-    libframework/zutil.h)
+    libframework/zutil.h
+    libframework/zhttp_client.cc
+    libframework/zhttp_client.h)
 
 
 include_directories(libs/include)

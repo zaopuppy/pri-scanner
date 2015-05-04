@@ -3,9 +3,10 @@
 
 enum ERR_CODE {
   NO_ENOUGH_BUFFER = -3,
-  ERR_IO_PENDING,
+  ERR_IO_PENDING = -2,
   FAIL = -1,
   OK = 0,
+  // new error code should starts from 1
 };
 
 #define ECHECK(_rv, _code) assert((_rv) == (_code))

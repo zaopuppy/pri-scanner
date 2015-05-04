@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
-#include <libframework/zerrno.h>
+#include <libframework/zframework.h>
 
 
 class ScanRecord {
@@ -41,6 +41,11 @@ int UploadWorker::send(ZInnerMsg *msg) {
     return FAIL;
   }
 
+  // TODO: thread-safe operation
+  if (msg_queue_.size() >= max_msg_queue_length_) {
+    return -1;
+  }
+
   msg_queue_.push_back(msg);
 
   switch (msg->msg_type_) {
@@ -72,7 +77,7 @@ int UploadWorker::handleConfigReq(ZInnerConfigReq *req) {
 }
 
 bool UploadWorker::sendingQueueIsFull() {
-  return sendingQueue_.size() >= max_sending_queue_length_;
+  return sendingQueue_.size() >= max_msg_queue_length_;
 }
 
 int UploadWorker::save(ZInnerUploadReq *req) {

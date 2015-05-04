@@ -16,7 +16,7 @@ public:
 
   virtual bool init() override;
 
-  UploadWorker(): stop_(false), max_sending_queue_length_(4096) {}
+  UploadWorker(): stop_(false), max_msg_queue_length_(1024) {}
 
   int send(ZInnerMsg *msg);
 
@@ -42,7 +42,7 @@ private:
 
 
 
-  const int max_sending_queue_length_;
+  const int max_msg_queue_length_;
   std::vector<ZInnerUploadReq*> sendingQueue_;
 
 };
