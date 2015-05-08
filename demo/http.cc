@@ -3,6 +3,7 @@
 #include <netinet/in.h>
 #include <strings.h>
 #include <string>
+#include <unistd.h>
 
 #include <event2/bufferevent_ssl.h>
 #include <event2/bufferevent.h>
@@ -10,6 +11,7 @@
 #include <event2/listener.h>
 #include <event2/util.h>
 #include <event2/http.h>
+#include <event2/dns.h>
 
 
 #define log(_format, ...)   printf(__FILE__ ":%d|" _format "\n", __LINE__, ##__VA_ARGS__)
@@ -89,6 +91,12 @@ bool parse_uri(struct evhttp_uri *http_uri, Uri &uri_data)
   return true;
 }
 
+static void
+dns_logfn(int is_warn, const char *msg)
+{
+  fprintf(stderr, "%s: %s\n", is_warn ? "WARN":"INFO", msg);
+}
+
 int get(event_base *base, const char *url, char *buf, int buf_len)
 {
   if (NULL == url || buf_len < 0) {
@@ -136,8 +144,10 @@ int get(event_base *base, const char *url, char *buf, int buf_len)
   // struct evhttp_connection *evhttp_connection_base_new(
   // struct event_base *base, struct evdns_base *dnsbase,
   // const char *address, unsigned short port);
+  struct evdns_base *dns_base = evdns_base_new(base, 0);
+  evdns_set_log_fn(dns_logfn);
   struct evhttp_connection *conn =
-    evhttp_connection_base_new(base, NULL, uri.host_.c_str(), uri.port_);
+    evhttp_connection_base_new(base, dns_base, uri.host_.c_str(), uri.port_);
   struct bufferevent *buffer_ev = evhttp_connection_get_bufferevent(conn);
   
   struct evhttp_request *req = evhttp_request_new(http_callback, buffer_ev);
@@ -149,10 +159,9 @@ int get(event_base *base, const char *url, char *buf, int buf_len)
   evhttp_add_header(output_headers, "Host", uri.host_.c_str());
   evhttp_add_header(output_headers, "Connection", "close");
   
-  struct evbuffer *output_buffer = evhttp_request_get_output_buffer(req);
-  evbuffer_add(output_buffer, buf, buf_len);
-
   if (buf_len > 0) {
+    struct evbuffer *output_buffer = evhttp_request_get_output_buffer(req);
+    evbuffer_add(output_buffer, buf, buf_len);
     char num_buf[16];
     snprintf(num_buf, sizeof(num_buf), "%d", buf_len);
     evhttp_add_header(output_headers, "Content-Length", num_buf);
@@ -166,12 +175,17 @@ int get(event_base *base, const char *url, char *buf, int buf_len)
     return -1;
   }
 
+  log("waiting");
   event_base_dispatch(base);
   evhttp_connection_free(conn);
 
   return 0;
 }
 
+static void ev_log_callback(int severity, const char *msg)
+{
+  log("%d|%s", severity, msg);
+}
 
 int main(int argc, char *argv[])
 {
@@ -189,9 +203,13 @@ int main(int argc, char *argv[])
     return -1;
   }
 
+  event_set_log_callback(ev_log_callback);
+
   get(base, url, NULL, 0);
 
   event_base_free(base);
+
+  sleep(5);
 
   return 0;
 }
