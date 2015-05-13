@@ -45,6 +45,8 @@ static void http_callback(struct evhttp_request *req, void *ctx)
     buf[rv] = 0x00;
     log("data: [%s]", buf);
   }
+
+  log("http_callback done");
 }
 
 
@@ -144,7 +146,7 @@ int get(event_base *base, const char *url, char *buf, int buf_len)
   // struct evhttp_connection *evhttp_connection_base_new(
   // struct event_base *base, struct evdns_base *dnsbase,
   // const char *address, unsigned short port);
-  struct evdns_base *dns_base = evdns_base_new(base, 0);
+  struct evdns_base *dns_base = evdns_base_new(base, 1);
   evdns_set_log_fn(dns_logfn);
   struct evhttp_connection *conn =
     evhttp_connection_base_new(base, dns_base, uri.host_.c_str(), uri.port_);
@@ -209,7 +211,7 @@ int main(int argc, char *argv[])
 
   event_base_free(base);
 
-  sleep(5);
+  // sleep(5);
 
   return 0;
 }
