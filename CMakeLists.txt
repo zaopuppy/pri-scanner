@@ -52,8 +52,6 @@ set(SOURCE_FILES
     gw/unittest.cc
     gw/unittest_main.cc
     gw/unittest_main.h
-#    gw/upload_worker.cc
-#    gw/upload_worker.h
     gw/webapi_msg.cc
     gw/webapi_msg.h
     gw/zb_stream.cc
