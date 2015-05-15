@@ -16,7 +16,7 @@ public:
 
 class Executor {
 public:
-  virtual void execute(Runnable cmd) = 0;
+  virtual void execute(Runnable *cmd) = 0;
 };
 
 class ExecutorService {
@@ -31,7 +31,7 @@ public:
   virtual void shutdownNow() = 0;
 
   // TODO: `future` needed
-  virtual void submit(Runnable task, callback_t callback, void *arg) = 0;
+  virtual void submit(Runnable *task, callback_t callback, void *arg) = 0;
 };
 
 class ThreadPool: ExecutorService {
@@ -44,7 +44,7 @@ private:
 
   virtual void shutdownNow() override;
 
-  virtual void submit(Runnable task, callback_t callback, void *arg) override;
+  virtual void submit(Runnable *task, callback_t callback, void *arg) override;
 
 private:
 
@@ -63,7 +63,7 @@ void ThreadPool::shutdownNow() {
   ExecutorService::shutdownNow();
 }
 
-void ThreadPool::submit(Runnable task, ExecutorService::callback_t callback, void *arg) {
+void ThreadPool::submit(Runnable *task, ExecutorService::callback_t callback, void *arg) {
   ExecutorService::submit(task, callback, arg);
 }
 }
