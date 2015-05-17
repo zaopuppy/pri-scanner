@@ -8,12 +8,11 @@ include_directories(../libs/include)
 include_directories(../libframework)
 include_directories(..)
 
+link_directories(../libs/lib)
+
 aux_source_directory(. SOURCE_FILES)
 
-find_library(LIBPROTOBUF protobuf)
-# find_library(LIBFRAMEWORK framework libframework PATHS ../libs/lib)
-
 add_executable(gw ${SOURCE_FILES})
-target_link_libraries (gw LIBPROTOBUF)
+target_link_libraries (gw protobuf framework event_core jansson zlog pthread)
 
 

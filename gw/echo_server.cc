@@ -20,7 +20,7 @@ public:
   virtual int onRead(char *buf, uint32_t buf_len) {
     Z_LOG_D("onRead()");
     trace_bin(buf, buf_len);
-    send(buf, buf_len);
+    getModule()->write(buf, buf_len);
     return 0;
   }
 

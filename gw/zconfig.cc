@@ -2,6 +2,8 @@
 
 #include <fstream>
 
+#include <libframework/zframework.h>
+
 using namespace std;
 
 bool Config::load(const char *filename)
