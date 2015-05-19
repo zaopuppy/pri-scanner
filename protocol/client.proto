@@ -1,0 +1,58 @@
+package com.letsmidi.monsys.protocol.client;
+
+enum MsgType {
+  HEARTBEAT     = 1;
+
+  LOGIN         = 3;
+  LOGIN_RSP     = 4;
+
+  REQUEST_COMM_SERVER = 5;
+  REQUEST_COMM_SERVER_RSP = 6;
+}
+
+enum ClientType {
+  CLIENT_TYPE_ANDROID = 1;
+}
+
+message ClientMsg {
+  // head
+  required uint32 version = 1;
+  required MsgType type = 2;
+  required uint32 sequence = 3;
+  // required uint32 reserved = 4;
+
+  // login
+  optional Login login = 5;
+  optional LoginRsp login_rsp = 6;
+
+  //
+  optional RequestCommServer request_comm_server = 7;
+  optional RequestCommServerRsp request_comm_server_rsp = 8;
+
+  // connect
+
+}
+
+message Login {
+  required ClientType client_type = 1 [default = CLIENT_TYPE_ANDROID];
+  required string user_name = 2;
+  required string password = 3;
+  // required int32 status = 4;
+}
+
+message LoginRsp {
+  required int32 code = 1;
+}
+
+message RequestCommServer {
+}
+
+message RequestCommServerRsp {
+  required int32 code = 1;
+  required string ip_v4_addr = 2;
+  required int32 port = 3;
+}
+
+
+
+

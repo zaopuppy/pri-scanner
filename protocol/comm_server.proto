@@ -1,0 +1,51 @@
+package com.letsmidi.monsys.protocol.commserver;
+
+enum MsgType {
+  HEARTBEAT         = 1;
+
+  REGISTER          = 3;
+  REGISTER_RSP      = 4;
+
+  REQUEST_TOKEN     = 5;
+  REQUEST_TOKEN_RSP = 6;
+}
+
+message CommServerMsg {
+  // head
+  required uint32 version = 1;
+  required MsgType type = 2;
+  required uint32 sequence = 3;
+  // required uint32 reserved = 4;
+
+  // login
+  optional Register register = 5;
+  optional RegisterRsp register_rsp = 6;
+
+  // request-token
+  optional RequestToken request_token = 7;
+  optional RequestTokenRsp request_token_rsp = 8;
+}
+
+// comm server -> login server
+message Register {
+  required string ip_v4_addr = 1;
+  required uint32 port = 2;
+}
+
+message RegisterRsp {
+  required int32 code = 1;
+}
+
+
+// login server -> comm server
+message RequestToken {
+}
+
+message RequestTokenRsp {
+  required int32 code = 1;
+  required string token = 2;
+}
+
+
+
+
