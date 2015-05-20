@@ -4,25 +4,46 @@
 
 #include "crawler.h"
 
+#include <memory>
+#include <strings.h>
+
 #include <event2/http.h>
+#include <future>
+#include <unistd.h>
+
+// #include "libframework/thread.h"
+
+
+#define log(_format, ...)   printf(__FILE__ ":%d|" _format "\n", __LINE__, ##__VA_ARGS__)
 
 
 int main(int argc, char *argv[])
 {
-  struct event_base *base = event_base_new();
-  assert(base != NULL);
+  //struct event_base *base = event_base_new();
+  //assert(base != NULL);
+  //
+  //Z::Crawler crawler(base, "http://www.baidu.com", 4, 1000);
+  //
+  //if (crawler.init()) {
+  //  crawler.start();
+  //}
+  //
+  //event_base_dispatch(base);
 
-  // crawler with 4 threads, 1000 parallel tasks
-  Crawler crawler(base, "http://www.baidu.com", 4, 1000);
+  std::thread thread([] {
+    for (int i = 0; i < 10; ++i) {
+      log("run");
+      sleep(1);
+    }
+  });
 
-  if (crawler.init()) {
-    crawler.start();
-  }
-
-  event_base_dispatch(base);
+  thread.join();
+  // std::future<int> f;
 
   return 0;
 }
+
+namespace Z {
 
 class Uri {
 public:
@@ -99,9 +120,55 @@ bool Crawler::init() {
   if (uri == nullptr) {
     return false;
   }
+
+  return true;
 }
 
 
 void Crawler::start() {
 
 }
+
+class EventLoop: public Thread {
+public:
+
+  virtual bool init() override;
+
+  virtual bool start() override;
+
+  virtual void run() override;
+
+
+  // Future<
+
+private:
+  struct event_base *base_;
+  bool stop_;
+};
+
+bool EventLoop::init() {
+  if (!Thread::init()) {
+    return false;
+  }
+
+  base_ = event_base_new();
+  if (base_ == nullptr) {
+    return false;
+  }
+
+  return true;
+}
+
+bool EventLoop::start() {
+  return Thread::start();
+}
+
+void EventLoop::run() {
+  while (!stop_) {
+    event_base_loop(base_, EVLOOP_ONCE);
+  }
+}
+
+
+}
+

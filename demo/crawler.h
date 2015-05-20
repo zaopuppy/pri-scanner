@@ -10,6 +10,8 @@
 
 #include <event2/event.h>
 
+namespace Z {
+
 class Crawler {
 public:
   Crawler(struct event_base *base, const char *url, int thread_num, int max_task_num);
@@ -25,5 +27,7 @@ private:
   const int max_task_num_;
 
 };
+
+}
 
 #endif //PRI_SCANNER_CRAWLER_H
