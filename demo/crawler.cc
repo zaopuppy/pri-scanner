@@ -140,29 +140,6 @@ bool Crawler::init() {
 
 typedef void (*http_callback_t)(struct evhttp_request *, void *);
 
-// static void http_callback(struct evhttp_request *req, void *ctx)
-static void crawler_callback(struct evhttp_request *req, void *arg)
-{
-  log("http_callback");
-  if (NULL == req) {
-    log("error occurred");
-    return;
-  }
-
-  log("response line: %d",
-      evhttp_request_get_response_code(req));
-  // evhttp_request_get_response_code_line(req));
-
-  char buf[256];
-  for (int rv = evbuffer_remove(evhttp_request_get_input_buffer(req), buf, sizeof(buf)-1);
-       rv > 0; rv = evbuffer_remove(evhttp_request_get_input_buffer(req), buf, sizeof(buf)-1)) {
-    buf[rv] = 0x00;
-    log("data: [%s]", buf);
-  }
-
-  log("http_callback done");
-}
-
 static void http_get(struct event_base *base,
                      struct evdns_base *dns_base,
                      const std::shared_ptr<Uri> uri,
@@ -191,6 +168,27 @@ static void http_get(struct event_base *base,
   // evhttp_connection_free(conn);
 }
 
+static void crawler_callback(struct evhttp_request *req, void *arg)
+{
+  log("http_callback");
+  if (NULL == req) {
+    log("error occurred");
+    return;
+  }
+
+  log("response line: %d", evhttp_request_get_response_code(req));
+  // evhttp_request_get_response_code_line(req));
+
+  char buf[1024];
+  for (int rv = evbuffer_remove(evhttp_request_get_input_buffer(req), buf, sizeof(buf)-1);
+       rv > 0; rv = evbuffer_remove(evhttp_request_get_input_buffer(req), buf, sizeof(buf)-1)) {
+    buf[rv] = 0x00;
+    log("data: [%s]", buf);
+  }
+
+  log("http_callback done");
+}
+
 class Lock {
 public:
   Lock(std::mutex &lock): lock_(lock) { lock_.lock(); }
@@ -201,35 +199,31 @@ private:
 };
 
 void Crawler::start() {
-  std::queue<std::string> url_queue;
-  std::mutex url_queue_lock;
-  url_queue.push(url_);
-  bool stop = false;
-  std::string url;
-  for (;;) {
-    {
-      Lock(url_queue_lock);
-      if (url_queue.empty()) {
-        if (task_running) {
-          wait_for_task();
-          if (url_queue.empty()) {
-            stop = true;
-          }
-        } else {
-          stop = true;
-        }
-      } else {
-        url = std::move(url_queue.front());
-        url_queue.pop();
-      }
-    }
-    http_get(base_, dns_base_, uri_, crawler_callback);
-  }
-
-  while (queue_is_not_empty) {
-    url = get_url_from_queue();
-    fetch(url);
-  }
+  //std::queue<std::string> url_queue;
+  //std::mutex url_queue_lock;
+  //url_queue.push(url_);
+  //bool stop = false;
+  //std::string url;
+  //for (;;) {
+  //  {
+  //    Lock(url_queue_lock);
+  //    if (url_queue.empty()) {
+  //      if (task_running) {
+  //        wait_for_task();
+  //        if (url_queue.empty()) {
+  //          stop = true;
+  //        }
+  //      } else {
+  //        stop = true;
+  //      }
+  //    } else {
+  //      url = std::move(url_queue.front());
+  //      url_queue.pop();
+  //    }
+  //  }
+  //  http_get(base_, dns_base_, uri_, crawler_callback);
+  //}
+  http_get(base_, dns_base_, uri_, crawler_callback);
 }
 
 //class EventLoop: public Thread {
