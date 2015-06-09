@@ -7,7 +7,7 @@
 const int ROUTINE_INTERVAL = 1000;
 
 // push server
-const char * const PUSH_SERVER_IP = "0.0.0.0";
+const char * const PUSH_SERVER_IP = "127.0.0.1";
 const int PUSH_SERVER_PORT = 1984;
 
 // web api server
@@ -23,6 +23,9 @@ const int FGW_CLIENT_SESSION_TIMEOUT = 10*1000;
 
 // ZIGBEE client
 const int ZIGBEE_CLIENT_SESSION_TIMEOUT = 8*1000;
+
+
+const int PUSH_MSG_VERSION = 1;
 
 
 class Config {

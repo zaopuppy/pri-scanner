@@ -36,18 +36,18 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* PushMsg_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PushMsg_reflection_ = NULL;
-const ::google::protobuf::Descriptor* Login_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* PushClientLogin_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  Login_reflection_ = NULL;
-const ::google::protobuf::Descriptor* LoginRsp_descriptor_ = NULL;
+  PushClientLogin_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PushClientLoginRsp_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  LoginRsp_reflection_ = NULL;
-const ::google::protobuf::Descriptor* ClientLogin_descriptor_ = NULL;
+  PushClientLoginRsp_reflection_ = NULL;
+const ::google::protobuf::Descriptor* AdminClientLogin_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  ClientLogin_reflection_ = NULL;
-const ::google::protobuf::Descriptor* ClientLoginRsp_descriptor_ = NULL;
+  AdminClientLogin_reflection_ = NULL;
+const ::google::protobuf::Descriptor* AdminClientLoginRsp_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  ClientLoginRsp_reflection_ = NULL;
+  AdminClientLoginRsp_reflection_ = NULL;
 const ::google::protobuf::Descriptor* Bind_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Bind_reflection_ = NULL;
@@ -162,8 +162,8 @@ void protobuf_AssignDesc_push_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, version_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, sequence_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, login_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, login_rsp_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, push_client_login_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, push_client_login_rsp_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, bind_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, bind_rsp_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, connect_),
@@ -176,8 +176,8 @@ void protobuf_AssignDesc_push_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, get_dev_info_rsp_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, set_dev_info_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, set_dev_info_rsp_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, client_login_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, client_login_rsp_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, admin_client_login_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, admin_client_login_rsp_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, user_register_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, user_register_rsp_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, heartbeat_),
@@ -193,68 +193,68 @@ void protobuf_AssignDesc_push_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PushMsg));
-  Login_descriptor_ = file->message_type(4);
-  static const int Login_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Login, device_id_),
+  PushClientLogin_descriptor_ = file->message_type(4);
+  static const int PushClientLogin_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushClientLogin, device_id_),
   };
-  Login_reflection_ =
+  PushClientLogin_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      Login_descriptor_,
-      Login::default_instance_,
-      Login_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Login, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Login, _unknown_fields_),
+      PushClientLogin_descriptor_,
+      PushClientLogin::default_instance_,
+      PushClientLogin_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushClientLogin, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushClientLogin, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(Login));
-  LoginRsp_descriptor_ = file->message_type(5);
-  static const int LoginRsp_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginRsp, code_),
+      sizeof(PushClientLogin));
+  PushClientLoginRsp_descriptor_ = file->message_type(5);
+  static const int PushClientLoginRsp_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushClientLoginRsp, code_),
   };
-  LoginRsp_reflection_ =
+  PushClientLoginRsp_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      LoginRsp_descriptor_,
-      LoginRsp::default_instance_,
-      LoginRsp_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginRsp, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginRsp, _unknown_fields_),
+      PushClientLoginRsp_descriptor_,
+      PushClientLoginRsp::default_instance_,
+      PushClientLoginRsp_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushClientLoginRsp, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushClientLoginRsp, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(LoginRsp));
-  ClientLogin_descriptor_ = file->message_type(6);
-  static const int ClientLogin_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientLogin, account_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientLogin, password_),
+      sizeof(PushClientLoginRsp));
+  AdminClientLogin_descriptor_ = file->message_type(6);
+  static const int AdminClientLogin_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AdminClientLogin, account_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AdminClientLogin, password_),
   };
-  ClientLogin_reflection_ =
+  AdminClientLogin_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      ClientLogin_descriptor_,
-      ClientLogin::default_instance_,
-      ClientLogin_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientLogin, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientLogin, _unknown_fields_),
+      AdminClientLogin_descriptor_,
+      AdminClientLogin::default_instance_,
+      AdminClientLogin_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AdminClientLogin, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AdminClientLogin, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(ClientLogin));
-  ClientLoginRsp_descriptor_ = file->message_type(7);
-  static const int ClientLoginRsp_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientLoginRsp, code_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientLoginRsp, fgw_infos_),
+      sizeof(AdminClientLogin));
+  AdminClientLoginRsp_descriptor_ = file->message_type(7);
+  static const int AdminClientLoginRsp_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AdminClientLoginRsp, code_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AdminClientLoginRsp, fgw_infos_),
   };
-  ClientLoginRsp_reflection_ =
+  AdminClientLoginRsp_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      ClientLoginRsp_descriptor_,
-      ClientLoginRsp::default_instance_,
-      ClientLoginRsp_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientLoginRsp, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientLoginRsp, _unknown_fields_),
+      AdminClientLoginRsp_descriptor_,
+      AdminClientLoginRsp::default_instance_,
+      AdminClientLoginRsp_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AdminClientLoginRsp, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AdminClientLoginRsp, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(ClientLoginRsp));
+      sizeof(AdminClientLoginRsp));
   Bind_descriptor_ = file->message_type(8);
   static const int Bind_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Bind, device_id_),
@@ -377,7 +377,8 @@ void protobuf_AssignDesc_push_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GetDevListRsp));
   GetDevInfo_descriptor_ = file->message_type(16);
-  static const int GetDevInfo_offsets_[2] = {
+  static const int GetDevInfo_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetDevInfo, device_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetDevInfo, addr_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetDevInfo, item_ids_),
   };
@@ -409,7 +410,8 @@ void protobuf_AssignDesc_push_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GetDevInfoRsp));
   SetDevInfo_descriptor_ = file->message_type(18);
-  static const int SetDevInfo_offsets_[2] = {
+  static const int SetDevInfo_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SetDevInfo, device_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SetDevInfo, addr_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SetDevInfo, id_value_pairs_),
   };
@@ -522,13 +524,13 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     PushMsg_descriptor_, &PushMsg::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    Login_descriptor_, &Login::default_instance());
+    PushClientLogin_descriptor_, &PushClientLogin::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    LoginRsp_descriptor_, &LoginRsp::default_instance());
+    PushClientLoginRsp_descriptor_, &PushClientLoginRsp::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    ClientLogin_descriptor_, &ClientLogin::default_instance());
+    AdminClientLogin_descriptor_, &AdminClientLogin::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    ClientLoginRsp_descriptor_, &ClientLoginRsp::default_instance());
+    AdminClientLoginRsp_descriptor_, &AdminClientLoginRsp::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Bind_descriptor_, &Bind::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -574,14 +576,14 @@ void protobuf_ShutdownFile_push_2eproto() {
   delete DeviceInfo_reflection_;
   delete PushMsg::default_instance_;
   delete PushMsg_reflection_;
-  delete Login::default_instance_;
-  delete Login_reflection_;
-  delete LoginRsp::default_instance_;
-  delete LoginRsp_reflection_;
-  delete ClientLogin::default_instance_;
-  delete ClientLogin_reflection_;
-  delete ClientLoginRsp::default_instance_;
-  delete ClientLoginRsp_reflection_;
+  delete PushClientLogin::default_instance_;
+  delete PushClientLogin_reflection_;
+  delete PushClientLoginRsp::default_instance_;
+  delete PushClientLoginRsp_reflection_;
+  delete AdminClientLogin::default_instance_;
+  delete AdminClientLogin_reflection_;
+  delete AdminClientLoginRsp::default_instance_;
+  delete AdminClientLoginRsp_reflection_;
   delete Bind::default_instance_;
   delete Bind_reflection_;
   delete BindRsp::default_instance_;
@@ -628,86 +630,90 @@ void protobuf_AddDesc_push_2eproto() {
     "lue\030\002 \002(\005\"6\n\014FGatewayInfo\022\n\n\002id\030\001 \002(\t\022\014\n"
     "\004name\030\002 \002(\t\022\014\n\004desc\030\003 \002(\t\"6\n\nDeviceInfo\022"
     "\014\n\004addr\030\001 \002(\005\022\014\n\004type\030\002 \002(\005\022\014\n\004name\030\003 \002("
-    "\t\"\204\013\n\007PushMsg\022\017\n\007version\030\001 \002(\005\0228\n\004type\030\002"
+    "\t\"\306\013\n\007PushMsg\022\017\n\007version\030\001 \002(\005\0228\n\004type\030\002"
     " \002(\0162*.com.letsmidi.monsys.protocol.push"
-    ".MsgType\022\020\n\010sequence\030\003 \002(\005\0227\n\005login\030\n \001("
-    "\0132(.com.letsmidi.monsys.protocol.push.Lo"
-    "gin\022>\n\tlogin_rsp\030\013 \001(\0132+.com.letsmidi.mo"
-    "nsys.protocol.push.LoginRsp\0225\n\004bind\030\014 \001("
-    "\0132\'.com.letsmidi.monsys.protocol.push.Bi"
-    "nd\022<\n\010bind_rsp\030\r \001(\0132*.com.letsmidi.mons"
-    "ys.protocol.push.BindRsp\022;\n\007connect\030\016 \001("
-    "\0132*.com.letsmidi.monsys.protocol.push.Co"
-    "nnect\022B\n\013connect_rsp\030\017 \001(\0132-.com.letsmid"
-    "i.monsys.protocol.push.ConnectRsp\022C\n\014get"
-    "_fgw_list\030\020 \001(\0132-.com.letsmidi.monsys.pr"
-    "otocol.push.GetFgwList\022J\n\020get_fgw_list_r"
-    "sp\030\021 \001(\01320.com.letsmidi.monsys.protocol."
-    "push.GetFgwListRsp\022C\n\014get_dev_list\030\022 \001(\013"
-    "2-.com.letsmidi.monsys.protocol.push.Get"
-    "DevList\022J\n\020get_dev_list_rsp\030\023 \001(\01320.com."
-    "letsmidi.monsys.protocol.push.GetDevList"
-    "Rsp\022C\n\014get_dev_info\030\024 \001(\0132-.com.letsmidi"
-    ".monsys.protocol.push.GetDevInfo\022J\n\020get_"
-    "dev_info_rsp\030\025 \001(\01320.com.letsmidi.monsys"
-    ".protocol.push.GetDevInfoRsp\022C\n\014set_dev_"
-    "info\030\026 \001(\0132-.com.letsmidi.monsys.protoco"
-    "l.push.SetDevInfo\022J\n\020set_dev_info_rsp\030\027 "
-    "\001(\01320.com.letsmidi.monsys.protocol.push."
-    "SetDevInfoRsp\022D\n\014client_login\030\030 \001(\0132..co"
-    "m.letsmidi.monsys.protocol.push.ClientLo"
-    "gin\022K\n\020client_login_rsp\030\031 \001(\01321.com.lets"
-    "midi.monsys.protocol.push.ClientLoginRsp"
-    "\022F\n\ruser_register\030\032 \001(\0132/.com.letsmidi.m"
-    "onsys.protocol.push.UserRegister\022M\n\021user"
-    "_register_rsp\030\033 \001(\01322.com.letsmidi.monsy"
-    "s.protocol.push.UserRegisterRsp\022\?\n\theart"
-    "beat\030\034 \001(\0132,.com.letsmidi.monsys.protoco"
-    "l.push.Heartbeat\"\032\n\005Login\022\021\n\tdevice_id\030\001"
-    " \002(\t\"\030\n\010LoginRsp\022\014\n\004code\030\001 \002(\005\"0\n\013Client"
-    "Login\022\017\n\007account\030\001 \002(\t\022\020\n\010password\030\002 \002(\t"
-    "\"b\n\016ClientLoginRsp\022\014\n\004code\030\001 \002(\005\022B\n\tfgw_"
-    "infos\030\002 \003(\0132/.com.letsmidi.monsys.protoc"
-    "ol.push.FGatewayInfo\"\031\n\004Bind\022\021\n\tdevice_i"
-    "d\030\001 \002(\t\"\027\n\007BindRsp\022\014\n\004code\030\001 \002(\005\"\034\n\007Conn"
-    "ect\022\021\n\tdevice_id\030\001 \002(\t\"\032\n\nConnectRsp\022\014\n\004"
-    "code\030\001 \002(\005\"\014\n\nGetFgwList\"a\n\rGetFgwListRs"
-    "p\022\014\n\004code\030\001 \002(\005\022B\n\tfgw_infos\030\002 \003(\0132/.com"
-    ".letsmidi.monsys.protocol.push.FGatewayI"
-    "nfo\"\037\n\nGetDevList\022\021\n\tdevice_id\030\001 \002(\t\"_\n\r"
-    "GetDevListRsp\022\014\n\004code\030\001 \002(\005\022@\n\tdev_infos"
-    "\030\002 \003(\0132-.com.letsmidi.monsys.protocol.pu"
-    "sh.DeviceInfo\"0\n\nGetDevInfo\022\014\n\004addr\030\001 \002("
-    "\005\022\024\n\010item_ids\030\002 \003(\005B\002\020\001\"e\n\rGetDevInfoRsp"
-    "\022\014\n\004code\030\001 \002(\005\022F\n\016id_value_pairs\030\002 \003(\0132."
-    ".com.letsmidi.monsys.protocol.push.IdVal"
-    "uePair\"b\n\nSetDevInfo\022\014\n\004addr\030\001 \002(\005\022F\n\016id"
-    "_value_pairs\030\002 \003(\0132..com.letsmidi.monsys"
-    ".protocol.push.IdValuePair\"\035\n\rSetDevInfo"
-    "Rsp\022\014\n\004code\030\001 \002(\005\"C\n\014UserRegister\022\020\n\010nic"
-    "kname\030\001 \002(\t\022\017\n\007account\030\002 \002(\t\022\020\n\010password"
-    "\030\003 \002(\t\"\037\n\017UserRegisterRsp\022\014\n\004code\030\001 \002(\005\""
-    "\013\n\tHeartbeat\"\030\n\010Response\022\014\n\004code\030\001 \002(\005*\350"
-    "\002\n\007MsgType\022\t\n\005LOGIN\020\001\022\r\n\tLOGIN_RSP\020e\022\010\n\004"
-    "BIND\020\002\022\014\n\010BIND_RSP\020f\022\013\n\007CONNECT\020\003\022\017\n\013CON"
-    "NECT_RSP\020g\022\020\n\014GET_FGW_LIST\020\004\022\024\n\020GET_FGW_"
-    "LIST_RSP\020h\022\020\n\014GET_DEV_LIST\020\005\022\024\n\020GET_DEV_"
-    "LIST_RSP\020i\022\020\n\014GET_DEV_INFO\020\006\022\024\n\020GET_DEV_"
-    "INFO_RSP\020j\022\020\n\014SET_DEV_INFO\020\007\022\024\n\020SET_DEV_"
-    "INFO_RSP\020k\022\020\n\014CLIENT_LOGIN\020\010\022\024\n\020CLIENT_L"
-    "OGIN_RSP\020l\022\021\n\rUSER_REGISTER\020\t\022\025\n\021USER_RE"
-    "GISTER_RSP\020m\022\r\n\tHEARTBEAT\020\n\022\014\n\010RESPONSE\020"
-    "c", 2961);
+    ".MsgType\022\020\n\010sequence\030\003 \002(\005\022M\n\021push_clien"
+    "t_login\030\n \001(\01322.com.letsmidi.monsys.prot"
+    "ocol.push.PushClientLogin\022T\n\025push_client"
+    "_login_rsp\030\013 \001(\01325.com.letsmidi.monsys.p"
+    "rotocol.push.PushClientLoginRsp\0225\n\004bind\030"
+    "\014 \001(\0132\'.com.letsmidi.monsys.protocol.pus"
+    "h.Bind\022<\n\010bind_rsp\030\r \001(\0132*.com.letsmidi."
+    "monsys.protocol.push.BindRsp\022;\n\007connect\030"
+    "\016 \001(\0132*.com.letsmidi.monsys.protocol.pus"
+    "h.Connect\022B\n\013connect_rsp\030\017 \001(\0132-.com.let"
+    "smidi.monsys.protocol.push.ConnectRsp\022C\n"
+    "\014get_fgw_list\030\020 \001(\0132-.com.letsmidi.monsy"
+    "s.protocol.push.GetFgwList\022J\n\020get_fgw_li"
+    "st_rsp\030\021 \001(\01320.com.letsmidi.monsys.proto"
+    "col.push.GetFgwListRsp\022C\n\014get_dev_list\030\022"
+    " \001(\0132-.com.letsmidi.monsys.protocol.push"
+    ".GetDevList\022J\n\020get_dev_list_rsp\030\023 \001(\01320."
+    "com.letsmidi.monsys.protocol.push.GetDev"
+    "ListRsp\022C\n\014get_dev_info\030\024 \001(\0132-.com.lets"
+    "midi.monsys.protocol.push.GetDevInfo\022J\n\020"
+    "get_dev_info_rsp\030\025 \001(\01320.com.letsmidi.mo"
+    "nsys.protocol.push.GetDevInfoRsp\022C\n\014set_"
+    "dev_info\030\026 \001(\0132-.com.letsmidi.monsys.pro"
+    "tocol.push.SetDevInfo\022J\n\020set_dev_info_rs"
+    "p\030\027 \001(\01320.com.letsmidi.monsys.protocol.p"
+    "ush.SetDevInfoRsp\022O\n\022admin_client_login\030"
+    "\030 \001(\01323.com.letsmidi.monsys.protocol.pus"
+    "h.AdminClientLogin\022V\n\026admin_client_login"
+    "_rsp\030\031 \001(\01326.com.letsmidi.monsys.protoco"
+    "l.push.AdminClientLoginRsp\022F\n\ruser_regis"
+    "ter\030\032 \001(\0132/.com.letsmidi.monsys.protocol"
+    ".push.UserRegister\022M\n\021user_register_rsp\030"
+    "\033 \001(\01322.com.letsmidi.monsys.protocol.pus"
+    "h.UserRegisterRsp\022\?\n\theartbeat\030\034 \001(\0132,.c"
+    "om.letsmidi.monsys.protocol.push.Heartbe"
+    "at\"$\n\017PushClientLogin\022\021\n\tdevice_id\030\001 \002(\t"
+    "\"\"\n\022PushClientLoginRsp\022\014\n\004code\030\001 \002(\005\"5\n\020"
+    "AdminClientLogin\022\017\n\007account\030\001 \002(\t\022\020\n\010pas"
+    "sword\030\002 \002(\t\"g\n\023AdminClientLoginRsp\022\014\n\004co"
+    "de\030\001 \002(\005\022B\n\tfgw_infos\030\002 \003(\0132/.com.letsmi"
+    "di.monsys.protocol.push.FGatewayInfo\"\031\n\004"
+    "Bind\022\021\n\tdevice_id\030\001 \002(\t\"\027\n\007BindRsp\022\014\n\004co"
+    "de\030\001 \002(\005\"\034\n\007Connect\022\021\n\tdevice_id\030\001 \002(\t\"\032"
+    "\n\nConnectRsp\022\014\n\004code\030\001 \002(\005\"\014\n\nGetFgwList"
+    "\"a\n\rGetFgwListRsp\022\014\n\004code\030\001 \002(\005\022B\n\tfgw_i"
+    "nfos\030\002 \003(\0132/.com.letsmidi.monsys.protoco"
+    "l.push.FGatewayInfo\"\037\n\nGetDevList\022\021\n\tdev"
+    "ice_id\030\001 \002(\t\"_\n\rGetDevListRsp\022\014\n\004code\030\001 "
+    "\002(\005\022@\n\tdev_infos\030\002 \003(\0132-.com.letsmidi.mo"
+    "nsys.protocol.push.DeviceInfo\"C\n\nGetDevI"
+    "nfo\022\021\n\tdevice_id\030\001 \002(\t\022\014\n\004addr\030\002 \002(\005\022\024\n\010"
+    "item_ids\030\003 \003(\005B\002\020\001\"e\n\rGetDevInfoRsp\022\014\n\004c"
+    "ode\030\001 \002(\005\022F\n\016id_value_pairs\030\002 \003(\0132..com."
+    "letsmidi.monsys.protocol.push.IdValuePai"
+    "r\"u\n\nSetDevInfo\022\021\n\tdevice_id\030\001 \002(\t\022\014\n\004ad"
+    "dr\030\002 \002(\005\022F\n\016id_value_pairs\030\003 \003(\0132..com.l"
+    "etsmidi.monsys.protocol.push.IdValuePair"
+    "\"\035\n\rSetDevInfoRsp\022\014\n\004code\030\001 \002(\005\"C\n\014UserR"
+    "egister\022\020\n\010nickname\030\001 \002(\t\022\017\n\007account\030\002 \002"
+    "(\t\022\020\n\010password\030\003 \002(\t\"\037\n\017UserRegisterRsp\022"
+    "\014\n\004code\030\001 \002(\005\"\013\n\tHeartbeat\"\030\n\010Response\022\014"
+    "\n\004code\030\001 \002(\005*\214\003\n\007MsgType\022\025\n\021PUSH_CLIENT_"
+    "LOGIN\020\001\022\031\n\025PUSH_CLIENT_LOGIN_RSP\020e\022\010\n\004BI"
+    "ND\020\002\022\014\n\010BIND_RSP\020f\022\013\n\007CONNECT\020\003\022\017\n\013CONNE"
+    "CT_RSP\020g\022\020\n\014GET_FGW_LIST\020\004\022\024\n\020GET_FGW_LI"
+    "ST_RSP\020h\022\020\n\014GET_DEV_LIST\020\005\022\024\n\020GET_DEV_LI"
+    "ST_RSP\020i\022\020\n\014GET_DEV_INFO\020\006\022\024\n\020GET_DEV_IN"
+    "FO_RSP\020j\022\020\n\014SET_DEV_INFO\020\007\022\024\n\020SET_DEV_IN"
+    "FO_RSP\020k\022\026\n\022ADMIN_CLIENT_LOGIN\020\010\022\032\n\026ADMI"
+    "N_CLIENT_LOGIN_RSP\020l\022\021\n\rUSER_REGISTER\020\t\022"
+    "\025\n\021USER_REGISTER_RSP\020m\022\r\n\tHEARTBEAT\020\n\022\014\n"
+    "\010RESPONSE\020c", 3131);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "push.proto", &protobuf_RegisterTypes);
   IdValuePair::default_instance_ = new IdValuePair();
   FGatewayInfo::default_instance_ = new FGatewayInfo();
   DeviceInfo::default_instance_ = new DeviceInfo();
   PushMsg::default_instance_ = new PushMsg();
-  Login::default_instance_ = new Login();
-  LoginRsp::default_instance_ = new LoginRsp();
-  ClientLogin::default_instance_ = new ClientLogin();
-  ClientLoginRsp::default_instance_ = new ClientLoginRsp();
+  PushClientLogin::default_instance_ = new PushClientLogin();
+  PushClientLoginRsp::default_instance_ = new PushClientLoginRsp();
+  AdminClientLogin::default_instance_ = new AdminClientLogin();
+  AdminClientLoginRsp::default_instance_ = new AdminClientLoginRsp();
   Bind::default_instance_ = new Bind();
   BindRsp::default_instance_ = new BindRsp();
   Connect::default_instance_ = new Connect();
@@ -728,10 +734,10 @@ void protobuf_AddDesc_push_2eproto() {
   FGatewayInfo::default_instance_->InitAsDefaultInstance();
   DeviceInfo::default_instance_->InitAsDefaultInstance();
   PushMsg::default_instance_->InitAsDefaultInstance();
-  Login::default_instance_->InitAsDefaultInstance();
-  LoginRsp::default_instance_->InitAsDefaultInstance();
-  ClientLogin::default_instance_->InitAsDefaultInstance();
-  ClientLoginRsp::default_instance_->InitAsDefaultInstance();
+  PushClientLogin::default_instance_->InitAsDefaultInstance();
+  PushClientLoginRsp::default_instance_->InitAsDefaultInstance();
+  AdminClientLogin::default_instance_->InitAsDefaultInstance();
+  AdminClientLoginRsp::default_instance_->InitAsDefaultInstance();
   Bind::default_instance_->InitAsDefaultInstance();
   BindRsp::default_instance_->InitAsDefaultInstance();
   Connect::default_instance_->InitAsDefaultInstance();
@@ -1772,8 +1778,8 @@ void DeviceInfo::Swap(DeviceInfo* other) {
 const int PushMsg::kVersionFieldNumber;
 const int PushMsg::kTypeFieldNumber;
 const int PushMsg::kSequenceFieldNumber;
-const int PushMsg::kLoginFieldNumber;
-const int PushMsg::kLoginRspFieldNumber;
+const int PushMsg::kPushClientLoginFieldNumber;
+const int PushMsg::kPushClientLoginRspFieldNumber;
 const int PushMsg::kBindFieldNumber;
 const int PushMsg::kBindRspFieldNumber;
 const int PushMsg::kConnectFieldNumber;
@@ -1786,8 +1792,8 @@ const int PushMsg::kGetDevInfoFieldNumber;
 const int PushMsg::kGetDevInfoRspFieldNumber;
 const int PushMsg::kSetDevInfoFieldNumber;
 const int PushMsg::kSetDevInfoRspFieldNumber;
-const int PushMsg::kClientLoginFieldNumber;
-const int PushMsg::kClientLoginRspFieldNumber;
+const int PushMsg::kAdminClientLoginFieldNumber;
+const int PushMsg::kAdminClientLoginRspFieldNumber;
 const int PushMsg::kUserRegisterFieldNumber;
 const int PushMsg::kUserRegisterRspFieldNumber;
 const int PushMsg::kHeartbeatFieldNumber;
@@ -1800,8 +1806,8 @@ PushMsg::PushMsg()
 }
 
 void PushMsg::InitAsDefaultInstance() {
-  login_ = const_cast< ::com::letsmidi::monsys::protocol::push::Login*>(&::com::letsmidi::monsys::protocol::push::Login::default_instance());
-  login_rsp_ = const_cast< ::com::letsmidi::monsys::protocol::push::LoginRsp*>(&::com::letsmidi::monsys::protocol::push::LoginRsp::default_instance());
+  push_client_login_ = const_cast< ::com::letsmidi::monsys::protocol::push::PushClientLogin*>(&::com::letsmidi::monsys::protocol::push::PushClientLogin::default_instance());
+  push_client_login_rsp_ = const_cast< ::com::letsmidi::monsys::protocol::push::PushClientLoginRsp*>(&::com::letsmidi::monsys::protocol::push::PushClientLoginRsp::default_instance());
   bind_ = const_cast< ::com::letsmidi::monsys::protocol::push::Bind*>(&::com::letsmidi::monsys::protocol::push::Bind::default_instance());
   bind_rsp_ = const_cast< ::com::letsmidi::monsys::protocol::push::BindRsp*>(&::com::letsmidi::monsys::protocol::push::BindRsp::default_instance());
   connect_ = const_cast< ::com::letsmidi::monsys::protocol::push::Connect*>(&::com::letsmidi::monsys::protocol::push::Connect::default_instance());
@@ -1814,8 +1820,8 @@ void PushMsg::InitAsDefaultInstance() {
   get_dev_info_rsp_ = const_cast< ::com::letsmidi::monsys::protocol::push::GetDevInfoRsp*>(&::com::letsmidi::monsys::protocol::push::GetDevInfoRsp::default_instance());
   set_dev_info_ = const_cast< ::com::letsmidi::monsys::protocol::push::SetDevInfo*>(&::com::letsmidi::monsys::protocol::push::SetDevInfo::default_instance());
   set_dev_info_rsp_ = const_cast< ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp*>(&::com::letsmidi::monsys::protocol::push::SetDevInfoRsp::default_instance());
-  client_login_ = const_cast< ::com::letsmidi::monsys::protocol::push::ClientLogin*>(&::com::letsmidi::monsys::protocol::push::ClientLogin::default_instance());
-  client_login_rsp_ = const_cast< ::com::letsmidi::monsys::protocol::push::ClientLoginRsp*>(&::com::letsmidi::monsys::protocol::push::ClientLoginRsp::default_instance());
+  admin_client_login_ = const_cast< ::com::letsmidi::monsys::protocol::push::AdminClientLogin*>(&::com::letsmidi::monsys::protocol::push::AdminClientLogin::default_instance());
+  admin_client_login_rsp_ = const_cast< ::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp*>(&::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp::default_instance());
   user_register_ = const_cast< ::com::letsmidi::monsys::protocol::push::UserRegister*>(&::com::letsmidi::monsys::protocol::push::UserRegister::default_instance());
   user_register_rsp_ = const_cast< ::com::letsmidi::monsys::protocol::push::UserRegisterRsp*>(&::com::letsmidi::monsys::protocol::push::UserRegisterRsp::default_instance());
   heartbeat_ = const_cast< ::com::letsmidi::monsys::protocol::push::Heartbeat*>(&::com::letsmidi::monsys::protocol::push::Heartbeat::default_instance());
@@ -1833,8 +1839,8 @@ void PushMsg::SharedCtor() {
   version_ = 0;
   type_ = 1;
   sequence_ = 0;
-  login_ = NULL;
-  login_rsp_ = NULL;
+  push_client_login_ = NULL;
+  push_client_login_rsp_ = NULL;
   bind_ = NULL;
   bind_rsp_ = NULL;
   connect_ = NULL;
@@ -1847,8 +1853,8 @@ void PushMsg::SharedCtor() {
   get_dev_info_rsp_ = NULL;
   set_dev_info_ = NULL;
   set_dev_info_rsp_ = NULL;
-  client_login_ = NULL;
-  client_login_rsp_ = NULL;
+  admin_client_login_ = NULL;
+  admin_client_login_rsp_ = NULL;
   user_register_ = NULL;
   user_register_rsp_ = NULL;
   heartbeat_ = NULL;
@@ -1862,8 +1868,8 @@ PushMsg::~PushMsg() {
 
 void PushMsg::SharedDtor() {
   if (this != default_instance_) {
-    delete login_;
-    delete login_rsp_;
+    delete push_client_login_;
+    delete push_client_login_rsp_;
     delete bind_;
     delete bind_rsp_;
     delete connect_;
@@ -1876,8 +1882,8 @@ void PushMsg::SharedDtor() {
     delete get_dev_info_rsp_;
     delete set_dev_info_;
     delete set_dev_info_rsp_;
-    delete client_login_;
-    delete client_login_rsp_;
+    delete admin_client_login_;
+    delete admin_client_login_rsp_;
     delete user_register_;
     delete user_register_rsp_;
     delete heartbeat_;
@@ -1910,11 +1916,11 @@ void PushMsg::Clear() {
     version_ = 0;
     type_ = 1;
     sequence_ = 0;
-    if (has_login()) {
-      if (login_ != NULL) login_->::com::letsmidi::monsys::protocol::push::Login::Clear();
+    if (has_push_client_login()) {
+      if (push_client_login_ != NULL) push_client_login_->::com::letsmidi::monsys::protocol::push::PushClientLogin::Clear();
     }
-    if (has_login_rsp()) {
-      if (login_rsp_ != NULL) login_rsp_->::com::letsmidi::monsys::protocol::push::LoginRsp::Clear();
+    if (has_push_client_login_rsp()) {
+      if (push_client_login_rsp_ != NULL) push_client_login_rsp_->::com::letsmidi::monsys::protocol::push::PushClientLoginRsp::Clear();
     }
     if (has_bind()) {
       if (bind_ != NULL) bind_->::com::letsmidi::monsys::protocol::push::Bind::Clear();
@@ -1956,11 +1962,11 @@ void PushMsg::Clear() {
     if (has_set_dev_info_rsp()) {
       if (set_dev_info_rsp_ != NULL) set_dev_info_rsp_->::com::letsmidi::monsys::protocol::push::SetDevInfoRsp::Clear();
     }
-    if (has_client_login()) {
-      if (client_login_ != NULL) client_login_->::com::letsmidi::monsys::protocol::push::ClientLogin::Clear();
+    if (has_admin_client_login()) {
+      if (admin_client_login_ != NULL) admin_client_login_->::com::letsmidi::monsys::protocol::push::AdminClientLogin::Clear();
     }
-    if (has_client_login_rsp()) {
-      if (client_login_rsp_ != NULL) client_login_rsp_->::com::letsmidi::monsys::protocol::push::ClientLoginRsp::Clear();
+    if (has_admin_client_login_rsp()) {
+      if (admin_client_login_rsp_ != NULL) admin_client_login_rsp_->::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp::Clear();
     }
     if (has_user_register()) {
       if (user_register_ != NULL) user_register_->::com::letsmidi::monsys::protocol::push::UserRegister::Clear();
@@ -2031,29 +2037,29 @@ bool PushMsg::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(82)) goto parse_login;
+        if (input->ExpectTag(82)) goto parse_push_client_login;
         break;
       }
 
-      // optional .com.letsmidi.monsys.protocol.push.Login login = 10;
+      // optional .com.letsmidi.monsys.protocol.push.PushClientLogin push_client_login = 10;
       case 10: {
         if (tag == 82) {
-         parse_login:
+         parse_push_client_login:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_login()));
+               input, mutable_push_client_login()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(90)) goto parse_login_rsp;
+        if (input->ExpectTag(90)) goto parse_push_client_login_rsp;
         break;
       }
 
-      // optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;
+      // optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp push_client_login_rsp = 11;
       case 11: {
         if (tag == 90) {
-         parse_login_rsp:
+         parse_push_client_login_rsp:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_login_rsp()));
+               input, mutable_push_client_login_rsp()));
         } else {
           goto handle_unusual;
         }
@@ -2213,29 +2219,29 @@ bool PushMsg::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(194)) goto parse_client_login;
+        if (input->ExpectTag(194)) goto parse_admin_client_login;
         break;
       }
 
-      // optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;
+      // optional .com.letsmidi.monsys.protocol.push.AdminClientLogin admin_client_login = 24;
       case 24: {
         if (tag == 194) {
-         parse_client_login:
+         parse_admin_client_login:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_client_login()));
+               input, mutable_admin_client_login()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(202)) goto parse_client_login_rsp;
+        if (input->ExpectTag(202)) goto parse_admin_client_login_rsp;
         break;
       }
 
-      // optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;
+      // optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp admin_client_login_rsp = 25;
       case 25: {
         if (tag == 202) {
-         parse_client_login_rsp:
+         parse_admin_client_login_rsp:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_client_login_rsp()));
+               input, mutable_admin_client_login_rsp()));
         } else {
           goto handle_unusual;
         }
@@ -2323,16 +2329,16 @@ void PushMsg::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->sequence(), output);
   }
 
-  // optional .com.letsmidi.monsys.protocol.push.Login login = 10;
-  if (has_login()) {
+  // optional .com.letsmidi.monsys.protocol.push.PushClientLogin push_client_login = 10;
+  if (has_push_client_login()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      10, this->login(), output);
+      10, this->push_client_login(), output);
   }
 
-  // optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;
-  if (has_login_rsp()) {
+  // optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp push_client_login_rsp = 11;
+  if (has_push_client_login_rsp()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      11, this->login_rsp(), output);
+      11, this->push_client_login_rsp(), output);
   }
 
   // optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;
@@ -2407,16 +2413,16 @@ void PushMsg::SerializeWithCachedSizes(
       23, this->set_dev_info_rsp(), output);
   }
 
-  // optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;
-  if (has_client_login()) {
+  // optional .com.letsmidi.monsys.protocol.push.AdminClientLogin admin_client_login = 24;
+  if (has_admin_client_login()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      24, this->client_login(), output);
+      24, this->admin_client_login(), output);
   }
 
-  // optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;
-  if (has_client_login_rsp()) {
+  // optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp admin_client_login_rsp = 25;
+  if (has_admin_client_login_rsp()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      25, this->client_login_rsp(), output);
+      25, this->admin_client_login_rsp(), output);
   }
 
   // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
@@ -2463,18 +2469,18 @@ void PushMsg::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->sequence(), target);
   }
 
-  // optional .com.letsmidi.monsys.protocol.push.Login login = 10;
-  if (has_login()) {
+  // optional .com.letsmidi.monsys.protocol.push.PushClientLogin push_client_login = 10;
+  if (has_push_client_login()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        10, this->login(), target);
+        10, this->push_client_login(), target);
   }
 
-  // optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;
-  if (has_login_rsp()) {
+  // optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp push_client_login_rsp = 11;
+  if (has_push_client_login_rsp()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        11, this->login_rsp(), target);
+        11, this->push_client_login_rsp(), target);
   }
 
   // optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;
@@ -2561,18 +2567,18 @@ void PushMsg::SerializeWithCachedSizes(
         23, this->set_dev_info_rsp(), target);
   }
 
-  // optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;
-  if (has_client_login()) {
+  // optional .com.letsmidi.monsys.protocol.push.AdminClientLogin admin_client_login = 24;
+  if (has_admin_client_login()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        24, this->client_login(), target);
+        24, this->admin_client_login(), target);
   }
 
-  // optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;
-  if (has_client_login_rsp()) {
+  // optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp admin_client_login_rsp = 25;
+  if (has_admin_client_login_rsp()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        25, this->client_login_rsp(), target);
+        25, this->admin_client_login_rsp(), target);
   }
 
   // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
@@ -2628,18 +2634,18 @@ int PushMsg::ByteSize() const {
           this->sequence());
     }
 
-    // optional .com.letsmidi.monsys.protocol.push.Login login = 10;
-    if (has_login()) {
+    // optional .com.letsmidi.monsys.protocol.push.PushClientLogin push_client_login = 10;
+    if (has_push_client_login()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->login());
+          this->push_client_login());
     }
 
-    // optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;
-    if (has_login_rsp()) {
+    // optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp push_client_login_rsp = 11;
+    if (has_push_client_login_rsp()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->login_rsp());
+          this->push_client_login_rsp());
     }
 
     // optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;
@@ -2730,18 +2736,18 @@ int PushMsg::ByteSize() const {
           this->set_dev_info_rsp());
     }
 
-    // optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;
-    if (has_client_login()) {
+    // optional .com.letsmidi.monsys.protocol.push.AdminClientLogin admin_client_login = 24;
+    if (has_admin_client_login()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->client_login());
+          this->admin_client_login());
     }
 
-    // optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;
-    if (has_client_login_rsp()) {
+    // optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp admin_client_login_rsp = 25;
+    if (has_admin_client_login_rsp()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->client_login_rsp());
+          this->admin_client_login_rsp());
     }
 
     // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
@@ -2801,11 +2807,11 @@ void PushMsg::MergeFrom(const PushMsg& from) {
     if (from.has_sequence()) {
       set_sequence(from.sequence());
     }
-    if (from.has_login()) {
-      mutable_login()->::com::letsmidi::monsys::protocol::push::Login::MergeFrom(from.login());
+    if (from.has_push_client_login()) {
+      mutable_push_client_login()->::com::letsmidi::monsys::protocol::push::PushClientLogin::MergeFrom(from.push_client_login());
     }
-    if (from.has_login_rsp()) {
-      mutable_login_rsp()->::com::letsmidi::monsys::protocol::push::LoginRsp::MergeFrom(from.login_rsp());
+    if (from.has_push_client_login_rsp()) {
+      mutable_push_client_login_rsp()->::com::letsmidi::monsys::protocol::push::PushClientLoginRsp::MergeFrom(from.push_client_login_rsp());
     }
     if (from.has_bind()) {
       mutable_bind()->::com::letsmidi::monsys::protocol::push::Bind::MergeFrom(from.bind());
@@ -2847,11 +2853,11 @@ void PushMsg::MergeFrom(const PushMsg& from) {
     if (from.has_set_dev_info_rsp()) {
       mutable_set_dev_info_rsp()->::com::letsmidi::monsys::protocol::push::SetDevInfoRsp::MergeFrom(from.set_dev_info_rsp());
     }
-    if (from.has_client_login()) {
-      mutable_client_login()->::com::letsmidi::monsys::protocol::push::ClientLogin::MergeFrom(from.client_login());
+    if (from.has_admin_client_login()) {
+      mutable_admin_client_login()->::com::letsmidi::monsys::protocol::push::AdminClientLogin::MergeFrom(from.admin_client_login());
     }
-    if (from.has_client_login_rsp()) {
-      mutable_client_login_rsp()->::com::letsmidi::monsys::protocol::push::ClientLoginRsp::MergeFrom(from.client_login_rsp());
+    if (from.has_admin_client_login_rsp()) {
+      mutable_admin_client_login_rsp()->::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp::MergeFrom(from.admin_client_login_rsp());
     }
     if (from.has_user_register()) {
       mutable_user_register()->::com::letsmidi::monsys::protocol::push::UserRegister::MergeFrom(from.user_register());
@@ -2881,11 +2887,11 @@ void PushMsg::CopyFrom(const PushMsg& from) {
 bool PushMsg::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
-  if (has_login()) {
-    if (!this->login().IsInitialized()) return false;
+  if (has_push_client_login()) {
+    if (!this->push_client_login().IsInitialized()) return false;
   }
-  if (has_login_rsp()) {
-    if (!this->login_rsp().IsInitialized()) return false;
+  if (has_push_client_login_rsp()) {
+    if (!this->push_client_login_rsp().IsInitialized()) return false;
   }
   if (has_bind()) {
     if (!this->bind().IsInitialized()) return false;
@@ -2920,11 +2926,11 @@ bool PushMsg::IsInitialized() const {
   if (has_set_dev_info_rsp()) {
     if (!this->set_dev_info_rsp().IsInitialized()) return false;
   }
-  if (has_client_login()) {
-    if (!this->client_login().IsInitialized()) return false;
+  if (has_admin_client_login()) {
+    if (!this->admin_client_login().IsInitialized()) return false;
   }
-  if (has_client_login_rsp()) {
-    if (!this->client_login_rsp().IsInitialized()) return false;
+  if (has_admin_client_login_rsp()) {
+    if (!this->admin_client_login_rsp().IsInitialized()) return false;
   }
   if (has_user_register()) {
     if (!this->user_register().IsInitialized()) return false;
@@ -2940,8 +2946,8 @@ void PushMsg::Swap(PushMsg* other) {
     std::swap(version_, other->version_);
     std::swap(type_, other->type_);
     std::swap(sequence_, other->sequence_);
-    std::swap(login_, other->login_);
-    std::swap(login_rsp_, other->login_rsp_);
+    std::swap(push_client_login_, other->push_client_login_);
+    std::swap(push_client_login_rsp_, other->push_client_login_rsp_);
     std::swap(bind_, other->bind_);
     std::swap(bind_rsp_, other->bind_rsp_);
     std::swap(connect_, other->connect_);
@@ -2954,8 +2960,8 @@ void PushMsg::Swap(PushMsg* other) {
     std::swap(get_dev_info_rsp_, other->get_dev_info_rsp_);
     std::swap(set_dev_info_, other->set_dev_info_);
     std::swap(set_dev_info_rsp_, other->set_dev_info_rsp_);
-    std::swap(client_login_, other->client_login_);
-    std::swap(client_login_rsp_, other->client_login_rsp_);
+    std::swap(admin_client_login_, other->admin_client_login_);
+    std::swap(admin_client_login_rsp_, other->admin_client_login_rsp_);
     std::swap(user_register_, other->user_register_);
     std::swap(user_register_rsp_, other->user_register_rsp_);
     std::swap(heartbeat_, other->heartbeat_);
@@ -2977,38 +2983,38 @@ void PushMsg::Swap(PushMsg* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int Login::kDeviceIdFieldNumber;
+const int PushClientLogin::kDeviceIdFieldNumber;
 #endif  // !_MSC_VER
 
-Login::Login()
+PushClientLogin::PushClientLogin()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.push.Login)
+  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.push.PushClientLogin)
 }
 
-void Login::InitAsDefaultInstance() {
+void PushClientLogin::InitAsDefaultInstance() {
 }
 
-Login::Login(const Login& from)
+PushClientLogin::PushClientLogin(const PushClientLogin& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.push.Login)
+  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.push.PushClientLogin)
 }
 
-void Login::SharedCtor() {
+void PushClientLogin::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   device_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-Login::~Login() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.push.Login)
+PushClientLogin::~PushClientLogin() {
+  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.push.PushClientLogin)
   SharedDtor();
 }
 
-void Login::SharedDtor() {
+void PushClientLogin::SharedDtor() {
   if (device_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete device_id_;
   }
@@ -3016,28 +3022,28 @@ void Login::SharedDtor() {
   }
 }
 
-void Login::SetCachedSize(int size) const {
+void PushClientLogin::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* Login::descriptor() {
+const ::google::protobuf::Descriptor* PushClientLogin::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Login_descriptor_;
+  return PushClientLogin_descriptor_;
 }
 
-const Login& Login::default_instance() {
+const PushClientLogin& PushClientLogin::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_push_2eproto();
   return *default_instance_;
 }
 
-Login* Login::default_instance_ = NULL;
+PushClientLogin* PushClientLogin::default_instance_ = NULL;
 
-Login* Login::New() const {
-  return new Login;
+PushClientLogin* PushClientLogin::New() const {
+  return new PushClientLogin;
 }
 
-void Login::Clear() {
+void PushClientLogin::Clear() {
   if (has_device_id()) {
     if (device_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
       device_id_->clear();
@@ -3047,11 +3053,11 @@ void Login::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool Login::MergePartialFromCodedStream(
+bool PushClientLogin::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.push.Login)
+  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.push.PushClientLogin)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -3087,17 +3093,17 @@ bool Login::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.push.Login)
+  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.push.PushClientLogin)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.push.Login)
+  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.push.PushClientLogin)
   return false;
 #undef DO_
 }
 
-void Login::SerializeWithCachedSizes(
+void PushClientLogin::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.push.Login)
+  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.push.PushClientLogin)
   // required string device_id = 1;
   if (has_device_id()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -3112,12 +3118,12 @@ void Login::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.push.Login)
+  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.push.PushClientLogin)
 }
 
-::google::protobuf::uint8* Login::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* PushClientLogin::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.push.Login)
+  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.push.PushClientLogin)
   // required string device_id = 1;
   if (has_device_id()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -3133,11 +3139,11 @@ void Login::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.push.Login)
+  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.push.PushClientLogin)
   return target;
 }
 
-int Login::ByteSize() const {
+int PushClientLogin::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -3160,10 +3166,10 @@ int Login::ByteSize() const {
   return total_size;
 }
 
-void Login::MergeFrom(const ::google::protobuf::Message& from) {
+void PushClientLogin::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const Login* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const Login*>(
+  const PushClientLogin* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const PushClientLogin*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -3172,7 +3178,7 @@ void Login::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void Login::MergeFrom(const Login& from) {
+void PushClientLogin::MergeFrom(const PushClientLogin& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_device_id()) {
@@ -3182,25 +3188,25 @@ void Login::MergeFrom(const Login& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void Login::CopyFrom(const ::google::protobuf::Message& from) {
+void PushClientLogin::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void Login::CopyFrom(const Login& from) {
+void PushClientLogin::CopyFrom(const PushClientLogin& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool Login::IsInitialized() const {
+bool PushClientLogin::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
 
-void Login::Swap(Login* other) {
+void PushClientLogin::Swap(PushClientLogin* other) {
   if (other != this) {
     std::swap(device_id_, other->device_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -3209,11 +3215,11 @@ void Login::Swap(Login* other) {
   }
 }
 
-::google::protobuf::Metadata Login::GetMetadata() const {
+::google::protobuf::Metadata PushClientLogin::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Login_descriptor_;
-  metadata.reflection = Login_reflection_;
+  metadata.descriptor = PushClientLogin_descriptor_;
+  metadata.reflection = PushClientLogin_reflection_;
   return metadata;
 }
 
@@ -3221,73 +3227,73 @@ void Login::Swap(Login* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int LoginRsp::kCodeFieldNumber;
+const int PushClientLoginRsp::kCodeFieldNumber;
 #endif  // !_MSC_VER
 
-LoginRsp::LoginRsp()
+PushClientLoginRsp::PushClientLoginRsp()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.push.LoginRsp)
+  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.push.PushClientLoginRsp)
 }
 
-void LoginRsp::InitAsDefaultInstance() {
+void PushClientLoginRsp::InitAsDefaultInstance() {
 }
 
-LoginRsp::LoginRsp(const LoginRsp& from)
+PushClientLoginRsp::PushClientLoginRsp(const PushClientLoginRsp& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.push.LoginRsp)
+  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.push.PushClientLoginRsp)
 }
 
-void LoginRsp::SharedCtor() {
+void PushClientLoginRsp::SharedCtor() {
   _cached_size_ = 0;
   code_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-LoginRsp::~LoginRsp() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.push.LoginRsp)
+PushClientLoginRsp::~PushClientLoginRsp() {
+  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.push.PushClientLoginRsp)
   SharedDtor();
 }
 
-void LoginRsp::SharedDtor() {
+void PushClientLoginRsp::SharedDtor() {
   if (this != default_instance_) {
   }
 }
 
-void LoginRsp::SetCachedSize(int size) const {
+void PushClientLoginRsp::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* LoginRsp::descriptor() {
+const ::google::protobuf::Descriptor* PushClientLoginRsp::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return LoginRsp_descriptor_;
+  return PushClientLoginRsp_descriptor_;
 }
 
-const LoginRsp& LoginRsp::default_instance() {
+const PushClientLoginRsp& PushClientLoginRsp::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_push_2eproto();
   return *default_instance_;
 }
 
-LoginRsp* LoginRsp::default_instance_ = NULL;
+PushClientLoginRsp* PushClientLoginRsp::default_instance_ = NULL;
 
-LoginRsp* LoginRsp::New() const {
-  return new LoginRsp;
+PushClientLoginRsp* PushClientLoginRsp::New() const {
+  return new PushClientLoginRsp;
 }
 
-void LoginRsp::Clear() {
+void PushClientLoginRsp::Clear() {
   code_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool LoginRsp::MergePartialFromCodedStream(
+bool PushClientLoginRsp::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.push.LoginRsp)
+  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.push.PushClientLoginRsp)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -3321,17 +3327,17 @@ bool LoginRsp::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.push.LoginRsp)
+  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.push.PushClientLoginRsp)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.push.LoginRsp)
+  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.push.PushClientLoginRsp)
   return false;
 #undef DO_
 }
 
-void LoginRsp::SerializeWithCachedSizes(
+void PushClientLoginRsp::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.push.LoginRsp)
+  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.push.PushClientLoginRsp)
   // required int32 code = 1;
   if (has_code()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->code(), output);
@@ -3341,12 +3347,12 @@ void LoginRsp::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.push.LoginRsp)
+  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.push.PushClientLoginRsp)
 }
 
-::google::protobuf::uint8* LoginRsp::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* PushClientLoginRsp::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.push.LoginRsp)
+  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.push.PushClientLoginRsp)
   // required int32 code = 1;
   if (has_code()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->code(), target);
@@ -3356,11 +3362,11 @@ void LoginRsp::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.push.LoginRsp)
+  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.push.PushClientLoginRsp)
   return target;
 }
 
-int LoginRsp::ByteSize() const {
+int PushClientLoginRsp::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -3383,10 +3389,10 @@ int LoginRsp::ByteSize() const {
   return total_size;
 }
 
-void LoginRsp::MergeFrom(const ::google::protobuf::Message& from) {
+void PushClientLoginRsp::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const LoginRsp* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const LoginRsp*>(
+  const PushClientLoginRsp* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const PushClientLoginRsp*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -3395,7 +3401,7 @@ void LoginRsp::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void LoginRsp::MergeFrom(const LoginRsp& from) {
+void PushClientLoginRsp::MergeFrom(const PushClientLoginRsp& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_code()) {
@@ -3405,25 +3411,25 @@ void LoginRsp::MergeFrom(const LoginRsp& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void LoginRsp::CopyFrom(const ::google::protobuf::Message& from) {
+void PushClientLoginRsp::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void LoginRsp::CopyFrom(const LoginRsp& from) {
+void PushClientLoginRsp::CopyFrom(const PushClientLoginRsp& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool LoginRsp::IsInitialized() const {
+bool PushClientLoginRsp::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
 
-void LoginRsp::Swap(LoginRsp* other) {
+void PushClientLoginRsp::Swap(PushClientLoginRsp* other) {
   if (other != this) {
     std::swap(code_, other->code_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -3432,11 +3438,11 @@ void LoginRsp::Swap(LoginRsp* other) {
   }
 }
 
-::google::protobuf::Metadata LoginRsp::GetMetadata() const {
+::google::protobuf::Metadata PushClientLoginRsp::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = LoginRsp_descriptor_;
-  metadata.reflection = LoginRsp_reflection_;
+  metadata.descriptor = PushClientLoginRsp_descriptor_;
+  metadata.reflection = PushClientLoginRsp_reflection_;
   return metadata;
 }
 
@@ -3444,27 +3450,27 @@ void LoginRsp::Swap(LoginRsp* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int ClientLogin::kAccountFieldNumber;
-const int ClientLogin::kPasswordFieldNumber;
+const int AdminClientLogin::kAccountFieldNumber;
+const int AdminClientLogin::kPasswordFieldNumber;
 #endif  // !_MSC_VER
 
-ClientLogin::ClientLogin()
+AdminClientLogin::AdminClientLogin()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.push.ClientLogin)
+  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.push.AdminClientLogin)
 }
 
-void ClientLogin::InitAsDefaultInstance() {
+void AdminClientLogin::InitAsDefaultInstance() {
 }
 
-ClientLogin::ClientLogin(const ClientLogin& from)
+AdminClientLogin::AdminClientLogin(const AdminClientLogin& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.push.ClientLogin)
+  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.push.AdminClientLogin)
 }
 
-void ClientLogin::SharedCtor() {
+void AdminClientLogin::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   account_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -3472,12 +3478,12 @@ void ClientLogin::SharedCtor() {
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-ClientLogin::~ClientLogin() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.push.ClientLogin)
+AdminClientLogin::~AdminClientLogin() {
+  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.push.AdminClientLogin)
   SharedDtor();
 }
 
-void ClientLogin::SharedDtor() {
+void AdminClientLogin::SharedDtor() {
   if (account_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete account_;
   }
@@ -3488,28 +3494,28 @@ void ClientLogin::SharedDtor() {
   }
 }
 
-void ClientLogin::SetCachedSize(int size) const {
+void AdminClientLogin::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* ClientLogin::descriptor() {
+const ::google::protobuf::Descriptor* AdminClientLogin::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return ClientLogin_descriptor_;
+  return AdminClientLogin_descriptor_;
 }
 
-const ClientLogin& ClientLogin::default_instance() {
+const AdminClientLogin& AdminClientLogin::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_push_2eproto();
   return *default_instance_;
 }
 
-ClientLogin* ClientLogin::default_instance_ = NULL;
+AdminClientLogin* AdminClientLogin::default_instance_ = NULL;
 
-ClientLogin* ClientLogin::New() const {
-  return new ClientLogin;
+AdminClientLogin* AdminClientLogin::New() const {
+  return new AdminClientLogin;
 }
 
-void ClientLogin::Clear() {
+void AdminClientLogin::Clear() {
   if (_has_bits_[0 / 32] & 3) {
     if (has_account()) {
       if (account_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -3526,11 +3532,11 @@ void ClientLogin::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool ClientLogin::MergePartialFromCodedStream(
+bool AdminClientLogin::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.push.ClientLogin)
+  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.push.AdminClientLogin)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -3583,17 +3589,17 @@ bool ClientLogin::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.push.ClientLogin)
+  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.push.AdminClientLogin)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.push.ClientLogin)
+  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.push.AdminClientLogin)
   return false;
 #undef DO_
 }
 
-void ClientLogin::SerializeWithCachedSizes(
+void AdminClientLogin::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.push.ClientLogin)
+  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.push.AdminClientLogin)
   // required string account = 1;
   if (has_account()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -3618,12 +3624,12 @@ void ClientLogin::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.push.ClientLogin)
+  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.push.AdminClientLogin)
 }
 
-::google::protobuf::uint8* ClientLogin::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* AdminClientLogin::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.push.ClientLogin)
+  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.push.AdminClientLogin)
   // required string account = 1;
   if (has_account()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -3650,11 +3656,11 @@ void ClientLogin::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.push.ClientLogin)
+  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.push.AdminClientLogin)
   return target;
 }
 
-int ClientLogin::ByteSize() const {
+int AdminClientLogin::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -3684,10 +3690,10 @@ int ClientLogin::ByteSize() const {
   return total_size;
 }
 
-void ClientLogin::MergeFrom(const ::google::protobuf::Message& from) {
+void AdminClientLogin::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const ClientLogin* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const ClientLogin*>(
+  const AdminClientLogin* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const AdminClientLogin*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -3696,7 +3702,7 @@ void ClientLogin::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void ClientLogin::MergeFrom(const ClientLogin& from) {
+void AdminClientLogin::MergeFrom(const AdminClientLogin& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_account()) {
@@ -3709,25 +3715,25 @@ void ClientLogin::MergeFrom(const ClientLogin& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void ClientLogin::CopyFrom(const ::google::protobuf::Message& from) {
+void AdminClientLogin::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void ClientLogin::CopyFrom(const ClientLogin& from) {
+void AdminClientLogin::CopyFrom(const AdminClientLogin& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool ClientLogin::IsInitialized() const {
+bool AdminClientLogin::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
 
-void ClientLogin::Swap(ClientLogin* other) {
+void AdminClientLogin::Swap(AdminClientLogin* other) {
   if (other != this) {
     std::swap(account_, other->account_);
     std::swap(password_, other->password_);
@@ -3737,11 +3743,11 @@ void ClientLogin::Swap(ClientLogin* other) {
   }
 }
 
-::google::protobuf::Metadata ClientLogin::GetMetadata() const {
+::google::protobuf::Metadata AdminClientLogin::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = ClientLogin_descriptor_;
-  metadata.reflection = ClientLogin_reflection_;
+  metadata.descriptor = AdminClientLogin_descriptor_;
+  metadata.reflection = AdminClientLogin_reflection_;
   return metadata;
 }
 
@@ -3749,75 +3755,75 @@ void ClientLogin::Swap(ClientLogin* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int ClientLoginRsp::kCodeFieldNumber;
-const int ClientLoginRsp::kFgwInfosFieldNumber;
+const int AdminClientLoginRsp::kCodeFieldNumber;
+const int AdminClientLoginRsp::kFgwInfosFieldNumber;
 #endif  // !_MSC_VER
 
-ClientLoginRsp::ClientLoginRsp()
+AdminClientLoginRsp::AdminClientLoginRsp()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp)
 }
 
-void ClientLoginRsp::InitAsDefaultInstance() {
+void AdminClientLoginRsp::InitAsDefaultInstance() {
 }
 
-ClientLoginRsp::ClientLoginRsp(const ClientLoginRsp& from)
+AdminClientLoginRsp::AdminClientLoginRsp(const AdminClientLoginRsp& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp)
 }
 
-void ClientLoginRsp::SharedCtor() {
+void AdminClientLoginRsp::SharedCtor() {
   _cached_size_ = 0;
   code_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-ClientLoginRsp::~ClientLoginRsp() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+AdminClientLoginRsp::~AdminClientLoginRsp() {
+  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp)
   SharedDtor();
 }
 
-void ClientLoginRsp::SharedDtor() {
+void AdminClientLoginRsp::SharedDtor() {
   if (this != default_instance_) {
   }
 }
 
-void ClientLoginRsp::SetCachedSize(int size) const {
+void AdminClientLoginRsp::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* ClientLoginRsp::descriptor() {
+const ::google::protobuf::Descriptor* AdminClientLoginRsp::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return ClientLoginRsp_descriptor_;
+  return AdminClientLoginRsp_descriptor_;
 }
 
-const ClientLoginRsp& ClientLoginRsp::default_instance() {
+const AdminClientLoginRsp& AdminClientLoginRsp::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_push_2eproto();
   return *default_instance_;
 }
 
-ClientLoginRsp* ClientLoginRsp::default_instance_ = NULL;
+AdminClientLoginRsp* AdminClientLoginRsp::default_instance_ = NULL;
 
-ClientLoginRsp* ClientLoginRsp::New() const {
-  return new ClientLoginRsp;
+AdminClientLoginRsp* AdminClientLoginRsp::New() const {
+  return new AdminClientLoginRsp;
 }
 
-void ClientLoginRsp::Clear() {
+void AdminClientLoginRsp::Clear() {
   code_ = 0;
   fgw_infos_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool ClientLoginRsp::MergePartialFromCodedStream(
+bool AdminClientLoginRsp::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -3865,17 +3871,17 @@ bool ClientLoginRsp::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp)
   return false;
 #undef DO_
 }
 
-void ClientLoginRsp::SerializeWithCachedSizes(
+void AdminClientLoginRsp::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp)
   // required int32 code = 1;
   if (has_code()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->code(), output);
@@ -3891,12 +3897,12 @@ void ClientLoginRsp::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp)
 }
 
-::google::protobuf::uint8* ClientLoginRsp::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* AdminClientLoginRsp::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp)
   // required int32 code = 1;
   if (has_code()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->code(), target);
@@ -3913,11 +3919,11 @@ void ClientLoginRsp::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp)
   return target;
 }
 
-int ClientLoginRsp::ByteSize() const {
+int AdminClientLoginRsp::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -3948,10 +3954,10 @@ int ClientLoginRsp::ByteSize() const {
   return total_size;
 }
 
-void ClientLoginRsp::MergeFrom(const ::google::protobuf::Message& from) {
+void AdminClientLoginRsp::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const ClientLoginRsp* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const ClientLoginRsp*>(
+  const AdminClientLoginRsp* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const AdminClientLoginRsp*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -3960,7 +3966,7 @@ void ClientLoginRsp::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void ClientLoginRsp::MergeFrom(const ClientLoginRsp& from) {
+void AdminClientLoginRsp::MergeFrom(const AdminClientLoginRsp& from) {
   GOOGLE_CHECK_NE(&from, this);
   fgw_infos_.MergeFrom(from.fgw_infos_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -3971,26 +3977,26 @@ void ClientLoginRsp::MergeFrom(const ClientLoginRsp& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void ClientLoginRsp::CopyFrom(const ::google::protobuf::Message& from) {
+void AdminClientLoginRsp::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void ClientLoginRsp::CopyFrom(const ClientLoginRsp& from) {
+void AdminClientLoginRsp::CopyFrom(const AdminClientLoginRsp& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool ClientLoginRsp::IsInitialized() const {
+bool AdminClientLoginRsp::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   if (!::google::protobuf::internal::AllAreInitialized(this->fgw_infos())) return false;
   return true;
 }
 
-void ClientLoginRsp::Swap(ClientLoginRsp* other) {
+void AdminClientLoginRsp::Swap(AdminClientLoginRsp* other) {
   if (other != this) {
     std::swap(code_, other->code_);
     fgw_infos_.Swap(&other->fgw_infos_);
@@ -4000,11 +4006,11 @@ void ClientLoginRsp::Swap(ClientLoginRsp* other) {
   }
 }
 
-::google::protobuf::Metadata ClientLoginRsp::GetMetadata() const {
+::google::protobuf::Metadata AdminClientLoginRsp::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = ClientLoginRsp_descriptor_;
-  metadata.reflection = ClientLoginRsp_reflection_;
+  metadata.descriptor = AdminClientLoginRsp_descriptor_;
+  metadata.reflection = AdminClientLoginRsp_reflection_;
   return metadata;
 }
 
@@ -5890,6 +5896,7 @@ void GetDevListRsp::Swap(GetDevListRsp* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int GetDevInfo::kDeviceIdFieldNumber;
 const int GetDevInfo::kAddrFieldNumber;
 const int GetDevInfo::kItemIdsFieldNumber;
 #endif  // !_MSC_VER
@@ -5911,7 +5918,9 @@ GetDevInfo::GetDevInfo(const GetDevInfo& from)
 }
 
 void GetDevInfo::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  device_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   addr_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -5922,6 +5931,9 @@ GetDevInfo::~GetDevInfo() {
 }
 
 void GetDevInfo::SharedDtor() {
+  if (device_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete device_id_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -5948,7 +5960,14 @@ GetDevInfo* GetDevInfo::New() const {
 }
 
 void GetDevInfo::Clear() {
-  addr_ = 0;
+  if (_has_bits_[0 / 32] & 3) {
+    if (has_device_id()) {
+      if (device_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        device_id_->clear();
+      }
+    }
+    addr_ = 0;
+  }
   item_ids_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -5964,9 +5983,26 @@ bool GetDevInfo::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 addr = 1;
+      // required string device_id = 1;
       case 1: {
-        if (tag == 8) {
+        if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_device_id()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->device_id().data(), this->device_id().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "device_id");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_addr;
+        break;
+      }
+
+      // required int32 addr = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_addr:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &addr_)));
@@ -5974,21 +6010,21 @@ bool GetDevInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_item_ids;
+        if (input->ExpectTag(26)) goto parse_item_ids;
         break;
       }
 
-      // repeated int32 item_ids = 2 [packed = true];
-      case 2: {
-        if (tag == 18) {
+      // repeated int32 item_ids = 3 [packed = true];
+      case 3: {
+        if (tag == 26) {
          parse_item_ids:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, this->mutable_item_ids())));
-        } else if (tag == 16) {
+        } else if (tag == 24) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 18, input, this->mutable_item_ids())));
+                 1, 26, input, this->mutable_item_ids())));
         } else {
           goto handle_unusual;
         }
@@ -6021,14 +6057,24 @@ failure:
 void GetDevInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.push.GetDevInfo)
-  // required int32 addr = 1;
-  if (has_addr()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->addr(), output);
+  // required string device_id = 1;
+  if (has_device_id()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->device_id().data(), this->device_id().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "device_id");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->device_id(), output);
   }
 
-  // repeated int32 item_ids = 2 [packed = true];
+  // required int32 addr = 2;
+  if (has_addr()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->addr(), output);
+  }
+
+  // repeated int32 item_ids = 3 [packed = true];
   if (this->item_ids_size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteTag(2, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    ::google::protobuf::internal::WireFormatLite::WriteTag(3, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_item_ids_cached_byte_size_);
   }
   for (int i = 0; i < this->item_ids_size(); i++) {
@@ -6046,15 +6092,26 @@ void GetDevInfo::SerializeWithCachedSizes(
 ::google::protobuf::uint8* GetDevInfo::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.push.GetDevInfo)
-  // required int32 addr = 1;
-  if (has_addr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->addr(), target);
+  // required string device_id = 1;
+  if (has_device_id()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->device_id().data(), this->device_id().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "device_id");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->device_id(), target);
   }
 
-  // repeated int32 item_ids = 2 [packed = true];
+  // required int32 addr = 2;
+  if (has_addr()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->addr(), target);
+  }
+
+  // repeated int32 item_ids = 3 [packed = true];
   if (this->item_ids_size() > 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
-      2,
+      3,
       ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
       target);
     target = ::google::protobuf::io::CodedOutputStream::WriteVarint32ToArray(
@@ -6077,7 +6134,14 @@ int GetDevInfo::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 addr = 1;
+    // required string device_id = 1;
+    if (has_device_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->device_id());
+    }
+
+    // required int32 addr = 2;
     if (has_addr()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -6085,7 +6149,7 @@ int GetDevInfo::ByteSize() const {
     }
 
   }
-  // repeated int32 item_ids = 2 [packed = true];
+  // repeated int32 item_ids = 3 [packed = true];
   {
     int data_size = 0;
     for (int i = 0; i < this->item_ids_size(); i++) {
@@ -6129,6 +6193,9 @@ void GetDevInfo::MergeFrom(const GetDevInfo& from) {
   GOOGLE_CHECK_NE(&from, this);
   item_ids_.MergeFrom(from.item_ids_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_device_id()) {
+      set_device_id(from.device_id());
+    }
     if (from.has_addr()) {
       set_addr(from.addr());
     }
@@ -6149,13 +6216,14 @@ void GetDevInfo::CopyFrom(const GetDevInfo& from) {
 }
 
 bool GetDevInfo::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
 
 void GetDevInfo::Swap(GetDevInfo* other) {
   if (other != this) {
+    std::swap(device_id_, other->device_id_);
     std::swap(addr_, other->addr_);
     item_ids_.Swap(&other->item_ids_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -6439,6 +6507,7 @@ void GetDevInfoRsp::Swap(GetDevInfoRsp* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int SetDevInfo::kDeviceIdFieldNumber;
 const int SetDevInfo::kAddrFieldNumber;
 const int SetDevInfo::kIdValuePairsFieldNumber;
 #endif  // !_MSC_VER
@@ -6460,7 +6529,9 @@ SetDevInfo::SetDevInfo(const SetDevInfo& from)
 }
 
 void SetDevInfo::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  device_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   addr_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -6471,6 +6542,9 @@ SetDevInfo::~SetDevInfo() {
 }
 
 void SetDevInfo::SharedDtor() {
+  if (device_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete device_id_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -6497,7 +6571,14 @@ SetDevInfo* SetDevInfo::New() const {
 }
 
 void SetDevInfo::Clear() {
-  addr_ = 0;
+  if (_has_bits_[0 / 32] & 3) {
+    if (has_device_id()) {
+      if (device_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        device_id_->clear();
+      }
+    }
+    addr_ = 0;
+  }
   id_value_pairs_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -6513,9 +6594,26 @@ bool SetDevInfo::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 addr = 1;
+      // required string device_id = 1;
       case 1: {
-        if (tag == 8) {
+        if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_device_id()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->device_id().data(), this->device_id().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "device_id");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_addr;
+        break;
+      }
+
+      // required int32 addr = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_addr:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &addr_)));
@@ -6523,20 +6621,20 @@ bool SetDevInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_id_value_pairs;
+        if (input->ExpectTag(26)) goto parse_id_value_pairs;
         break;
       }
 
-      // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
-      case 2: {
-        if (tag == 18) {
+      // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 3;
+      case 3: {
+        if (tag == 26) {
          parse_id_value_pairs:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_id_value_pairs()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_id_value_pairs;
+        if (input->ExpectTag(26)) goto parse_id_value_pairs;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -6566,15 +6664,25 @@ failure:
 void SetDevInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.push.SetDevInfo)
-  // required int32 addr = 1;
-  if (has_addr()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->addr(), output);
+  // required string device_id = 1;
+  if (has_device_id()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->device_id().data(), this->device_id().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "device_id");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->device_id(), output);
   }
 
-  // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
+  // required int32 addr = 2;
+  if (has_addr()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->addr(), output);
+  }
+
+  // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 3;
   for (int i = 0; i < this->id_value_pairs_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->id_value_pairs(i), output);
+      3, this->id_value_pairs(i), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -6587,16 +6695,27 @@ void SetDevInfo::SerializeWithCachedSizes(
 ::google::protobuf::uint8* SetDevInfo::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.push.SetDevInfo)
-  // required int32 addr = 1;
-  if (has_addr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->addr(), target);
+  // required string device_id = 1;
+  if (has_device_id()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->device_id().data(), this->device_id().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "device_id");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->device_id(), target);
   }
 
-  // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
+  // required int32 addr = 2;
+  if (has_addr()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->addr(), target);
+  }
+
+  // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 3;
   for (int i = 0; i < this->id_value_pairs_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->id_value_pairs(i), target);
+        3, this->id_value_pairs(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -6611,7 +6730,14 @@ int SetDevInfo::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 addr = 1;
+    // required string device_id = 1;
+    if (has_device_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->device_id());
+    }
+
+    // required int32 addr = 2;
     if (has_addr()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -6619,7 +6745,7 @@ int SetDevInfo::ByteSize() const {
     }
 
   }
-  // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
+  // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 3;
   total_size += 1 * this->id_value_pairs_size();
   for (int i = 0; i < this->id_value_pairs_size(); i++) {
     total_size +=
@@ -6654,6 +6780,9 @@ void SetDevInfo::MergeFrom(const SetDevInfo& from) {
   GOOGLE_CHECK_NE(&from, this);
   id_value_pairs_.MergeFrom(from.id_value_pairs_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_device_id()) {
+      set_device_id(from.device_id());
+    }
     if (from.has_addr()) {
       set_addr(from.addr());
     }
@@ -6674,7 +6803,7 @@ void SetDevInfo::CopyFrom(const SetDevInfo& from) {
 }
 
 bool SetDevInfo::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   if (!::google::protobuf::internal::AllAreInitialized(this->id_value_pairs())) return false;
   return true;
@@ -6682,6 +6811,7 @@ bool SetDevInfo::IsInitialized() const {
 
 void SetDevInfo::Swap(SetDevInfo* other) {
   if (other != this) {
+    std::swap(device_id_, other->device_id_);
     std::swap(addr_, other->addr_);
     id_value_pairs_.Swap(&other->id_value_pairs_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);

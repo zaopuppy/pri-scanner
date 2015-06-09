@@ -1,10 +1,11 @@
 #include "protobuf_convert.h"
+#include "zconfig.h"
 
 
 PushMsg* new_pushmsg(MsgType type)
 {
   PushMsg *msg = new PushMsg();
-  msg->set_version(1);
+  msg->set_version(PUSH_MSG_VERSION);
   msg->set_type(type);
   return msg;
 }
@@ -76,7 +77,7 @@ ZInnerMsg* push2inner(const PushMsg &push_msg)
 PushMsg* inner2push(const ZInnerGetDevListRsp &inner_msg)
 {
   PushMsg *push_msg = new PushMsg();
-  push_msg->set_version(1);
+  push_msg->set_version(PUSH_MSG_VERSION);
   push_msg->set_type(GET_DEV_LIST_RSP);
 
   GetDevListRsp *rsp = new GetDevListRsp();
@@ -98,7 +99,7 @@ PushMsg* inner2push(const ZInnerGetDevListRsp &inner_msg)
 PushMsg* inner2push(const ZInnerGetDevInfoRsp &inner_msg)
 {
   PushMsg *push_msg = new PushMsg();
-  push_msg->set_version(1);
+  push_msg->set_version(PUSH_MSG_VERSION);
   push_msg->set_type(GET_DEV_INFO_RSP);
 
   GetDevInfoRsp *rsp = new GetDevInfoRsp();
@@ -119,7 +120,7 @@ PushMsg* inner2push(const ZInnerGetDevInfoRsp &inner_msg)
 PushMsg* inner2push(const ZInnerSetDevInfoRsp &inner_msg)
 {
   PushMsg *push_msg = new PushMsg();
-  push_msg->set_version(1);
+  push_msg->set_version(PUSH_MSG_VERSION);
   push_msg->set_type(SET_DEV_INFO_RSP);
 
   SetDevInfoRsp *rsp = new SetDevInfoRsp();

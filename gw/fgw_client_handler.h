@@ -33,7 +33,7 @@ public:
 
   virtual void onConnected();
 
-  void fgwLogin();
+  void login();
 
   // override from ZTimer::TimerCallback
   virtual void onTimeout(int handler);
@@ -63,7 +63,6 @@ private:
   ZInnerAddress addr_;
 
   SESSION_CTRL_TYPE session_ctrl_;
-
 
   // state-machine
   int state_;

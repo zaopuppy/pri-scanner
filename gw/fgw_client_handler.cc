@@ -91,19 +91,19 @@ void FGWClientHandler::routine(long delta)
 
 }
 
-void FGWClientHandler::fgwLogin()
+void FGWClientHandler::login()
 {
   Z_LOG_D("FGWClientHandler::registerFGW()");
 
   PushMsg push_msg;
-  push_msg.set_version(1);
-  push_msg.set_type(LOGIN);
+  push_msg.set_version(PUSH_MSG_VERSION);
+  push_msg.set_type(PUSH_CLIENT_LOGIN);
   push_msg.set_sequence(0);
 
-  Login *login = new Login();
+  PushClientLogin *login = new PushClientLogin();
   login->set_device_id("DEVID-Z");
 
-  push_msg.set_allocated_login(login);
+  push_msg.set_allocated_push_client_login(login);
 
   int rv = protobuf_encode(&push_msg, out_buf_, sizeof(out_buf_));
   if (rv < 0) {
@@ -143,11 +143,11 @@ int FGWClientHandler::onRead_Unregistered(char *buf, uint32_t buf_len)
 int FGWClientHandler::processLoginRsp(PushMsg *push_msg)
 {
   Z_LOG_D("FGWClientHandler::processLoginRsp()");
-  if (!push_msg->has_login_rsp()) {
+  if (!push_msg->has_push_client_login_rsp()) {
     return -1;
   }
 
-  const LoginRsp &rsp = push_msg->login_rsp();
+  const PushClientLoginRsp &rsp = push_msg->push_client_login_rsp();
   if (rsp.code() != 0) {
     Z_LOG_E("Failed to login to server, result is %d", rsp.code());
     return FAIL;
@@ -178,7 +178,7 @@ int FGWClientHandler::onRead_WaitForServer(char *buf, uint32_t buf_len)
     return FAIL;
   }
 
-  if (push_msg.type() != LOGIN_RSP) {
+  if (push_msg.type() != PUSH_CLIENT_LOGIN_RSP) {
     Z_LOG_E("Unknown push msg type: %d", push_msg.type());
     return FAIL;
   }
@@ -261,7 +261,7 @@ void FGWClientHandler::onConnected()
   // reset state
   setState(STATE_UNREGISTERED);
 
-  fgwLogin();
+  login();
 }
 
 void FGWClientHandler::sendRsp(const char *text_msg, int status)
@@ -277,7 +277,7 @@ void FGWClientHandler::onTimeout(int handler_id)
   if (handler_id == login_timer_id) {
     if (state_ == STATE_WAIT_FOR_SERVER) {
       setState(STATE_UNREGISTERED);
-      fgwLogin();
+      login();
     }
   } else {
     Z_LOG_E("unknown handler id: %d", handler_id);

@@ -42,10 +42,10 @@ class IdValuePair;
 class FGatewayInfo;
 class DeviceInfo;
 class PushMsg;
-class Login;
-class LoginRsp;
-class ClientLogin;
-class ClientLoginRsp;
+class PushClientLogin;
+class PushClientLoginRsp;
+class AdminClientLogin;
+class AdminClientLoginRsp;
 class Bind;
 class BindRsp;
 class Connect;
@@ -64,8 +64,8 @@ class Heartbeat;
 class Response;
 
 enum MsgType {
-  LOGIN = 1,
-  LOGIN_RSP = 101,
+  PUSH_CLIENT_LOGIN = 1,
+  PUSH_CLIENT_LOGIN_RSP = 101,
   BIND = 2,
   BIND_RSP = 102,
   CONNECT = 3,
@@ -78,15 +78,15 @@ enum MsgType {
   GET_DEV_INFO_RSP = 106,
   SET_DEV_INFO = 7,
   SET_DEV_INFO_RSP = 107,
-  CLIENT_LOGIN = 8,
-  CLIENT_LOGIN_RSP = 108,
+  ADMIN_CLIENT_LOGIN = 8,
+  ADMIN_CLIENT_LOGIN_RSP = 108,
   USER_REGISTER = 9,
   USER_REGISTER_RSP = 109,
   HEARTBEAT = 10,
   RESPONSE = 99
 };
 bool MsgType_IsValid(int value);
-const MsgType MsgType_MIN = LOGIN;
+const MsgType MsgType_MIN = PUSH_CLIENT_LOGIN;
 const MsgType MsgType_MAX = USER_REGISTER_RSP;
 const int MsgType_ARRAYSIZE = MsgType_MAX + 1;
 
@@ -483,23 +483,23 @@ class PushMsg : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 sequence() const;
   inline void set_sequence(::google::protobuf::int32 value);
 
-  // optional .com.letsmidi.monsys.protocol.push.Login login = 10;
-  inline bool has_login() const;
-  inline void clear_login();
-  static const int kLoginFieldNumber = 10;
-  inline const ::com::letsmidi::monsys::protocol::push::Login& login() const;
-  inline ::com::letsmidi::monsys::protocol::push::Login* mutable_login();
-  inline ::com::letsmidi::monsys::protocol::push::Login* release_login();
-  inline void set_allocated_login(::com::letsmidi::monsys::protocol::push::Login* login);
+  // optional .com.letsmidi.monsys.protocol.push.PushClientLogin push_client_login = 10;
+  inline bool has_push_client_login() const;
+  inline void clear_push_client_login();
+  static const int kPushClientLoginFieldNumber = 10;
+  inline const ::com::letsmidi::monsys::protocol::push::PushClientLogin& push_client_login() const;
+  inline ::com::letsmidi::monsys::protocol::push::PushClientLogin* mutable_push_client_login();
+  inline ::com::letsmidi::monsys::protocol::push::PushClientLogin* release_push_client_login();
+  inline void set_allocated_push_client_login(::com::letsmidi::monsys::protocol::push::PushClientLogin* push_client_login);
 
-  // optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;
-  inline bool has_login_rsp() const;
-  inline void clear_login_rsp();
-  static const int kLoginRspFieldNumber = 11;
-  inline const ::com::letsmidi::monsys::protocol::push::LoginRsp& login_rsp() const;
-  inline ::com::letsmidi::monsys::protocol::push::LoginRsp* mutable_login_rsp();
-  inline ::com::letsmidi::monsys::protocol::push::LoginRsp* release_login_rsp();
-  inline void set_allocated_login_rsp(::com::letsmidi::monsys::protocol::push::LoginRsp* login_rsp);
+  // optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp push_client_login_rsp = 11;
+  inline bool has_push_client_login_rsp() const;
+  inline void clear_push_client_login_rsp();
+  static const int kPushClientLoginRspFieldNumber = 11;
+  inline const ::com::letsmidi::monsys::protocol::push::PushClientLoginRsp& push_client_login_rsp() const;
+  inline ::com::letsmidi::monsys::protocol::push::PushClientLoginRsp* mutable_push_client_login_rsp();
+  inline ::com::letsmidi::monsys::protocol::push::PushClientLoginRsp* release_push_client_login_rsp();
+  inline void set_allocated_push_client_login_rsp(::com::letsmidi::monsys::protocol::push::PushClientLoginRsp* push_client_login_rsp);
 
   // optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;
   inline bool has_bind() const;
@@ -609,23 +609,23 @@ class PushMsg : public ::google::protobuf::Message {
   inline ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp* release_set_dev_info_rsp();
   inline void set_allocated_set_dev_info_rsp(::com::letsmidi::monsys::protocol::push::SetDevInfoRsp* set_dev_info_rsp);
 
-  // optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;
-  inline bool has_client_login() const;
-  inline void clear_client_login();
-  static const int kClientLoginFieldNumber = 24;
-  inline const ::com::letsmidi::monsys::protocol::push::ClientLogin& client_login() const;
-  inline ::com::letsmidi::monsys::protocol::push::ClientLogin* mutable_client_login();
-  inline ::com::letsmidi::monsys::protocol::push::ClientLogin* release_client_login();
-  inline void set_allocated_client_login(::com::letsmidi::monsys::protocol::push::ClientLogin* client_login);
+  // optional .com.letsmidi.monsys.protocol.push.AdminClientLogin admin_client_login = 24;
+  inline bool has_admin_client_login() const;
+  inline void clear_admin_client_login();
+  static const int kAdminClientLoginFieldNumber = 24;
+  inline const ::com::letsmidi::monsys::protocol::push::AdminClientLogin& admin_client_login() const;
+  inline ::com::letsmidi::monsys::protocol::push::AdminClientLogin* mutable_admin_client_login();
+  inline ::com::letsmidi::monsys::protocol::push::AdminClientLogin* release_admin_client_login();
+  inline void set_allocated_admin_client_login(::com::letsmidi::monsys::protocol::push::AdminClientLogin* admin_client_login);
 
-  // optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;
-  inline bool has_client_login_rsp() const;
-  inline void clear_client_login_rsp();
-  static const int kClientLoginRspFieldNumber = 25;
-  inline const ::com::letsmidi::monsys::protocol::push::ClientLoginRsp& client_login_rsp() const;
-  inline ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* mutable_client_login_rsp();
-  inline ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* release_client_login_rsp();
-  inline void set_allocated_client_login_rsp(::com::letsmidi::monsys::protocol::push::ClientLoginRsp* client_login_rsp);
+  // optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp admin_client_login_rsp = 25;
+  inline bool has_admin_client_login_rsp() const;
+  inline void clear_admin_client_login_rsp();
+  static const int kAdminClientLoginRspFieldNumber = 25;
+  inline const ::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp& admin_client_login_rsp() const;
+  inline ::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp* mutable_admin_client_login_rsp();
+  inline ::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp* release_admin_client_login_rsp();
+  inline void set_allocated_admin_client_login_rsp(::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp* admin_client_login_rsp);
 
   // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
   inline bool has_user_register() const;
@@ -662,10 +662,10 @@ class PushMsg : public ::google::protobuf::Message {
   inline void clear_has_type();
   inline void set_has_sequence();
   inline void clear_has_sequence();
-  inline void set_has_login();
-  inline void clear_has_login();
-  inline void set_has_login_rsp();
-  inline void clear_has_login_rsp();
+  inline void set_has_push_client_login();
+  inline void clear_has_push_client_login();
+  inline void set_has_push_client_login_rsp();
+  inline void clear_has_push_client_login_rsp();
   inline void set_has_bind();
   inline void clear_has_bind();
   inline void set_has_bind_rsp();
@@ -690,10 +690,10 @@ class PushMsg : public ::google::protobuf::Message {
   inline void clear_has_set_dev_info();
   inline void set_has_set_dev_info_rsp();
   inline void clear_has_set_dev_info_rsp();
-  inline void set_has_client_login();
-  inline void clear_has_client_login();
-  inline void set_has_client_login_rsp();
-  inline void clear_has_client_login_rsp();
+  inline void set_has_admin_client_login();
+  inline void clear_has_admin_client_login();
+  inline void set_has_admin_client_login_rsp();
+  inline void clear_has_admin_client_login_rsp();
   inline void set_has_user_register();
   inline void clear_has_user_register();
   inline void set_has_user_register_rsp();
@@ -707,8 +707,8 @@ class PushMsg : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::int32 version_;
   int type_;
-  ::com::letsmidi::monsys::protocol::push::Login* login_;
-  ::com::letsmidi::monsys::protocol::push::LoginRsp* login_rsp_;
+  ::com::letsmidi::monsys::protocol::push::PushClientLogin* push_client_login_;
+  ::com::letsmidi::monsys::protocol::push::PushClientLoginRsp* push_client_login_rsp_;
   ::com::letsmidi::monsys::protocol::push::Bind* bind_;
   ::com::letsmidi::monsys::protocol::push::BindRsp* bind_rsp_;
   ::com::letsmidi::monsys::protocol::push::Connect* connect_;
@@ -721,8 +721,8 @@ class PushMsg : public ::google::protobuf::Message {
   ::com::letsmidi::monsys::protocol::push::GetDevInfoRsp* get_dev_info_rsp_;
   ::com::letsmidi::monsys::protocol::push::SetDevInfo* set_dev_info_;
   ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp* set_dev_info_rsp_;
-  ::com::letsmidi::monsys::protocol::push::ClientLogin* client_login_;
-  ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* client_login_rsp_;
+  ::com::letsmidi::monsys::protocol::push::AdminClientLogin* admin_client_login_;
+  ::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp* admin_client_login_rsp_;
   ::com::letsmidi::monsys::protocol::push::UserRegister* user_register_;
   ::com::letsmidi::monsys::protocol::push::UserRegisterRsp* user_register_rsp_;
   ::com::letsmidi::monsys::protocol::push::Heartbeat* heartbeat_;
@@ -736,14 +736,14 @@ class PushMsg : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class Login : public ::google::protobuf::Message {
+class PushClientLogin : public ::google::protobuf::Message {
  public:
-  Login();
-  virtual ~Login();
+  PushClientLogin();
+  virtual ~PushClientLogin();
 
-  Login(const Login& from);
+  PushClientLogin(const PushClientLogin& from);
 
-  inline Login& operator=(const Login& from) {
+  inline PushClientLogin& operator=(const PushClientLogin& from) {
     CopyFrom(from);
     return *this;
   }
@@ -757,17 +757,17 @@ class Login : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const Login& default_instance();
+  static const PushClientLogin& default_instance();
 
-  void Swap(Login* other);
+  void Swap(PushClientLogin* other);
 
   // implements Message ----------------------------------------------
 
-  Login* New() const;
+  PushClientLogin* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const Login& from);
-  void MergeFrom(const Login& from);
+  void CopyFrom(const PushClientLogin& from);
+  void MergeFrom(const PushClientLogin& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -801,7 +801,7 @@ class Login : public ::google::protobuf::Message {
   inline ::std::string* release_device_id();
   inline void set_allocated_device_id(::std::string* device_id);
 
-  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.Login)
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.PushClientLogin)
  private:
   inline void set_has_device_id();
   inline void clear_has_device_id();
@@ -816,18 +816,18 @@ class Login : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_push_2eproto();
 
   void InitAsDefaultInstance();
-  static Login* default_instance_;
+  static PushClientLogin* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class LoginRsp : public ::google::protobuf::Message {
+class PushClientLoginRsp : public ::google::protobuf::Message {
  public:
-  LoginRsp();
-  virtual ~LoginRsp();
+  PushClientLoginRsp();
+  virtual ~PushClientLoginRsp();
 
-  LoginRsp(const LoginRsp& from);
+  PushClientLoginRsp(const PushClientLoginRsp& from);
 
-  inline LoginRsp& operator=(const LoginRsp& from) {
+  inline PushClientLoginRsp& operator=(const PushClientLoginRsp& from) {
     CopyFrom(from);
     return *this;
   }
@@ -841,17 +841,17 @@ class LoginRsp : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const LoginRsp& default_instance();
+  static const PushClientLoginRsp& default_instance();
 
-  void Swap(LoginRsp* other);
+  void Swap(PushClientLoginRsp* other);
 
   // implements Message ----------------------------------------------
 
-  LoginRsp* New() const;
+  PushClientLoginRsp* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const LoginRsp& from);
-  void MergeFrom(const LoginRsp& from);
+  void CopyFrom(const PushClientLoginRsp& from);
+  void MergeFrom(const PushClientLoginRsp& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -880,7 +880,7 @@ class LoginRsp : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 code() const;
   inline void set_code(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.LoginRsp)
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.PushClientLoginRsp)
  private:
   inline void set_has_code();
   inline void clear_has_code();
@@ -895,18 +895,18 @@ class LoginRsp : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_push_2eproto();
 
   void InitAsDefaultInstance();
-  static LoginRsp* default_instance_;
+  static PushClientLoginRsp* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class ClientLogin : public ::google::protobuf::Message {
+class AdminClientLogin : public ::google::protobuf::Message {
  public:
-  ClientLogin();
-  virtual ~ClientLogin();
+  AdminClientLogin();
+  virtual ~AdminClientLogin();
 
-  ClientLogin(const ClientLogin& from);
+  AdminClientLogin(const AdminClientLogin& from);
 
-  inline ClientLogin& operator=(const ClientLogin& from) {
+  inline AdminClientLogin& operator=(const AdminClientLogin& from) {
     CopyFrom(from);
     return *this;
   }
@@ -920,17 +920,17 @@ class ClientLogin : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const ClientLogin& default_instance();
+  static const AdminClientLogin& default_instance();
 
-  void Swap(ClientLogin* other);
+  void Swap(AdminClientLogin* other);
 
   // implements Message ----------------------------------------------
 
-  ClientLogin* New() const;
+  AdminClientLogin* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const ClientLogin& from);
-  void MergeFrom(const ClientLogin& from);
+  void CopyFrom(const AdminClientLogin& from);
+  void MergeFrom(const AdminClientLogin& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -976,7 +976,7 @@ class ClientLogin : public ::google::protobuf::Message {
   inline ::std::string* release_password();
   inline void set_allocated_password(::std::string* password);
 
-  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.ClientLogin)
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.AdminClientLogin)
  private:
   inline void set_has_account();
   inline void clear_has_account();
@@ -994,18 +994,18 @@ class ClientLogin : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_push_2eproto();
 
   void InitAsDefaultInstance();
-  static ClientLogin* default_instance_;
+  static AdminClientLogin* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class ClientLoginRsp : public ::google::protobuf::Message {
+class AdminClientLoginRsp : public ::google::protobuf::Message {
  public:
-  ClientLoginRsp();
-  virtual ~ClientLoginRsp();
+  AdminClientLoginRsp();
+  virtual ~AdminClientLoginRsp();
 
-  ClientLoginRsp(const ClientLoginRsp& from);
+  AdminClientLoginRsp(const AdminClientLoginRsp& from);
 
-  inline ClientLoginRsp& operator=(const ClientLoginRsp& from) {
+  inline AdminClientLoginRsp& operator=(const AdminClientLoginRsp& from) {
     CopyFrom(from);
     return *this;
   }
@@ -1019,17 +1019,17 @@ class ClientLoginRsp : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const ClientLoginRsp& default_instance();
+  static const AdminClientLoginRsp& default_instance();
 
-  void Swap(ClientLoginRsp* other);
+  void Swap(AdminClientLoginRsp* other);
 
   // implements Message ----------------------------------------------
 
-  ClientLoginRsp* New() const;
+  AdminClientLoginRsp* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const ClientLoginRsp& from);
-  void MergeFrom(const ClientLoginRsp& from);
+  void CopyFrom(const AdminClientLoginRsp& from);
+  void MergeFrom(const AdminClientLoginRsp& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -1070,7 +1070,7 @@ class ClientLoginRsp : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::FGatewayInfo >*
       mutable_fgw_infos();
 
-  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp)
  private:
   inline void set_has_code();
   inline void clear_has_code();
@@ -1086,7 +1086,7 @@ class ClientLoginRsp : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_push_2eproto();
 
   void InitAsDefaultInstance();
-  static ClientLoginRsp* default_instance_;
+  static AdminClientLoginRsp* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1806,17 +1806,29 @@ class GetDevInfo : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 addr = 1;
+  // required string device_id = 1;
+  inline bool has_device_id() const;
+  inline void clear_device_id();
+  static const int kDeviceIdFieldNumber = 1;
+  inline const ::std::string& device_id() const;
+  inline void set_device_id(const ::std::string& value);
+  inline void set_device_id(const char* value);
+  inline void set_device_id(const char* value, size_t size);
+  inline ::std::string* mutable_device_id();
+  inline ::std::string* release_device_id();
+  inline void set_allocated_device_id(::std::string* device_id);
+
+  // required int32 addr = 2;
   inline bool has_addr() const;
   inline void clear_addr();
-  static const int kAddrFieldNumber = 1;
+  static const int kAddrFieldNumber = 2;
   inline ::google::protobuf::int32 addr() const;
   inline void set_addr(::google::protobuf::int32 value);
 
-  // repeated int32 item_ids = 2 [packed = true];
+  // repeated int32 item_ids = 3 [packed = true];
   inline int item_ids_size() const;
   inline void clear_item_ids();
-  static const int kItemIdsFieldNumber = 2;
+  static const int kItemIdsFieldNumber = 3;
   inline ::google::protobuf::int32 item_ids(int index) const;
   inline void set_item_ids(int index, ::google::protobuf::int32 value);
   inline void add_item_ids(::google::protobuf::int32 value);
@@ -1827,6 +1839,8 @@ class GetDevInfo : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.GetDevInfo)
  private:
+  inline void set_has_device_id();
+  inline void clear_has_device_id();
   inline void set_has_addr();
   inline void clear_has_addr();
 
@@ -1834,6 +1848,7 @@ class GetDevInfo : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::std::string* device_id_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > item_ids_;
   mutable int _item_ids_cached_byte_size_;
   ::google::protobuf::int32 addr_;
@@ -1991,17 +2006,29 @@ class SetDevInfo : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 addr = 1;
+  // required string device_id = 1;
+  inline bool has_device_id() const;
+  inline void clear_device_id();
+  static const int kDeviceIdFieldNumber = 1;
+  inline const ::std::string& device_id() const;
+  inline void set_device_id(const ::std::string& value);
+  inline void set_device_id(const char* value);
+  inline void set_device_id(const char* value, size_t size);
+  inline ::std::string* mutable_device_id();
+  inline ::std::string* release_device_id();
+  inline void set_allocated_device_id(::std::string* device_id);
+
+  // required int32 addr = 2;
   inline bool has_addr() const;
   inline void clear_addr();
-  static const int kAddrFieldNumber = 1;
+  static const int kAddrFieldNumber = 2;
   inline ::google::protobuf::int32 addr() const;
   inline void set_addr(::google::protobuf::int32 value);
 
-  // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
+  // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 3;
   inline int id_value_pairs_size() const;
   inline void clear_id_value_pairs();
-  static const int kIdValuePairsFieldNumber = 2;
+  static const int kIdValuePairsFieldNumber = 3;
   inline const ::com::letsmidi::monsys::protocol::push::IdValuePair& id_value_pairs(int index) const;
   inline ::com::letsmidi::monsys::protocol::push::IdValuePair* mutable_id_value_pairs(int index);
   inline ::com::letsmidi::monsys::protocol::push::IdValuePair* add_id_value_pairs();
@@ -2012,6 +2039,8 @@ class SetDevInfo : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.SetDevInfo)
  private:
+  inline void set_has_device_id();
+  inline void clear_has_device_id();
   inline void set_has_addr();
   inline void clear_has_addr();
 
@@ -2019,6 +2048,7 @@ class SetDevInfo : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::std::string* device_id_;
   ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::IdValuePair > id_value_pairs_;
   ::google::protobuf::int32 addr_;
   friend void  protobuf_AddDesc_push_2eproto();
@@ -2940,86 +2970,86 @@ inline void PushMsg::set_sequence(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.PushMsg.sequence)
 }
 
-// optional .com.letsmidi.monsys.protocol.push.Login login = 10;
-inline bool PushMsg::has_login() const {
+// optional .com.letsmidi.monsys.protocol.push.PushClientLogin push_client_login = 10;
+inline bool PushMsg::has_push_client_login() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void PushMsg::set_has_login() {
+inline void PushMsg::set_has_push_client_login() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void PushMsg::clear_has_login() {
+inline void PushMsg::clear_has_push_client_login() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void PushMsg::clear_login() {
-  if (login_ != NULL) login_->::com::letsmidi::monsys::protocol::push::Login::Clear();
-  clear_has_login();
+inline void PushMsg::clear_push_client_login() {
+  if (push_client_login_ != NULL) push_client_login_->::com::letsmidi::monsys::protocol::push::PushClientLogin::Clear();
+  clear_has_push_client_login();
 }
-inline const ::com::letsmidi::monsys::protocol::push::Login& PushMsg::login() const {
-  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.PushMsg.login)
-  return login_ != NULL ? *login_ : *default_instance_->login_;
+inline const ::com::letsmidi::monsys::protocol::push::PushClientLogin& PushMsg::push_client_login() const {
+  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.PushMsg.push_client_login)
+  return push_client_login_ != NULL ? *push_client_login_ : *default_instance_->push_client_login_;
 }
-inline ::com::letsmidi::monsys::protocol::push::Login* PushMsg::mutable_login() {
-  set_has_login();
-  if (login_ == NULL) login_ = new ::com::letsmidi::monsys::protocol::push::Login;
-  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.PushMsg.login)
-  return login_;
+inline ::com::letsmidi::monsys::protocol::push::PushClientLogin* PushMsg::mutable_push_client_login() {
+  set_has_push_client_login();
+  if (push_client_login_ == NULL) push_client_login_ = new ::com::letsmidi::monsys::protocol::push::PushClientLogin;
+  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.PushMsg.push_client_login)
+  return push_client_login_;
 }
-inline ::com::letsmidi::monsys::protocol::push::Login* PushMsg::release_login() {
-  clear_has_login();
-  ::com::letsmidi::monsys::protocol::push::Login* temp = login_;
-  login_ = NULL;
+inline ::com::letsmidi::monsys::protocol::push::PushClientLogin* PushMsg::release_push_client_login() {
+  clear_has_push_client_login();
+  ::com::letsmidi::monsys::protocol::push::PushClientLogin* temp = push_client_login_;
+  push_client_login_ = NULL;
   return temp;
 }
-inline void PushMsg::set_allocated_login(::com::letsmidi::monsys::protocol::push::Login* login) {
-  delete login_;
-  login_ = login;
-  if (login) {
-    set_has_login();
+inline void PushMsg::set_allocated_push_client_login(::com::letsmidi::monsys::protocol::push::PushClientLogin* push_client_login) {
+  delete push_client_login_;
+  push_client_login_ = push_client_login;
+  if (push_client_login) {
+    set_has_push_client_login();
   } else {
-    clear_has_login();
+    clear_has_push_client_login();
   }
-  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.PushMsg.login)
+  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.PushMsg.push_client_login)
 }
 
-// optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;
-inline bool PushMsg::has_login_rsp() const {
+// optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp push_client_login_rsp = 11;
+inline bool PushMsg::has_push_client_login_rsp() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void PushMsg::set_has_login_rsp() {
+inline void PushMsg::set_has_push_client_login_rsp() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void PushMsg::clear_has_login_rsp() {
+inline void PushMsg::clear_has_push_client_login_rsp() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void PushMsg::clear_login_rsp() {
-  if (login_rsp_ != NULL) login_rsp_->::com::letsmidi::monsys::protocol::push::LoginRsp::Clear();
-  clear_has_login_rsp();
+inline void PushMsg::clear_push_client_login_rsp() {
+  if (push_client_login_rsp_ != NULL) push_client_login_rsp_->::com::letsmidi::monsys::protocol::push::PushClientLoginRsp::Clear();
+  clear_has_push_client_login_rsp();
 }
-inline const ::com::letsmidi::monsys::protocol::push::LoginRsp& PushMsg::login_rsp() const {
-  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.PushMsg.login_rsp)
-  return login_rsp_ != NULL ? *login_rsp_ : *default_instance_->login_rsp_;
+inline const ::com::letsmidi::monsys::protocol::push::PushClientLoginRsp& PushMsg::push_client_login_rsp() const {
+  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.PushMsg.push_client_login_rsp)
+  return push_client_login_rsp_ != NULL ? *push_client_login_rsp_ : *default_instance_->push_client_login_rsp_;
 }
-inline ::com::letsmidi::monsys::protocol::push::LoginRsp* PushMsg::mutable_login_rsp() {
-  set_has_login_rsp();
-  if (login_rsp_ == NULL) login_rsp_ = new ::com::letsmidi::monsys::protocol::push::LoginRsp;
-  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.PushMsg.login_rsp)
-  return login_rsp_;
+inline ::com::letsmidi::monsys::protocol::push::PushClientLoginRsp* PushMsg::mutable_push_client_login_rsp() {
+  set_has_push_client_login_rsp();
+  if (push_client_login_rsp_ == NULL) push_client_login_rsp_ = new ::com::letsmidi::monsys::protocol::push::PushClientLoginRsp;
+  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.PushMsg.push_client_login_rsp)
+  return push_client_login_rsp_;
 }
-inline ::com::letsmidi::monsys::protocol::push::LoginRsp* PushMsg::release_login_rsp() {
-  clear_has_login_rsp();
-  ::com::letsmidi::monsys::protocol::push::LoginRsp* temp = login_rsp_;
-  login_rsp_ = NULL;
+inline ::com::letsmidi::monsys::protocol::push::PushClientLoginRsp* PushMsg::release_push_client_login_rsp() {
+  clear_has_push_client_login_rsp();
+  ::com::letsmidi::monsys::protocol::push::PushClientLoginRsp* temp = push_client_login_rsp_;
+  push_client_login_rsp_ = NULL;
   return temp;
 }
-inline void PushMsg::set_allocated_login_rsp(::com::letsmidi::monsys::protocol::push::LoginRsp* login_rsp) {
-  delete login_rsp_;
-  login_rsp_ = login_rsp;
-  if (login_rsp) {
-    set_has_login_rsp();
+inline void PushMsg::set_allocated_push_client_login_rsp(::com::letsmidi::monsys::protocol::push::PushClientLoginRsp* push_client_login_rsp) {
+  delete push_client_login_rsp_;
+  push_client_login_rsp_ = push_client_login_rsp;
+  if (push_client_login_rsp) {
+    set_has_push_client_login_rsp();
   } else {
-    clear_has_login_rsp();
+    clear_has_push_client_login_rsp();
   }
-  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.PushMsg.login_rsp)
+  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.PushMsg.push_client_login_rsp)
 }
 
 // optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;
@@ -3514,86 +3544,86 @@ inline void PushMsg::set_allocated_set_dev_info_rsp(::com::letsmidi::monsys::pro
   // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.PushMsg.set_dev_info_rsp)
 }
 
-// optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;
-inline bool PushMsg::has_client_login() const {
+// optional .com.letsmidi.monsys.protocol.push.AdminClientLogin admin_client_login = 24;
+inline bool PushMsg::has_admin_client_login() const {
   return (_has_bits_[0] & 0x00020000u) != 0;
 }
-inline void PushMsg::set_has_client_login() {
+inline void PushMsg::set_has_admin_client_login() {
   _has_bits_[0] |= 0x00020000u;
 }
-inline void PushMsg::clear_has_client_login() {
+inline void PushMsg::clear_has_admin_client_login() {
   _has_bits_[0] &= ~0x00020000u;
 }
-inline void PushMsg::clear_client_login() {
-  if (client_login_ != NULL) client_login_->::com::letsmidi::monsys::protocol::push::ClientLogin::Clear();
-  clear_has_client_login();
+inline void PushMsg::clear_admin_client_login() {
+  if (admin_client_login_ != NULL) admin_client_login_->::com::letsmidi::monsys::protocol::push::AdminClientLogin::Clear();
+  clear_has_admin_client_login();
 }
-inline const ::com::letsmidi::monsys::protocol::push::ClientLogin& PushMsg::client_login() const {
-  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.PushMsg.client_login)
-  return client_login_ != NULL ? *client_login_ : *default_instance_->client_login_;
+inline const ::com::letsmidi::monsys::protocol::push::AdminClientLogin& PushMsg::admin_client_login() const {
+  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.PushMsg.admin_client_login)
+  return admin_client_login_ != NULL ? *admin_client_login_ : *default_instance_->admin_client_login_;
 }
-inline ::com::letsmidi::monsys::protocol::push::ClientLogin* PushMsg::mutable_client_login() {
-  set_has_client_login();
-  if (client_login_ == NULL) client_login_ = new ::com::letsmidi::monsys::protocol::push::ClientLogin;
-  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.PushMsg.client_login)
-  return client_login_;
+inline ::com::letsmidi::monsys::protocol::push::AdminClientLogin* PushMsg::mutable_admin_client_login() {
+  set_has_admin_client_login();
+  if (admin_client_login_ == NULL) admin_client_login_ = new ::com::letsmidi::monsys::protocol::push::AdminClientLogin;
+  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.PushMsg.admin_client_login)
+  return admin_client_login_;
 }
-inline ::com::letsmidi::monsys::protocol::push::ClientLogin* PushMsg::release_client_login() {
-  clear_has_client_login();
-  ::com::letsmidi::monsys::protocol::push::ClientLogin* temp = client_login_;
-  client_login_ = NULL;
+inline ::com::letsmidi::monsys::protocol::push::AdminClientLogin* PushMsg::release_admin_client_login() {
+  clear_has_admin_client_login();
+  ::com::letsmidi::monsys::protocol::push::AdminClientLogin* temp = admin_client_login_;
+  admin_client_login_ = NULL;
   return temp;
 }
-inline void PushMsg::set_allocated_client_login(::com::letsmidi::monsys::protocol::push::ClientLogin* client_login) {
-  delete client_login_;
-  client_login_ = client_login;
-  if (client_login) {
-    set_has_client_login();
+inline void PushMsg::set_allocated_admin_client_login(::com::letsmidi::monsys::protocol::push::AdminClientLogin* admin_client_login) {
+  delete admin_client_login_;
+  admin_client_login_ = admin_client_login;
+  if (admin_client_login) {
+    set_has_admin_client_login();
   } else {
-    clear_has_client_login();
+    clear_has_admin_client_login();
   }
-  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.PushMsg.client_login)
+  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.PushMsg.admin_client_login)
 }
 
-// optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;
-inline bool PushMsg::has_client_login_rsp() const {
+// optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp admin_client_login_rsp = 25;
+inline bool PushMsg::has_admin_client_login_rsp() const {
   return (_has_bits_[0] & 0x00040000u) != 0;
 }
-inline void PushMsg::set_has_client_login_rsp() {
+inline void PushMsg::set_has_admin_client_login_rsp() {
   _has_bits_[0] |= 0x00040000u;
 }
-inline void PushMsg::clear_has_client_login_rsp() {
+inline void PushMsg::clear_has_admin_client_login_rsp() {
   _has_bits_[0] &= ~0x00040000u;
 }
-inline void PushMsg::clear_client_login_rsp() {
-  if (client_login_rsp_ != NULL) client_login_rsp_->::com::letsmidi::monsys::protocol::push::ClientLoginRsp::Clear();
-  clear_has_client_login_rsp();
+inline void PushMsg::clear_admin_client_login_rsp() {
+  if (admin_client_login_rsp_ != NULL) admin_client_login_rsp_->::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp::Clear();
+  clear_has_admin_client_login_rsp();
 }
-inline const ::com::letsmidi::monsys::protocol::push::ClientLoginRsp& PushMsg::client_login_rsp() const {
-  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.PushMsg.client_login_rsp)
-  return client_login_rsp_ != NULL ? *client_login_rsp_ : *default_instance_->client_login_rsp_;
+inline const ::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp& PushMsg::admin_client_login_rsp() const {
+  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.PushMsg.admin_client_login_rsp)
+  return admin_client_login_rsp_ != NULL ? *admin_client_login_rsp_ : *default_instance_->admin_client_login_rsp_;
 }
-inline ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* PushMsg::mutable_client_login_rsp() {
-  set_has_client_login_rsp();
-  if (client_login_rsp_ == NULL) client_login_rsp_ = new ::com::letsmidi::monsys::protocol::push::ClientLoginRsp;
-  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.PushMsg.client_login_rsp)
-  return client_login_rsp_;
+inline ::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp* PushMsg::mutable_admin_client_login_rsp() {
+  set_has_admin_client_login_rsp();
+  if (admin_client_login_rsp_ == NULL) admin_client_login_rsp_ = new ::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp;
+  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.PushMsg.admin_client_login_rsp)
+  return admin_client_login_rsp_;
 }
-inline ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* PushMsg::release_client_login_rsp() {
-  clear_has_client_login_rsp();
-  ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* temp = client_login_rsp_;
-  client_login_rsp_ = NULL;
+inline ::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp* PushMsg::release_admin_client_login_rsp() {
+  clear_has_admin_client_login_rsp();
+  ::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp* temp = admin_client_login_rsp_;
+  admin_client_login_rsp_ = NULL;
   return temp;
 }
-inline void PushMsg::set_allocated_client_login_rsp(::com::letsmidi::monsys::protocol::push::ClientLoginRsp* client_login_rsp) {
-  delete client_login_rsp_;
-  client_login_rsp_ = client_login_rsp;
-  if (client_login_rsp) {
-    set_has_client_login_rsp();
+inline void PushMsg::set_allocated_admin_client_login_rsp(::com::letsmidi::monsys::protocol::push::AdminClientLoginRsp* admin_client_login_rsp) {
+  delete admin_client_login_rsp_;
+  admin_client_login_rsp_ = admin_client_login_rsp;
+  if (admin_client_login_rsp) {
+    set_has_admin_client_login_rsp();
   } else {
-    clear_has_client_login_rsp();
+    clear_has_admin_client_login_rsp();
   }
-  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.PushMsg.client_login_rsp)
+  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.PushMsg.admin_client_login_rsp)
 }
 
 // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
@@ -3721,61 +3751,61 @@ inline void PushMsg::set_allocated_heartbeat(::com::letsmidi::monsys::protocol::
 
 // -------------------------------------------------------------------
 
-// Login
+// PushClientLogin
 
 // required string device_id = 1;
-inline bool Login::has_device_id() const {
+inline bool PushClientLogin::has_device_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Login::set_has_device_id() {
+inline void PushClientLogin::set_has_device_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Login::clear_has_device_id() {
+inline void PushClientLogin::clear_has_device_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void Login::clear_device_id() {
+inline void PushClientLogin::clear_device_id() {
   if (device_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     device_id_->clear();
   }
   clear_has_device_id();
 }
-inline const ::std::string& Login::device_id() const {
-  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.Login.device_id)
+inline const ::std::string& PushClientLogin::device_id() const {
+  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.PushClientLogin.device_id)
   return *device_id_;
 }
-inline void Login::set_device_id(const ::std::string& value) {
+inline void PushClientLogin::set_device_id(const ::std::string& value) {
   set_has_device_id();
   if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     device_id_ = new ::std::string;
   }
   device_id_->assign(value);
-  // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.Login.device_id)
+  // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.PushClientLogin.device_id)
 }
-inline void Login::set_device_id(const char* value) {
+inline void PushClientLogin::set_device_id(const char* value) {
   set_has_device_id();
   if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     device_id_ = new ::std::string;
   }
   device_id_->assign(value);
-  // @@protoc_insertion_point(field_set_char:com.letsmidi.monsys.protocol.push.Login.device_id)
+  // @@protoc_insertion_point(field_set_char:com.letsmidi.monsys.protocol.push.PushClientLogin.device_id)
 }
-inline void Login::set_device_id(const char* value, size_t size) {
+inline void PushClientLogin::set_device_id(const char* value, size_t size) {
   set_has_device_id();
   if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     device_id_ = new ::std::string;
   }
   device_id_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:com.letsmidi.monsys.protocol.push.Login.device_id)
+  // @@protoc_insertion_point(field_set_pointer:com.letsmidi.monsys.protocol.push.PushClientLogin.device_id)
 }
-inline ::std::string* Login::mutable_device_id() {
+inline ::std::string* PushClientLogin::mutable_device_id() {
   set_has_device_id();
   if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     device_id_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.Login.device_id)
+  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.PushClientLogin.device_id)
   return device_id_;
 }
-inline ::std::string* Login::release_device_id() {
+inline ::std::string* PushClientLogin::release_device_id() {
   clear_has_device_id();
   if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
@@ -3785,7 +3815,7 @@ inline ::std::string* Login::release_device_id() {
     return temp;
   }
 }
-inline void Login::set_allocated_device_id(::std::string* device_id) {
+inline void PushClientLogin::set_allocated_device_id(::std::string* device_id) {
   if (device_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete device_id_;
   }
@@ -3796,94 +3826,94 @@ inline void Login::set_allocated_device_id(::std::string* device_id) {
     clear_has_device_id();
     device_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.Login.device_id)
+  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.PushClientLogin.device_id)
 }
 
 // -------------------------------------------------------------------
 
-// LoginRsp
+// PushClientLoginRsp
 
 // required int32 code = 1;
-inline bool LoginRsp::has_code() const {
+inline bool PushClientLoginRsp::has_code() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void LoginRsp::set_has_code() {
+inline void PushClientLoginRsp::set_has_code() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void LoginRsp::clear_has_code() {
+inline void PushClientLoginRsp::clear_has_code() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void LoginRsp::clear_code() {
+inline void PushClientLoginRsp::clear_code() {
   code_ = 0;
   clear_has_code();
 }
-inline ::google::protobuf::int32 LoginRsp::code() const {
-  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.LoginRsp.code)
+inline ::google::protobuf::int32 PushClientLoginRsp::code() const {
+  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.PushClientLoginRsp.code)
   return code_;
 }
-inline void LoginRsp::set_code(::google::protobuf::int32 value) {
+inline void PushClientLoginRsp::set_code(::google::protobuf::int32 value) {
   set_has_code();
   code_ = value;
-  // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.LoginRsp.code)
+  // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.PushClientLoginRsp.code)
 }
 
 // -------------------------------------------------------------------
 
-// ClientLogin
+// AdminClientLogin
 
 // required string account = 1;
-inline bool ClientLogin::has_account() const {
+inline bool AdminClientLogin::has_account() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void ClientLogin::set_has_account() {
+inline void AdminClientLogin::set_has_account() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void ClientLogin::clear_has_account() {
+inline void AdminClientLogin::clear_has_account() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void ClientLogin::clear_account() {
+inline void AdminClientLogin::clear_account() {
   if (account_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     account_->clear();
   }
   clear_has_account();
 }
-inline const ::std::string& ClientLogin::account() const {
-  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.ClientLogin.account)
+inline const ::std::string& AdminClientLogin::account() const {
+  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.AdminClientLogin.account)
   return *account_;
 }
-inline void ClientLogin::set_account(const ::std::string& value) {
+inline void AdminClientLogin::set_account(const ::std::string& value) {
   set_has_account();
   if (account_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     account_ = new ::std::string;
   }
   account_->assign(value);
-  // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.ClientLogin.account)
+  // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.AdminClientLogin.account)
 }
-inline void ClientLogin::set_account(const char* value) {
+inline void AdminClientLogin::set_account(const char* value) {
   set_has_account();
   if (account_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     account_ = new ::std::string;
   }
   account_->assign(value);
-  // @@protoc_insertion_point(field_set_char:com.letsmidi.monsys.protocol.push.ClientLogin.account)
+  // @@protoc_insertion_point(field_set_char:com.letsmidi.monsys.protocol.push.AdminClientLogin.account)
 }
-inline void ClientLogin::set_account(const char* value, size_t size) {
+inline void AdminClientLogin::set_account(const char* value, size_t size) {
   set_has_account();
   if (account_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     account_ = new ::std::string;
   }
   account_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:com.letsmidi.monsys.protocol.push.ClientLogin.account)
+  // @@protoc_insertion_point(field_set_pointer:com.letsmidi.monsys.protocol.push.AdminClientLogin.account)
 }
-inline ::std::string* ClientLogin::mutable_account() {
+inline ::std::string* AdminClientLogin::mutable_account() {
   set_has_account();
   if (account_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     account_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.ClientLogin.account)
+  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.AdminClientLogin.account)
   return account_;
 }
-inline ::std::string* ClientLogin::release_account() {
+inline ::std::string* AdminClientLogin::release_account() {
   clear_has_account();
   if (account_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
@@ -3893,7 +3923,7 @@ inline ::std::string* ClientLogin::release_account() {
     return temp;
   }
 }
-inline void ClientLogin::set_allocated_account(::std::string* account) {
+inline void AdminClientLogin::set_allocated_account(::std::string* account) {
   if (account_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete account_;
   }
@@ -3904,62 +3934,62 @@ inline void ClientLogin::set_allocated_account(::std::string* account) {
     clear_has_account();
     account_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.ClientLogin.account)
+  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.AdminClientLogin.account)
 }
 
 // required string password = 2;
-inline bool ClientLogin::has_password() const {
+inline bool AdminClientLogin::has_password() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void ClientLogin::set_has_password() {
+inline void AdminClientLogin::set_has_password() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void ClientLogin::clear_has_password() {
+inline void AdminClientLogin::clear_has_password() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void ClientLogin::clear_password() {
+inline void AdminClientLogin::clear_password() {
   if (password_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     password_->clear();
   }
   clear_has_password();
 }
-inline const ::std::string& ClientLogin::password() const {
-  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.ClientLogin.password)
+inline const ::std::string& AdminClientLogin::password() const {
+  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.AdminClientLogin.password)
   return *password_;
 }
-inline void ClientLogin::set_password(const ::std::string& value) {
+inline void AdminClientLogin::set_password(const ::std::string& value) {
   set_has_password();
   if (password_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     password_ = new ::std::string;
   }
   password_->assign(value);
-  // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.ClientLogin.password)
+  // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.AdminClientLogin.password)
 }
-inline void ClientLogin::set_password(const char* value) {
+inline void AdminClientLogin::set_password(const char* value) {
   set_has_password();
   if (password_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     password_ = new ::std::string;
   }
   password_->assign(value);
-  // @@protoc_insertion_point(field_set_char:com.letsmidi.monsys.protocol.push.ClientLogin.password)
+  // @@protoc_insertion_point(field_set_char:com.letsmidi.monsys.protocol.push.AdminClientLogin.password)
 }
-inline void ClientLogin::set_password(const char* value, size_t size) {
+inline void AdminClientLogin::set_password(const char* value, size_t size) {
   set_has_password();
   if (password_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     password_ = new ::std::string;
   }
   password_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:com.letsmidi.monsys.protocol.push.ClientLogin.password)
+  // @@protoc_insertion_point(field_set_pointer:com.letsmidi.monsys.protocol.push.AdminClientLogin.password)
 }
-inline ::std::string* ClientLogin::mutable_password() {
+inline ::std::string* AdminClientLogin::mutable_password() {
   set_has_password();
   if (password_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     password_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.ClientLogin.password)
+  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.AdminClientLogin.password)
   return password_;
 }
-inline ::std::string* ClientLogin::release_password() {
+inline ::std::string* AdminClientLogin::release_password() {
   clear_has_password();
   if (password_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
@@ -3969,7 +3999,7 @@ inline ::std::string* ClientLogin::release_password() {
     return temp;
   }
 }
-inline void ClientLogin::set_allocated_password(::std::string* password) {
+inline void AdminClientLogin::set_allocated_password(::std::string* password) {
   if (password_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete password_;
   }
@@ -3980,64 +4010,64 @@ inline void ClientLogin::set_allocated_password(::std::string* password) {
     clear_has_password();
     password_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.ClientLogin.password)
+  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.AdminClientLogin.password)
 }
 
 // -------------------------------------------------------------------
 
-// ClientLoginRsp
+// AdminClientLoginRsp
 
 // required int32 code = 1;
-inline bool ClientLoginRsp::has_code() const {
+inline bool AdminClientLoginRsp::has_code() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void ClientLoginRsp::set_has_code() {
+inline void AdminClientLoginRsp::set_has_code() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void ClientLoginRsp::clear_has_code() {
+inline void AdminClientLoginRsp::clear_has_code() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void ClientLoginRsp::clear_code() {
+inline void AdminClientLoginRsp::clear_code() {
   code_ = 0;
   clear_has_code();
 }
-inline ::google::protobuf::int32 ClientLoginRsp::code() const {
-  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.ClientLoginRsp.code)
+inline ::google::protobuf::int32 AdminClientLoginRsp::code() const {
+  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp.code)
   return code_;
 }
-inline void ClientLoginRsp::set_code(::google::protobuf::int32 value) {
+inline void AdminClientLoginRsp::set_code(::google::protobuf::int32 value) {
   set_has_code();
   code_ = value;
-  // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.ClientLoginRsp.code)
+  // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp.code)
 }
 
 // repeated .com.letsmidi.monsys.protocol.push.FGatewayInfo fgw_infos = 2;
-inline int ClientLoginRsp::fgw_infos_size() const {
+inline int AdminClientLoginRsp::fgw_infos_size() const {
   return fgw_infos_.size();
 }
-inline void ClientLoginRsp::clear_fgw_infos() {
+inline void AdminClientLoginRsp::clear_fgw_infos() {
   fgw_infos_.Clear();
 }
-inline const ::com::letsmidi::monsys::protocol::push::FGatewayInfo& ClientLoginRsp::fgw_infos(int index) const {
-  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.ClientLoginRsp.fgw_infos)
+inline const ::com::letsmidi::monsys::protocol::push::FGatewayInfo& AdminClientLoginRsp::fgw_infos(int index) const {
+  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp.fgw_infos)
   return fgw_infos_.Get(index);
 }
-inline ::com::letsmidi::monsys::protocol::push::FGatewayInfo* ClientLoginRsp::mutable_fgw_infos(int index) {
-  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.ClientLoginRsp.fgw_infos)
+inline ::com::letsmidi::monsys::protocol::push::FGatewayInfo* AdminClientLoginRsp::mutable_fgw_infos(int index) {
+  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp.fgw_infos)
   return fgw_infos_.Mutable(index);
 }
-inline ::com::letsmidi::monsys::protocol::push::FGatewayInfo* ClientLoginRsp::add_fgw_infos() {
-  // @@protoc_insertion_point(field_add:com.letsmidi.monsys.protocol.push.ClientLoginRsp.fgw_infos)
+inline ::com::letsmidi::monsys::protocol::push::FGatewayInfo* AdminClientLoginRsp::add_fgw_infos() {
+  // @@protoc_insertion_point(field_add:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp.fgw_infos)
   return fgw_infos_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::FGatewayInfo >&
-ClientLoginRsp::fgw_infos() const {
-  // @@protoc_insertion_point(field_list:com.letsmidi.monsys.protocol.push.ClientLoginRsp.fgw_infos)
+AdminClientLoginRsp::fgw_infos() const {
+  // @@protoc_insertion_point(field_list:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp.fgw_infos)
   return fgw_infos_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::FGatewayInfo >*
-ClientLoginRsp::mutable_fgw_infos() {
-  // @@protoc_insertion_point(field_mutable_list:com.letsmidi.monsys.protocol.push.ClientLoginRsp.fgw_infos)
+AdminClientLoginRsp::mutable_fgw_infos() {
+  // @@protoc_insertion_point(field_mutable_list:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp.fgw_infos)
   return &fgw_infos_;
 }
 
@@ -4461,15 +4491,91 @@ GetDevListRsp::mutable_dev_infos() {
 
 // GetDevInfo
 
-// required int32 addr = 1;
-inline bool GetDevInfo::has_addr() const {
+// required string device_id = 1;
+inline bool GetDevInfo::has_device_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void GetDevInfo::set_has_addr() {
+inline void GetDevInfo::set_has_device_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void GetDevInfo::clear_has_addr() {
+inline void GetDevInfo::clear_has_device_id() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void GetDevInfo::clear_device_id() {
+  if (device_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    device_id_->clear();
+  }
+  clear_has_device_id();
+}
+inline const ::std::string& GetDevInfo::device_id() const {
+  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.GetDevInfo.device_id)
+  return *device_id_;
+}
+inline void GetDevInfo::set_device_id(const ::std::string& value) {
+  set_has_device_id();
+  if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    device_id_ = new ::std::string;
+  }
+  device_id_->assign(value);
+  // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.GetDevInfo.device_id)
+}
+inline void GetDevInfo::set_device_id(const char* value) {
+  set_has_device_id();
+  if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    device_id_ = new ::std::string;
+  }
+  device_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:com.letsmidi.monsys.protocol.push.GetDevInfo.device_id)
+}
+inline void GetDevInfo::set_device_id(const char* value, size_t size) {
+  set_has_device_id();
+  if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    device_id_ = new ::std::string;
+  }
+  device_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:com.letsmidi.monsys.protocol.push.GetDevInfo.device_id)
+}
+inline ::std::string* GetDevInfo::mutable_device_id() {
+  set_has_device_id();
+  if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    device_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.GetDevInfo.device_id)
+  return device_id_;
+}
+inline ::std::string* GetDevInfo::release_device_id() {
+  clear_has_device_id();
+  if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = device_id_;
+    device_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void GetDevInfo::set_allocated_device_id(::std::string* device_id) {
+  if (device_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete device_id_;
+  }
+  if (device_id) {
+    set_has_device_id();
+    device_id_ = device_id;
+  } else {
+    clear_has_device_id();
+    device_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.GetDevInfo.device_id)
+}
+
+// required int32 addr = 2;
+inline bool GetDevInfo::has_addr() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void GetDevInfo::set_has_addr() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void GetDevInfo::clear_has_addr() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void GetDevInfo::clear_addr() {
   addr_ = 0;
@@ -4485,7 +4591,7 @@ inline void GetDevInfo::set_addr(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.GetDevInfo.addr)
 }
 
-// repeated int32 item_ids = 2 [packed = true];
+// repeated int32 item_ids = 3 [packed = true];
 inline int GetDevInfo::item_ids_size() const {
   return item_ids_.size();
 }
@@ -4577,15 +4683,91 @@ GetDevInfoRsp::mutable_id_value_pairs() {
 
 // SetDevInfo
 
-// required int32 addr = 1;
-inline bool SetDevInfo::has_addr() const {
+// required string device_id = 1;
+inline bool SetDevInfo::has_device_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void SetDevInfo::set_has_addr() {
+inline void SetDevInfo::set_has_device_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void SetDevInfo::clear_has_addr() {
+inline void SetDevInfo::clear_has_device_id() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void SetDevInfo::clear_device_id() {
+  if (device_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    device_id_->clear();
+  }
+  clear_has_device_id();
+}
+inline const ::std::string& SetDevInfo::device_id() const {
+  // @@protoc_insertion_point(field_get:com.letsmidi.monsys.protocol.push.SetDevInfo.device_id)
+  return *device_id_;
+}
+inline void SetDevInfo::set_device_id(const ::std::string& value) {
+  set_has_device_id();
+  if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    device_id_ = new ::std::string;
+  }
+  device_id_->assign(value);
+  // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.SetDevInfo.device_id)
+}
+inline void SetDevInfo::set_device_id(const char* value) {
+  set_has_device_id();
+  if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    device_id_ = new ::std::string;
+  }
+  device_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:com.letsmidi.monsys.protocol.push.SetDevInfo.device_id)
+}
+inline void SetDevInfo::set_device_id(const char* value, size_t size) {
+  set_has_device_id();
+  if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    device_id_ = new ::std::string;
+  }
+  device_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:com.letsmidi.monsys.protocol.push.SetDevInfo.device_id)
+}
+inline ::std::string* SetDevInfo::mutable_device_id() {
+  set_has_device_id();
+  if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    device_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:com.letsmidi.monsys.protocol.push.SetDevInfo.device_id)
+  return device_id_;
+}
+inline ::std::string* SetDevInfo::release_device_id() {
+  clear_has_device_id();
+  if (device_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = device_id_;
+    device_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void SetDevInfo::set_allocated_device_id(::std::string* device_id) {
+  if (device_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete device_id_;
+  }
+  if (device_id) {
+    set_has_device_id();
+    device_id_ = device_id;
+  } else {
+    clear_has_device_id();
+    device_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.push.SetDevInfo.device_id)
+}
+
+// required int32 addr = 2;
+inline bool SetDevInfo::has_addr() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void SetDevInfo::set_has_addr() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void SetDevInfo::clear_has_addr() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void SetDevInfo::clear_addr() {
   addr_ = 0;
@@ -4601,7 +4783,7 @@ inline void SetDevInfo::set_addr(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:com.letsmidi.monsys.protocol.push.SetDevInfo.addr)
 }
 
-// repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
+// repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 3;
 inline int SetDevInfo::id_value_pairs_size() const {
   return id_value_pairs_.size();
 }

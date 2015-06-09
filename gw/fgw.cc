@@ -59,31 +59,18 @@ int main(int argc, char *argv[])
     FGWClient *client = NULL;
     {
       client = new FGWClient(base);
-      client->setServerAddress("192.168.2.105", 1984);
+      client->setServerAddress(PUSH_SERVER_IP, PUSH_SERVER_PORT);
       if (OK != client->init()) {
         Z_LOG_E("failed to initialize fgw client");
         break;
       }
     }
 
-    //UploadWorker worker;
-    //if (!worker.init()) {
-    //  Z_LOG_E("failed to initialize upload worker");
-    //  break;
-    //}
-    //
-    //if (!worker.start()) {
-    //  Z_LOG_E("failed to start upload worker");
-    //  break;
-    //}
-
     while (!g_stop) {
       event_base_loop(base, EVLOOP_ONCE);
       serial->checkMsgQueue();
       client->checkMsgQueue();
     }
-
-    // worker.stop();
 
     rv = OK;
   } while (0);
