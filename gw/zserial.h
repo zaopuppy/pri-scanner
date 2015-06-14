@@ -23,9 +23,9 @@ public:
 public:
   virtual int init();
   virtual void close();
-  // virtual int sendMsg(ZInnerMsg *msg);
   virtual int onInnerMsg(ZInnerMsg *msg);
   virtual void routine(long delta) { handler_->routine(delta); }
+  virtual bool isActive() { return state_ == STATE_CONNECTED; }
 
   int event(evutil_socket_t fd, short events);
 

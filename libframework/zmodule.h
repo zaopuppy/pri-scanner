@@ -18,6 +18,7 @@ public:
   virtual void close() = 0;
   virtual int onInnerMsg(ZInnerMsg *msg) = 0;
   virtual void routine(long delta) = 0;
+  virtual bool isActive() = 0;
 
   virtual int read(char *buf, int buf_len) = 0;
   virtual int write(char const *buf, int buf_len) = 0;

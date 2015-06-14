@@ -32,6 +32,7 @@ class ZClient : public ZModule {
 
   // TODO
   // virtual void onTimeout(int id) {}
+  virtual bool isActive() { return state_ == STATE_CONNECTED; }
 
   void event(evutil_socket_t fd, short events);
   void setServerAddress(const char *server_ip, unsigned short server_port) {

@@ -104,7 +104,7 @@ public:
       : ZInnerMsg(Z_ZB_SET_DEV_RSP) { }
 
 public:
-  uint8_t status_;
+  int32_t status_;
 };
 
 ////////////////////////////////////////////////////
@@ -124,7 +124,7 @@ public:
       : ZInnerMsg(Z_ZB_PRE_BIND_RSP) { }
 
 public:
-  uint8_t result_;
+  int32_t result_;
 };
 
 ////////////////////////////////////////////////////
@@ -144,7 +144,7 @@ public:
       : ZInnerMsg(Z_ZB_BIND_RSP) { }
 
 public:
-  uint8_t result_;
+  int32_t result_;
 };
 
 class ZInnerUploadReq: public ZInnerMsg {
@@ -162,7 +162,7 @@ public:
       : ZInnerMsg(Z_ZB_UPLOAD_RSP) {}
 
 public:
-  uint8_t result_;
+  int32_t result_;
 };
 
 class ZInnerConfigReq: public ZInnerMsg {
@@ -178,7 +178,7 @@ public:
       : ZInnerMsg(Z_ZB_CONFIG_RSP) {}
 
 public:
-  uint8_t result_;
+  int32_t result_;
 };
 
 

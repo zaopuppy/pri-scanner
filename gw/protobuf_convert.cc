@@ -81,8 +81,8 @@ PushMsg* inner2push(const ZInnerGetDevListRsp &inner_msg)
   push_msg->set_type(GET_DEV_LIST_RSP);
 
   GetDevListRsp *rsp = new GetDevListRsp();
-  rsp->set_code(0);
-  int dev_info_count = inner_msg.info_list_.size();
+  rsp->set_code(inner_msg.status_);
+  int dev_info_count = (int) inner_msg.info_list_.size();
   for (int i = 0; i < dev_info_count; ++i) {
     DeviceInfo *info = rsp->add_dev_infos();
     const ZZBDevInfo *zb_info = inner_msg.info_list_[i];
@@ -103,8 +103,8 @@ PushMsg* inner2push(const ZInnerGetDevInfoRsp &inner_msg)
   push_msg->set_type(GET_DEV_INFO_RSP);
 
   GetDevInfoRsp *rsp = new GetDevInfoRsp();
-  rsp->set_code(0);
-  int id_value_pair_count = inner_msg.dev_infos_.size();
+  rsp->set_code(inner_msg.status_);
+  int id_value_pair_count = (int) inner_msg.dev_infos_.size();
   for (int i = 0; i < id_value_pair_count; ++i) {
     const ZItemPair &zb_pair = inner_msg.dev_infos_[i];
     IdValuePair *pair = rsp->add_id_value_pairs();
