@@ -1,13 +1,6 @@
 #include "fgw_client_handler.h"
 
 #include <unistd.h>
-#include <string.h>
-
-#include "webapi_msg.h"
-#include "push.pb.h"
-// #include "google/protobuf/io/coded_stream.h"
-#include "protobuf_helper.h"
-#include "protobuf_convert.h"
 
 using namespace com::letsmidi::monsys::protocol::push;
 
@@ -116,14 +109,22 @@ void FGWClientHandler::login()
   state_ = STATE_WAIT_FOR_SERVER;
 
   // set timer
-  login_timer_id = timer_.setTimer(10 * 1000);
+  if (login_timer_id >= 0) {
+    timer_.cancel(login_timer_id);
+  }
+  login_timer_id = timer_.set(10 * 1000);
   if (login_timer_id < 0) {
     Z_LOG_E("Failed to set timer, there's nothing we can do now");
   }
+  Z_LOG_D("login_timer_id=%d", login_timer_id);
 }
 
 void FGWClientHandler::close()
 {
+  setState(STATE_UNREGISTERED);
+  // TODO: cancel timer
+  // timer_.cancelAll();
+
   event_free(read_event_);
   read_event_ = NULL;
   ::close(fd_);
@@ -158,7 +159,7 @@ int FGWClientHandler::processLoginRsp(PushMsg *push_msg)
   setState(STATE_REGISTERED);
 
   // cancel timer
-  timer_.cancelTimer(login_timer_id);
+  timer_.cancel(login_timer_id);
   login_timer_id = -1;
 
   return OK;
@@ -230,29 +231,6 @@ int FGWClientHandler::onRead_Registered(char *buf, uint32_t buf_len)
 
   return OK;
 }
-
-//int FGWClientHandler::send(const char *buf, uint32_t buf_len)
-//{
-//  Z_LOG_D("FGWClientHandler::send(%d)", fd_);
-//  return ::send(fd_, buf, buf_len, 0);
-//}
-
-//int FGWClientHandler::sendJson(json_t *jmsg)
-//{
-//  Z_LOG_D("FGWClientHandler::sendJson()");
-//
-//  char *str_dump = json_dumps(jmsg, 0);
-//
-//  trace_bin(str_dump, (uint32_t) strlen(str_dump));
-//
-//  int rv = getModule()->write(str_dump, (int) strlen(str_dump));
-//
-//
-//  free(str_dump);
-//  json_decref(jmsg);
-//
-//  return rv;
-//}
 
 void FGWClientHandler::onConnected()
 {

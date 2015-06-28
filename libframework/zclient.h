@@ -10,21 +10,19 @@
 #include "zevent_proxy.h"
 
 class ZClient : public ZModule {
- public:
+public:
   ZClient(event_base *base, int type)
-    : ZModule(type)
-    , /*base_(base), */fd_(-1)
-    , socket_event_proxy_(base, ZClient::socket_callback)
-    , timeout_event_proxy_(base, ZClient::timeout_callback)
-    // , socket_event_(NULL), timeout_event_(NULL)
-    // , timeout_event_(NULL)
-    , server_ip_("0.0.0.0"), server_port_(0), handler_(NULL)
+      : ZModule(type)
+      , /*base_(base), */fd_(-1)
+      , socket_event_proxy_(base, ZClient::socket_callback)
+      , timeout_event_proxy_(base, ZClient::timeout_callback)
+      , server_ip_("0.0.0.0"), server_port_(0), handler_(NULL)
   {
   }
 
   typedef ZModule super_;
 
- public:
+public:
   virtual int init();
   virtual void close();
   // virtual int sendMsg(ZInnerMsg *msg);
@@ -55,7 +53,10 @@ protected:
   void onConnected(evutil_socket_t fd, short events);
   int onDisconnected(evutil_socket_t fd, short events);
 
+  // triggle `connect` but don't handle asynchronized event
   int connect();
+  // call `connect` and setup event if neccessary
+  int doConnect(evutil_socket_t fd, short events);
   void disconnect();
   void scheduleReconnect();
 
@@ -66,15 +67,14 @@ protected:
   static void socket_callback(evutil_socket_t fd, short events, void *arg);
   static void timeout_callback(evutil_socket_t fd, short events, void *arg);
 
- private:
+private:
   enum STATE {
     STATE_WAITING_FOR_CONNECT,
     STATE_CONNECTED,
     STATE_DISCONNECTED,
-    STATE_FINISHED,
   };
 
- private:
+private:
   evutil_socket_t fd_;
   ZEventProxy socket_event_proxy_;
   ZEventProxy timeout_event_proxy_;

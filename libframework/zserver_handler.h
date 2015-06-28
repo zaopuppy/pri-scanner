@@ -41,11 +41,11 @@ class ZServerHandler : public ZHandler, public ZTimer::TimerCallback {
   evutil_socket_t getFd() { return fd_; }
 
   int setTimer(int interval, bool repeat = false) {
-    return timer_.setTimer(interval, repeat);
+    return timer_.set(interval, repeat);
   }
 
   void cancelTimer(int id) {
-    timer_.cancelTimer(id);
+    timer_.cancel(id);
   }
 
  public:

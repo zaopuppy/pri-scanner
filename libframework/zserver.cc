@@ -78,7 +78,7 @@ int ZServer::init() {
 
   // // setup a timer
   // Z_LOG_D("Setting up a timer, interval: %d", routine_interval_);
-  // timer_routine_id_ = timer_.setTimer(routine_interval_, true);
+  // timer_routine_id_ = timer_.set(routine_interval_, true);
 
   return OK;
 }

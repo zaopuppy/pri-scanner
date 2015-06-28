@@ -16,7 +16,7 @@ static const struct timeval RETRY_INTERVAL = { 3, 0 };
 
 // static
 void ZClient::socket_callback(evutil_socket_t fd, short events, void *arg) {
-  // Z_LOG_D("socket_callback(%d, %d)", fd, events);
+  Z_LOG_D("socket_callback(%d, %d)", fd, events);
   assert(arg);
   ZClient *m = (ZClient*)arg;
   m->event(fd, events);
@@ -25,7 +25,7 @@ void ZClient::socket_callback(evutil_socket_t fd, short events, void *arg) {
 // static
 void ZClient::timeout_callback(evutil_socket_t fd, short events, void *arg)
 {
-  // Z_LOG_D("timeout_callback(%d, %d)", fd, events);
+  Z_LOG_D("timeout_callback(%d, %d)", fd, events);
   assert(arg);
   ZClient *m = (ZClient*)arg;
   m->onTimeoutPrivate();
@@ -43,7 +43,7 @@ void ZClient::onTimeoutPrivate()
       disconnect();
       break;
     case STATE_DISCONNECTED:
-      onDisconnected(fd_, 1);
+      doConnect(fd_, EV_TIMEOUT);
       break;
     default:
       break;
@@ -61,7 +61,8 @@ int ZClient::init() {
     return FAIL;
   }
 
-  rv = onDisconnected(-1, 0);
+  // rv = onDisconnected(-1, 0);
+  rv = doConnect(-1, 0);
   if (rv != OK && rv != ERR_IO_PENDING) {
     return FAIL;
   }
@@ -84,7 +85,7 @@ int ZClient::onInnerMsg(ZInnerMsg *msg)
 
 void ZClient::disconnect() {
   if (fd_ >= 0) {
-    ::close(fd_); // XXX: evutil_closesocket(fd_);
+    ::close(fd_); // TODO: evutil_closesocket(fd_);
     fd_ = -1;
   }
 
@@ -95,6 +96,8 @@ void ZClient::disconnect() {
 //-1: IO_PENDING
 // this method should not change current state;
 int ZClient::connect() {
+  Z_LOG_D("connect()");
+
   disconnect();
 
   fd_ = socket(AF_INET, SOCK_STREAM, 0);
@@ -152,9 +155,11 @@ int ZClient::connect() {
 }
 
 void ZClient::close() {
+  socket_event_proxy_.cancel();
+  timeout_event_proxy_.cancel();
   ::close(fd_); // XXX: evutil_closesocket(fd_);
   fd_ = -1;
-  state_ = STATE_FINISHED;
+  state_ = STATE_DISCONNECTED;
 }
 
 void ZClient::event(evutil_socket_t fd, short events) {
@@ -168,10 +173,6 @@ void ZClient::event(evutil_socket_t fd, short events) {
       break;
     case STATE_DISCONNECTED:
       onDisconnected(fd, events);
-      break;
-    case STATE_FINISHED:
-      // should never happen
-      assert(false);
       break;
     default:
       close();
@@ -220,24 +221,25 @@ int ZClient::onWaitingForConnect(evutil_socket_t fd, short events) {
 void ZClient::scheduleReconnect() {
   Z_LOG_D("ZClient::scheduleReconnect: %p", this);
   state_ = STATE_DISCONNECTED;
+  // cancel old first
+  timeout_event_proxy_.cancel();
   timeout_event_proxy_.registerTimeout(this, &RETRY_INTERVAL);
 }
 
 void ZClient::onConnected(evutil_socket_t fd, short events) {
+  Z_LOG_D("onConnected(%d, %d)", fd, events);
   assert(fd >= 0);
 
   int rv = read(buf_, sizeof(buf_));
   if (rv == 0) {
     Z_LOG_D("peer closed");
-    state_ = STATE_DISCONNECTED;
+    close();
     scheduleReconnect();
-    // close();
     return;
   } else if (rv < 0) { // XXX EAGAIN
     // perror("recv");
     Z_LOG_D("Failed to receive data from socket: errno=%d", errno);
-    ::close(fd);
-    state_ = STATE_DISCONNECTED;
+    close();
     scheduleReconnect();
     return;
   }
@@ -248,52 +250,60 @@ void ZClient::onConnected(evutil_socket_t fd, short events) {
 }
 
 int ZClient::onDisconnected(evutil_socket_t fd, short events) {
-  // state_ = STATE_DISCONNECTED;
-  // return doLoop();
+  Z_LOG_D("onDisconnected(%d, %d)", fd, events);
+  assert(fd >= 0);
+
+  int rv = read(buf_, sizeof(buf_));
+  if (rv <= 0) {
+    Z_LOG_D("peer closed");
+  } else {
+    Z_LOG_E("impossible");
+    assert(false);
+  }
+
+  return OK;
+}
+
+
+int ZClient::doConnect(evutil_socket_t fd, short events) {
   int rv = connect();
   switch (rv) {
-    case OK:
-      {
-        Z_LOG_D("Connected");
-        state_ = STATE_CONNECTED;
-        socket_event_proxy_.registerSocket(fd_, EV_READ|EV_PERSIST, (void*)this, NULL);
-        if (handler_) {
-          Z_LOG_D("handler_->fd_ = %d", fd);
-          handler_->fd_ = fd;
-          handler_->onConnected();
-        }
-        break;
+    case OK: {
+      Z_LOG_D("Connected");
+      state_ = STATE_CONNECTED;
+      socket_event_proxy_.registerSocket(fd_, EV_READ|EV_PERSIST, (void*)this, NULL);
+      if (handler_) {
+        Z_LOG_D("handler_->fd_ = %d", fd);
+        handler_->fd_ = fd;
+        handler_->onConnected();
       }
-    case ERR_IO_PENDING:
-      {
-        Z_LOG_I("Waiting for response: %p", this);
-        state_ = STATE_WAITING_FOR_CONNECT;
+      break;
+    }
+    case ERR_IO_PENDING: {
+      Z_LOG_I("Waiting for socket ack: %p", this);
+      state_ = STATE_WAITING_FOR_CONNECT;
 
-        // one shot write event
-        socket_event_proxy_.registerSocket(fd_, EV_WRITE, (void*)this, NULL);
+      // one shot write event
+      socket_event_proxy_.registerSocket(fd_, EV_WRITE, (void*)this, NULL);
 
-        // one-shot timer
-        // if old timer is still there, remove it first
-        timeout_event_proxy_.registerTimeout(this, &RETRY_INTERVAL);
-        break;
-      }
-    case FAIL:
-      {
-        Z_LOG_D("Failed to connect");
-        state_ = STATE_DISCONNECTED;
+      // one-shot timer
+      // if old timer is still there, remove it first
+      timeout_event_proxy_.registerTimeout(this, &RETRY_INTERVAL);
+      break;
+    }
+    case FAIL: {
+      Z_LOG_D("Failed to connect");
+      state_ = STATE_DISCONNECTED;
 
-        scheduleReconnect();
+      scheduleReconnect();
 
-        break;
-      }
-    default:
-      {
-        rv = FAIL;
-        break;
-      }
+      break;
+    }
+    default: {
+      rv = FAIL;
+      break;
+    }
   }
 
   return rv;
 }
-
-

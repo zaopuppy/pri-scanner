@@ -67,6 +67,7 @@ private:
   // state-machine
   int state_;
 
+  // TODO: remove it, ZClientHandler has done lots of work for this.
   ZTimer timer_;
   int login_timer_id;
 

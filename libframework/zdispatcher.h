@@ -15,7 +15,7 @@ private:
   , timer_(base, this), timer_routine_id_(-1)
   {
     module_list_.clear();
-    timer_routine_id_ = timer_.setTimer(routine_interval_, true);
+    timer_routine_id_ = timer_.set(routine_interval_, true);
   }
 
 public:

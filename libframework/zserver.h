@@ -39,11 +39,11 @@ class ZServer : public ZModule, public ZTimer::TimerCallback {
   // }
 
   int setTimer(int interval, bool repeat = false) {
-    return timer_.setTimer(interval, repeat);
+    return timer_.set(interval, repeat);
   }
 
   void cancelTimer(int id) {
-    timer_.cancelTimer(id);
+   timer_.cancel(id);
   }
 
   int fileno() { return fd_; }

@@ -32,7 +32,7 @@ public:
 
 public:
   // set up a timer and return an timer id
-  int setTimer(int interval, bool repeat = false) {
+  int set(int interval, bool repeat = false) {
     int id = getAvailableIndex();
     if (id < 0) {
       return -1;
@@ -60,7 +60,7 @@ public:
     return id;
   }
 
-  void cancelTimer(int id) {
+  void cancel(int id) {
     // check parameter first
     if (id < 0 || id >= MAX_TIMER_COUNT) {
       return;
@@ -74,6 +74,12 @@ public:
     delete ev_list_[id];
     ev_list_[id] = NULL;
 
+  }
+
+  void cancelAll() {
+    for (int i = 0; i < MAX_TIMER_COUNT; ++i) {
+      cancel(i);
+    }
   }
 
   void onTimeout(int id) {
@@ -106,7 +112,7 @@ protected:
     timer->onTimeout(timer_data->id);
 
     if (!timer_data->repeat) {
-      timer->cancelTimer(timer_data->id);
+      timer->cancel(timer_data->id);
     }
 
   }
