@@ -1,17 +1,10 @@
 #include "zzigbee_handler.h"
 
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
-#include <assert.h>
-
-#include "libframework/zframework.h"
-
 /////////////////////////////////////////////////////////////////////
 
 int ZZigBeeHandler::init()
 {
-  Z_LOG_D("fd_: %d", fd_);
+  Z_LOG_D("fd_: %d", getFd());
   return 0;
 }
 

@@ -23,31 +23,39 @@ void ZClient::socket_callback(evutil_socket_t fd, short events, void *arg) {
 }
 
 // static
-void ZClient::timeout_callback(evutil_socket_t fd, short events, void *arg)
-{
-  Z_LOG_D("timeout_callback(%d, %d)", fd, events);
-  assert(arg);
-  ZClient *m = (ZClient*)arg;
-  m->onTimeoutPrivate();
-}
+//void ZClient::timeout_callback(evutil_socket_t fd, short events, void *arg)
+//{
+//  Z_LOG_D("timeout_callback(%d, %d)", fd, events);
+//  assert(arg);
+//  ZClient *m = (ZClient*)arg;
+//  m->onTimeoutPrivate();
+//}
 
-void ZClient::onTimeoutPrivate()
+void ZClient::onTimeout(int id)
 {
   Z_LOG_D("ZClient::doTimeout(): %p", this);
 
-  timeout_event_proxy_.cancel();
+  // timeout_event_proxy_.cancel();
 
-  switch (state_) {
-    case STATE_WAITING_FOR_CONNECT:
-      Z_LOG_I("connecting timeout, abort, waiting for reconnect: %p", this);
-      disconnect();
-      break;
-    case STATE_DISCONNECTED:
-      doConnect(fd_, EV_TIMEOUT);
-      break;
-    default:
-      break;
+  if (id == reconnect_timer_id_) {
+    doConnect(-1, EV_TIMEOUT);
+  } else if (id == connect_wait_timer_id_) {
+    disconnect();
+  } else {
+    Z_LOG_E("bad timer id: %d", id);
   }
+
+  //switch (state_) {
+  //  case STATE_WAITING_FOR_CONNECT:
+  //    Z_LOG_I("connecting timeout, abort, waiting for reconnect: %p", this);
+  //    disconnect();
+  //    break;
+  //  case STATE_DISCONNECTED:
+  //    doConnect(fd_, EV_TIMEOUT);
+  //    break;
+  //  default:
+  //    break;
+  //}
 
 }
 
@@ -156,7 +164,9 @@ int ZClient::connect() {
 
 void ZClient::close() {
   socket_event_proxy_.cancel();
-  timeout_event_proxy_.cancel();
+
+  cancelAllTimer();
+
   ::close(fd_); // XXX: evutil_closesocket(fd_);
   fd_ = -1;
   state_ = STATE_DISCONNECTED;
@@ -183,21 +193,20 @@ void ZClient::event(evutil_socket_t fd, short events) {
 int ZClient::onWaitingForConnect(evutil_socket_t fd, short events) {
   Z_LOG_D("ZClient::onWaitingForConnect(%d, %d)", fd, events);
 
-  // clear timeout checker
-  timeout_event_proxy_.cancel();
-
   int val = -1;
   socklen_t val_len = sizeof(val);
   int rv = getsockopt(fd, SOL_SOCKET, SO_ERROR, &val, &val_len);
   if (rv == 0 && val == 0) {
     Z_LOG_I("Connected: %p", this);
 
+    cancelTimer(connect_wait_timer_id_);
+
     socket_event_proxy_.registerSocket(fd, EV_READ|EV_PERSIST, (void*)this, NULL);
 
     state_ = STATE_CONNECTED;
     if (handler_) {
       Z_LOG_D("handler_->fd_ = %d", fd);
-      handler_->fd_ = fd;
+      handler_->setFd(fd);
       handler_->onConnected();
     }
   } else if (rv == 0 && val == EINPROGRESS) { // val is errno, errno won't be set in this situation
@@ -207,9 +216,10 @@ int ZClient::onWaitingForConnect(evutil_socket_t fd, short events) {
   } else {
     Z_LOG_I("Failed to connect, rv=%d, val=%d, errno=%d: %p", rv, val, errno, this);
 
-    ::close(fd_);
-    fd_ = -1;
-    state_ = STATE_DISCONNECTED;
+    close();
+    //::close(fd_);
+    //fd_ = -1;
+    //state_ = STATE_DISCONNECTED;
 
     scheduleReconnect();
   }
@@ -222,8 +232,10 @@ void ZClient::scheduleReconnect() {
   Z_LOG_D("ZClient::scheduleReconnect: %p", this);
   state_ = STATE_DISCONNECTED;
   // cancel old first
-  timeout_event_proxy_.cancel();
-  timeout_event_proxy_.registerTimeout(this, &RETRY_INTERVAL);
+  cancelTimer(reconnect_timer_id_);
+  //timeout_event_proxy_.cancel();
+  //timeout_event_proxy_.registerTimeout(this, &RETRY_INTERVAL);
+  reconnect_timer_id_ = setTimer(3*1000, false);
 }
 
 void ZClient::onConnected(evutil_socket_t fd, short events) {
@@ -273,8 +285,8 @@ int ZClient::doConnect(evutil_socket_t fd, short events) {
       state_ = STATE_CONNECTED;
       socket_event_proxy_.registerSocket(fd_, EV_READ|EV_PERSIST, (void*)this, NULL);
       if (handler_) {
-        Z_LOG_D("handler_->fd_ = %d", fd);
-        handler_->fd_ = fd;
+        Z_LOG_D("handler_->fd_ = %d", fd_);
+        handler_->setFd(fd_);
         handler_->onConnected();
       }
       break;
@@ -288,7 +300,10 @@ int ZClient::doConnect(evutil_socket_t fd, short events) {
 
       // one-shot timer
       // if old timer is still there, remove it first
-      timeout_event_proxy_.registerTimeout(this, &RETRY_INTERVAL);
+      cancelTimer(connect_wait_timer_id_);
+      // timeout_event_proxy_.registerTimeout(this, &RETRY_INTERVAL);
+      connect_wait_timer_id_ = setTimer(3*1000, false);
+      assert(connect_wait_timer_id_ >=0);
       break;
     }
     case FAIL: {

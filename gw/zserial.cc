@@ -206,7 +206,7 @@ int ZSerial::connect()
 
   state_ = STATE_CONNECTED;
 
-  handler_->fd_  = fd_;
+  handler_->setFd(fd_);
 
   handler_->onConnected();
 

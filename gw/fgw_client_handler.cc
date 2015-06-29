@@ -110,9 +110,11 @@ void FGWClientHandler::login()
 
   // set timer
   if (login_timer_id >= 0) {
-    timer_.cancel(login_timer_id);
+    // timer_.cancel(login_timer_id);
+    cancelTimer(login_timer_id);
   }
-  login_timer_id = timer_.set(10 * 1000);
+  // login_timer_id = timer_.set(10 * 1000);
+  login_timer_id = setTimer(10 * 1000);
   if (login_timer_id < 0) {
     Z_LOG_E("Failed to set timer, there's nothing we can do now");
   }
@@ -121,14 +123,11 @@ void FGWClientHandler::login()
 
 void FGWClientHandler::close()
 {
-  setState(STATE_UNREGISTERED);
-  // TODO: cancel timer
-  // timer_.cancelAll();
+  super_::close();
 
-  event_free(read_event_);
-  read_event_ = NULL;
-  ::close(fd_);
-  fd_ = -1;
+  setState(STATE_UNREGISTERED);
+
+  cancelAllTimer();
 }
 
 int FGWClientHandler::onRead_Unregistered(char *buf, uint32_t buf_len)
@@ -159,7 +158,8 @@ int FGWClientHandler::processLoginRsp(PushMsg *push_msg)
   setState(STATE_REGISTERED);
 
   // cancel timer
-  timer_.cancel(login_timer_id);
+  // timer_.cancel(login_timer_id);
+  cancelTimer(login_timer_id);
   login_timer_id = -1;
 
   return OK;

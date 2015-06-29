@@ -16,10 +16,12 @@ class FGWClientHandler : public ZClientHandler {
 public:
   FGWClientHandler(int id, ZModule *module, struct event_base *base)
     : ZClientHandler(id, module, base), state_(STATE_UNREGISTERED)
-    , timer_(base, this)
+    // , timer_(base, this)
     , login_timer_id(-1)
     , id_generator_(1, 0xFFFFFF)
   {}
+
+  typedef ZClientHandler super_;
 
 public:
   virtual int init();
@@ -68,7 +70,7 @@ private:
   int state_;
 
   // TODO: remove it, ZClientHandler has done lots of work for this.
-  ZTimer timer_;
+  // ZTimer timer_;
   int login_timer_id;
 
   char out_buf_[2048];

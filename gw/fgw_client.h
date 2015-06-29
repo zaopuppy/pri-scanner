@@ -13,7 +13,7 @@ public:
     ZClient::setHandler(handler_);
   }
 
-  typedef ZClient super;
+  typedef ZClient super_;
 
   virtual ~FGWClient() {}
 
