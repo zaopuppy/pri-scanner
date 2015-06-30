@@ -27,7 +27,49 @@ public:
 
 class Handler: public EventCallback {
 public:
-  void init(Channel ch) {
+  Handler(evutil_socket_t fd,
+          const std::string server_host, unsigned short server_port,
+          const std::string client_host, unsigned short client_port)
+      : fd_(fd)
+      , server_host_(server_host), server_port_(server_port)
+      , client_host_(client_host), client_port_(client_port)
+  {}
+
+public:
+  evutil_socket_t getFd() { return fd_; }
+
+  const std::string& getServerHost() { return server_host_; }
+
+  unsigned short getServerPort() { return server_port_; }
+
+  const std::string& getClientHost() { return client_host_; }
+
+  unsigned short getClientPort() { return client_port_; }
+
+private:
+  const evutil_socket_t fd_;
+  const std::string server_host_;
+  const unsigned short server_port_;
+  const std::string client_host_;
+  const unsigned short client_port_;
+};
+
+class EchoHandler: public Handler {
+public:
+  EchoHandler(evutil_socket_t fd,
+              const std::string server_host, unsigned short server_port,
+              const std::string client_host, unsigned short client_port)
+      : Handler(fd, server_host, server_port, client_host, client_port)
+  {}
+
+public:
+  void onRead(evutil_socket_t fd) {
+  }
+
+  void onWrite(evutil_socket_t fd) {
+  }
+
+  void onTimeout() {
   }
 };
 
@@ -50,6 +92,9 @@ static void event_callback(evutil_socket_t fd, short events, void* arg) {
   }
 }
 
+/**
+ * move this out of the `Server` class to reduce code bloat of template.
+ */
 static evutil_socket_t listen(const std::string &host, unsigned short port)
 {
   int rv;
@@ -89,13 +134,39 @@ static evutil_socket_t listen(const std::string &host, unsigned short port)
   return fd;
 }
 
+/**
+ * move this out of the `Server` class to reduce code bloat of template.
+ */
+static evutil_socket_t accept(evutil_socket_t fd, std::string &host, unsigned short &port) {
+  struct sockaddr_storage ss;
+  socklen_t slen = sizeof(ss);
+  int cli_fd = ::accept(fd, (struct sockaddr*) (&ss), &slen);
+  if (cli_fd < 0) {           // XXX EAGAIN?
+    perror("accept");
+    ::evutil_closesocket(cli_fd);
+    return -1;
+  }
+
+  //
+  struct sockaddr_in* addr = (struct sockaddr_in*)(&ss);
+
+  // assign output parameters
+  // FIXME: release the allocated memory in a multi-thread program
+  host.assign(inet_ntoa(addr->sin_addr));
+  port = ntohs(addr->sin_port);
+
+  evutil_make_socket_nonblocking(cli_fd);
+
+  return cli_fd;
+}
+
+
+template <typename CHILD_HANDLER_T>
 class Server: public EventCallback {
 public:
   Server(struct event_base *base)
       : host_("0.0.0.0"), port_(0)
       , base_(base)
-      , handler_(nullptr)
-      , child_handler_(nullptr)
   { }
 
   enum {
@@ -104,34 +175,21 @@ public:
   };
 
 public:
-  Server &setHost(const std::string &host) {
+  Server& setHost(const std::string &host) {
     host_.assign(host);
     return *this;
   }
 
-  Server &setPort(unsigned short port) {
+  Server& setPort(unsigned short port) {
     port_ = port;
     return *this;
   }
 
-  Server &setOption(uint32_t opt, int value) { }
-
-  Server &setHandler(std::unique_ptr<Handler> h) {
-    handler_ = std::move(h);
+  Server& setOption(uint32_t opt, int value) {
     return *this;
   }
 
-  Server &setChildHandler(std::unique_ptr<Handler> h) {
-    child_handler_ = std::move(h);
-    return *this;
-  }
-
-  // ---
-
-  Server &listen() {
-
-    assert(handler_.get() != nullptr);
-    assert(child_handler_.get() != nullptr);
+  Server& listen() {
 
     evutil_socket_t fd = z::listen(host_, port_);
     if (fd < 0) {
@@ -152,27 +210,22 @@ public:
 
 protected:
   virtual void onRead(evutil_socket_t fd) {
-    struct sockaddr_storage ss;
-    socklen_t slen = sizeof(ss);
-    int cli_fd = ::accept(fd, (struct sockaddr*) (&ss), &slen);
-    if (cli_fd < 0) {           // XXX EAGAIN?
-      perror("accept");
-      ::evutil_closesocket(cli_fd);
+
+    std::string client_host;
+    unsigned short client_port;
+    evutil_socket_t client_fd = z::accept(fd, client_host, client_port);
+    if (client_fd < 0) {
+      // failed
       return;
     }
 
-    //
-    struct sockaddr_in* addr = (struct sockaddr_in*)(&ss);
-    // FIXME: release the allocated memory in a multi-thread program
-    std::string addr_str = inet_ntoa(addr->sin_addr);
-    unsigned short port = ntohs(addr->sin_port);
-    log("accepted connection from: %s:%u", addr_str.c_str(), port);
+    log("accepted connection from: %s:%u", client_host.c_str(), client_port);
 
-    evutil_make_socket_nonblocking(cli_fd);
-
-    //
+    CHILD_HANDLER_T *child_handler = new CHILD_HANDLER_T(
+        client_fd, host_, port_, client_host, client_port);
     struct event *ev = event_new(
-        base_, cli_fd, EV_READ|EV_PERSIST, event_callback, child_handler_.get());
+        base_, client_fd, EV_READ|EV_PERSIST, event_callback, child_handler);
+    event_add(ev, nullptr);
 
   }
 
@@ -188,15 +241,12 @@ private:
   std::string host_;
   unsigned short port_;
   struct event_base *base_;
-  std::unique_ptr<Handler> handler_;
-  std::unique_ptr<Handler> child_handler_;
 };
+
 
 }
 
-/**
- * std::function<int(int)> f = [](int a) { return 1; }
- */
+
 int main(int argc, char *argv[])
 {
   log("just a test.");
@@ -205,16 +255,14 @@ int main(int argc, char *argv[])
 
   {
     // EventGroup worker;
-    z::Server server(base);
+    z::Server<z::EchoHandler> server(base);
 
     // setup
     server
         .setHost("0.0.0.0")
         .setPort(1984)
-        .setOption(z::Server::BACKLOG, 128)
-        .setOption(z::Server::KEEPALIVE, 1)
-        .setHandler(std::unique_ptr<z::Handler>(nullptr))
-        .setChildHandler(std::unique_ptr<z::Handler>(nullptr));
+        .setOption(server.BACKLOG, 128)
+        .setOption(server.KEEPALIVE, 1);
 
     // listen
     server.listen();
