@@ -11,6 +11,8 @@
 #include <event2/event_struct.h>
 #include <assert.h>
 #include <string.h>
+#include "../libframework/ztimer.h"
+#include "../libframework/zerrno.h"
 
 
 #define log(_format_, _args_...) printf(_format_ "\n", ##_args_)
@@ -22,16 +24,19 @@ class EventCallback {
 public:
   virtual void onRead(evutil_socket_t fd) = 0;
   virtual void onWrite(evutil_socket_t fd) = 0;
-  virtual void onTimeout() = 0;
+  //virtual void onTimeout() = 0;
 };
 
 
-class Handler: public EventCallback {
+class Handler: public EventCallback, public z::Timer::TimerCallback {
 public:
-  Handler(evutil_socket_t fd,
+  Handler(struct event_base *base,
+          evutil_socket_t fd,
           const std::string server_host, unsigned short server_port,
           const std::string client_host, unsigned short client_port)
-      : fd_(fd)
+      : base_(base)
+      , fd_(fd)
+      , timer_(base, this)
       , server_host_(server_host), server_port_(server_port)
       , client_host_(client_host), client_port_(client_port)
   {
@@ -56,17 +61,33 @@ public:
   unsigned short getClientPort() { return client_port_; }
 
   // from `EventCallback`
-  virtual void onRead(evutil_socket_t fd) {
+  virtual void onRead(evutil_socket_t fd) override {
     log("onRead(%d)", fd);
+    int rv = (int) ::read(fd, buf_, sizeof(buf_));
+    if (0 == rv) {
+      log("peer closed");
+      close();
+      return;
+    } else if (rv < 0) {
+      perror("read");
+      close();
+      return;
+    }
+
+    onRead(fd, buf_, rv);
   }
 
-  virtual void onWrite(evutil_socket_t fd) {
+  virtual void onWrite(evutil_socket_t fd) override {
     log("onWrite(%d)", fd);
   }
 
-  virtual void onTimeout() {
-    log("onTimeout");
+  // from Timer::TimerCallback
+  virtual void onTimeout(int id) override {
+    log("onTimeout(%d)", id);
   }
+
+  // for child classes
+  virtual void onRead(evutil_socket_t fd, char *buf, int buf_size) = 0;
 
 protected:
 
@@ -78,50 +99,43 @@ protected:
     ::close(fd_);
   }
 
-
 private:
+  struct event_base *base_;
   const evutil_socket_t fd_;
   struct event *ev_;
   const std::string server_host_;
   const unsigned short server_port_;
   const std::string client_host_;
   const unsigned short client_port_;
+  char buf_[10 << 10];
+  z::Timer timer_;
 };
 
 class EchoHandler: public Handler {
 public:
-  EchoHandler(evutil_socket_t fd,
+  EchoHandler(struct event_base *base,
+              evutil_socket_t fd,
               const std::string server_host, unsigned short server_port,
               const std::string client_host, unsigned short client_port)
-      : Handler(fd, server_host, server_port, client_host, client_port)
+      : Handler(base, fd, server_host, server_port, client_host, client_port)
   {}
 
   typedef Handler super_;
 
 public:
-  void onRead(evutil_socket_t fd) {
-    int rv = (int) ::read(fd, buf_, sizeof(buf_));
-    if (0 == rv) {
-      log("peer closed");
-      close();
-      return;
-    } else if (rv < 0) {
-      perror("read");
-      close();
-      return;
-    }
-    std::string s(buf_, (size_t) rv);
-    log("read: (%d, [%s]", rv, s.c_str());
-
-    ::write(fd, buf_, rv);
+  virtual void onRead(evutil_socket_t fd, char *buf, int buf_len) override {
+    std::string s(buf, buf_len);
+    log("read: (%d, [%s]", buf_len, s.c_str());
+    ::write(fd, buf, buf_len);
   }
 
 private:
-  char buf_[10 << 10];
+
 };
 
 static void event_callback(evutil_socket_t fd, short events, void* arg) {
   assert(arg != nullptr);
+  assert(!(events & EV_TIMEOUT));
 
   EventCallback *callback = (EventCallback *) arg;
 
@@ -131,11 +145,6 @@ static void event_callback(evutil_socket_t fd, short events, void* arg) {
 
   if (events & EV_WRITE) {
     callback->onWrite(fd);
-  }
-
-  // FIXME: use ZTimer istead of this.
-  if (events & EV_TIMEOUT) {
-    callback->onTimeout();
   }
 }
 
@@ -184,7 +193,8 @@ static evutil_socket_t listen(const std::string &host, unsigned short port)
 /**
  * move this out of the `Server` class to reduce code bloat of template.
  */
-static evutil_socket_t accept(evutil_socket_t fd, std::string &host, unsigned short &port) {
+static evutil_socket_t accept(evutil_socket_t fd, std::string &host, unsigned short &port)
+{
   struct sockaddr_storage ss;
   socklen_t slen = sizeof(ss);
   int cli_fd = ::accept(fd, (struct sockaddr*) (&ss), &slen);
@@ -209,11 +219,12 @@ static evutil_socket_t accept(evutil_socket_t fd, std::string &host, unsigned sh
 
 
 template <typename CHILD_HANDLER_T>
-class Server: public EventCallback {
+class Server: public EventCallback, public z::Timer::TimerCallback {
 public:
   Server(struct event_base *base)
       : host_("0.0.0.0"), port_(0)
       , base_(base)
+      , timer_(base, this)
   { }
 
   enum {
@@ -255,8 +266,12 @@ public:
     return *this;
   }
 
+  virtual void onTimeout(int id) override {
+    log("onTimeout(%d)", id);
+  }
+
 protected:
-  virtual void onRead(evutil_socket_t fd) {
+  virtual void onRead(evutil_socket_t fd) override {
 
     std::string client_host;
     unsigned short client_port;
@@ -269,7 +284,7 @@ protected:
     log("accepted connection from: %s:%u", client_host.c_str(), client_port);
 
     CHILD_HANDLER_T *child_handler = new CHILD_HANDLER_T(
-        client_fd, host_, port_, client_host, client_port);
+        base_, client_fd, host_, port_, client_host, client_port);
     struct event *ev = event_new(
         base_, client_fd, EV_READ|EV_PERSIST, event_callback, child_handler);
     child_handler->setEvent(ev);
@@ -278,12 +293,105 @@ protected:
 
   }
 
+  virtual void onWrite(evutil_socket_t fd) override {
+    log("onWrite(%d)", fd);
+  }
+
 private:
   std::string host_;
   unsigned short port_;
   struct event_base *base_;
+  z::Timer timer_;
 };
 
+
+int connect(std::string host, unsigned short port, evutil_socket_t &fd)
+{
+  fd = socket(AF_INET, SOCK_STREAM, 0);
+  if (fd < 0) {
+    log("failed to get new socket file descriptor");
+    return FAIL;
+  }
+
+  evutil_make_socket_nonblocking(fd);
+
+#ifndef WIN32
+  {
+    int one = 1;
+    if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one))) {
+      perror("setsockopt");
+      ::close(fd);
+      return FAIL;
+    }
+  }
+#endif // WIN32
+
+  int rv;
+
+  // // need bind or not?
+  // if (false) {
+  //  rv = bind(fd, (struct sockaddr*) (&sin), sizeof(sin));
+  //  if (rv < 0) {
+  //    perror("bind");
+  //    return false;
+  //  }
+  // }
+
+  struct sockaddr_in sin;
+  sin.sin_family = AF_INET;
+  sin.sin_addr.s_addr = inet_addr(host.c_str());
+  sin.sin_port = htons(port);
+
+  rv = ::connect(fd, (struct sockaddr*) (&sin), sizeof(sin));
+  if (rv < 0) {
+    if (errno != EINPROGRESS) {
+
+      perror("connect");
+      log("Can not initial connection");
+      ::close(fd); // XXX: evutil_closesocket
+      return FAIL;
+    } else {
+      return ERR_IO_PENDING;
+    }
+  }
+
+  return OK;
+}
+
+class Client: public EventCallback, public z::Timer::TimerCallback {
+public:
+  Client(const std::string &server_host, unsigned short server_port)
+      : server_host_(server_host)
+      , server_port_(server_port)
+  {}
+
+public:
+  void connect() {
+    evutil_socket_t fd;
+    int rv = z::connect(server_host_, server_port_, fd);
+    switch (rv) {
+      case OK: {
+        break;
+      }
+      case ERR_IO_PENDING: {
+        break;
+      }
+      case FAIL:
+      default:
+        return;
+    }
+  }
+
+  virtual void onRead(evutil_socket_t fd) override {}
+
+  virtual void onWrite(evutil_socket_t fd) override {}
+
+  virtual void onTimeout(int id) override {}
+
+private:
+  const std::string server_host_;
+  const unsigned short server_port_;
+};
 
 }
 

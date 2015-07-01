@@ -7,7 +7,7 @@
 #include "zmodule.h"
 #include "zevent_proxy.h"
 
-class ZServer : public ZModule, public ZTimer::TimerCallback {
+class ZServer : public ZModule, public z::Timer::TimerCallback {
 public:
   ZServer(const char *ip, uint16_t port, event_base *base, int type)
       : ZModule(type)
@@ -65,7 +65,7 @@ private:
 
   ZEventProxy socket_event_proxy_;
 
-  ZTimer timer_;
+  z::Timer timer_;
   // int routine_interval_;	// in millisecond
   // int timer_routine_id_;
 };

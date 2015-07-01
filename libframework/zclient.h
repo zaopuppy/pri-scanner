@@ -9,7 +9,7 @@
 #include "zclient_handler.h"
 #include "zevent_proxy.h"
 
-class ZClient : public ZModule, public ZTimer::TimerCallback {
+class ZClient : public ZModule, public z::Timer::TimerCallback {
 public:
   ZClient(event_base *base, int type)
       : ZModule(type)
@@ -93,7 +93,7 @@ private:
   evutil_socket_t fd_;
   ZEventProxy socket_event_proxy_;
   // ZEventProxy timeout_event_proxy_;
-  ZTimer timer_;
+  z::Timer timer_;
   STATE state_;
   char buf_[1 << 10];
   // int type_;

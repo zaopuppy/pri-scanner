@@ -8,7 +8,7 @@
 #include "zsession_ctrl.h"
 #include "zmodule.h"
 
-class ZDispatcher : public ZTimer::TimerCallback {
+class ZDispatcher : public z::Timer::TimerCallback {
 private:
   ZDispatcher(struct event_base *base)
   : routine_interval_(500)
@@ -61,7 +61,7 @@ private:
   // SESSION_CTRL_TYPE session_ctrl_;
 
   int routine_interval_;
-  ZTimer timer_;
+  z::Timer timer_;
   int timer_routine_id_;
 };
 

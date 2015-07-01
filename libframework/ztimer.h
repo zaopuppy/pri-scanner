@@ -5,7 +5,9 @@
 
 #include <event2/event.h>
 
-class ZTimer {
+namespace z {
+
+class Timer {
 public:
   class TimerCallback {
   public:
@@ -13,14 +15,14 @@ public:
   };
 
 public:
-  ZTimer(struct event_base *base, TimerCallback *callback)
+  Timer(struct event_base *base, TimerCallback *callback)
   : base_(base), callback_(callback)
   {
     for (int i = 0; i < MAX_TIMER_COUNT; ++i) {
       ev_list_[i] = NULL;
     }
   }
-  ~ZTimer() {
+  ~Timer() {
     for (int i = 0; i < MAX_TIMER_COUNT; ++i) {
       if (ev_list_[i] != NULL) {
         event_free(ev_list_[i]->ev);
@@ -88,7 +90,7 @@ public:
 
 protected:
   struct TimerData {
-    ZTimer *timer;
+    Timer *timer;
     bool repeat;
     int id;
     struct event *ev;
@@ -106,8 +108,10 @@ protected:
   }
 
   static void timer_callback(evutil_socket_t fd, short events, void* arg) {
+    assert(events & EV_TIMEOUT);
+
     TimerData *timer_data = (TimerData*)arg;
-    ZTimer *timer = timer_data->timer;
+    Timer *timer = timer_data->timer;
 
     timer->onTimeout(timer_data->id);
 
@@ -127,6 +131,9 @@ private:
   TimerData *ev_list_[MAX_TIMER_COUNT];
   TimerCallback *callback_;
 };
+
+}
+
 
 #endif // _Z_TIMER_H__
 
