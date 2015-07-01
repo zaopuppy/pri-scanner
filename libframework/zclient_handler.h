@@ -5,7 +5,7 @@
 
 #include "zhandler.h"
 
-class ZClientHandler : public ZHandler, public ZTimer::TimerCallback {
+class ZClientHandler : public ZHandler, public z::Timer::TimerCallback {
 public:
   ZClientHandler(int id, ZModule *module, struct event_base *base)
       : ZHandler(id, module)
@@ -51,7 +51,7 @@ public:
 private:
   evutil_socket_t fd_;
   // struct event *read_event_;
-  ZTimer timer_;
+  z::Timer timer_;
 };
 
 #endif // _Z_CLIENT_HANDLER_H__
