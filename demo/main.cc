@@ -10,6 +10,7 @@
 #include <event2/event.h>
 #include <event2/event_struct.h>
 #include <assert.h>
+#include <string.h>
 
 
 #define log(_format_, _args_...) printf(_format_ "\n", ##_args_)
@@ -33,9 +34,17 @@ public:
       : fd_(fd)
       , server_host_(server_host), server_port_(server_port)
       , client_host_(client_host), client_port_(client_port)
-  {}
+  {
+    assert(fd >= 0);
+    assert(server_host.length() > 0);
+    assert(client_host.length() > 0);
+  }
 
 public:
+  void setEvent(struct event *ev) {
+    assert(ev != nullptr);
+    ev_ = ev;
+  }
   evutil_socket_t getFd() { return fd_; }
 
   const std::string& getServerHost() { return server_host_; }
@@ -46,8 +55,33 @@ public:
 
   unsigned short getClientPort() { return client_port_; }
 
+  // from `EventCallback`
+  virtual void onRead(evutil_socket_t fd) {
+    log("onRead(%d)", fd);
+  }
+
+  virtual void onWrite(evutil_socket_t fd) {
+    log("onWrite(%d)", fd);
+  }
+
+  virtual void onTimeout() {
+    log("onTimeout");
+  }
+
+protected:
+
+  virtual void close() {
+    assert(ev_ != nullptr);
+    if (ev_ != nullptr) {
+      event_free(ev_);
+    }
+    ::close(fd_);
+  }
+
+
 private:
   const evutil_socket_t fd_;
+  struct event *ev_;
   const std::string server_host_;
   const unsigned short server_port_;
   const std::string client_host_;
@@ -62,15 +96,28 @@ public:
       : Handler(fd, server_host, server_port, client_host, client_port)
   {}
 
+  typedef Handler super_;
+
 public:
   void onRead(evutil_socket_t fd) {
+    int rv = (int) ::read(fd, buf_, sizeof(buf_));
+    if (0 == rv) {
+      log("peer closed");
+      close();
+      return;
+    } else if (rv < 0) {
+      perror("read");
+      close();
+      return;
+    }
+    std::string s(buf_, (size_t) rv);
+    log("read: (%d, [%s]", rv, s.c_str());
+
+    ::write(fd, buf_, rv);
   }
 
-  void onWrite(evutil_socket_t fd) {
-  }
-
-  void onTimeout() {
-  }
+private:
+  char buf_[10 << 10];
 };
 
 static void event_callback(evutil_socket_t fd, short events, void* arg) {
@@ -225,16 +272,10 @@ protected:
         client_fd, host_, port_, client_host, client_port);
     struct event *ev = event_new(
         base_, client_fd, EV_READ|EV_PERSIST, event_callback, child_handler);
+    child_handler->setEvent(ev);
+
     event_add(ev, nullptr);
 
-  }
-
-  virtual void onWrite(evutil_socket_t fd) {
-    // ignore
-  }
-
-  virtual void onTimeout() {
-    //
   }
 
 private:
