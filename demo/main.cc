@@ -209,6 +209,7 @@ static evutil_socket_t accept(evutil_socket_t fd, std::string &host, unsigned sh
 
   // assign output parameters
   // FIXME: release the allocated memory in a multi-thread program
+  // TODO: DIY it
   host.assign(inet_ntoa(addr->sin_addr));
   port = ntohs(addr->sin_port);
 
