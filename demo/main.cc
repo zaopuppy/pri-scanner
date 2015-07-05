@@ -349,7 +349,8 @@ int connect(std::string host, unsigned short port, evutil_socket_t &fd)
 
       perror("connect");
       log("Can not initial connection");
-      ::close(fd); // XXX: evutil_closesocket
+      // ::close(fd);
+      evutil_closesocket(fd);
       return FAIL;
     } else {
       return ERR_IO_PENDING;
@@ -361,25 +362,65 @@ int connect(std::string host, unsigned short port, evutil_socket_t &fd)
 
 class Client: public EventCallback, public z::Timer::TimerCallback {
 public:
-  Client(const std::string &server_host, unsigned short server_port)
-      : server_host_(server_host)
+  Client(struct event_base *base, const std::string &server_host, unsigned short server_port)
+      : base_(base)
+      , server_host_(server_host)
       , server_port_(server_port)
+      , fd_(-1)
+      , ev_(nullptr)
+      , state_(DISCONNECTED)
+      , timer_(base, this)
   {}
 
+  typedef enum {
+    DISCONNECTED,
+    WAIT_FOR_RSP,
+    CONNECTED,
+  } state_t;
+
 public:
+  int setTimer(int interval, bool repeat) {
+    return timer_.set(interval, repeat);
+  }
+
+  void cancelTimer(int id) {
+    timer_.cancel(id);
+  }
+
+  void cancelAllTimer() {
+    timer_.cancelAll();
+  }
+
+  void close() {
+    if (ev_ != nullptr) {
+      event_free(ev_);
+      ev_ = nullptr;
+    }
+
+    if (fd_ >= 0) {
+      evutil_closesocket(fd_);
+    }
+  }
+
   void connect() {
+    if (state_ != DISCONNECTED) { return; }
+
     evutil_socket_t fd;
     int rv = z::connect(server_host_, server_port_, fd);
     switch (rv) {
       case OK: {
+        state_ = CONNECTED;
+        setupReadEvent(fd);
         break;
       }
       case ERR_IO_PENDING: {
+        state_ = WAIT_FOR_RSP;
+        setupReadEvent(fd);
         break;
       }
       case FAIL:
       default:
-        return;
+        break;
     }
   }
 
@@ -390,8 +431,24 @@ public:
   virtual void onTimeout(int id) override {}
 
 private:
+  void setupReadEvent(evutil_socket_t fd) {
+    assert(ev_ == nullptr);
+    assert(fd_ < 0);
+    fd_ = fd;
+    ev_ = event_new(base_, fd, EV_READ|EV_PERSIST, event_callback, this);
+  }
+
+private:
+  struct event_base *base_;
   const std::string server_host_;
   const unsigned short server_port_;
+
+  evutil_socket_t fd_;
+  struct event *ev_;
+
+  state_t state_;
+
+  z::Timer timer_;
 };
 
 }
