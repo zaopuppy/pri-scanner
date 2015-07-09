@@ -13,6 +13,7 @@
 #include <string.h>
 #include "../libframework/ztimer.h"
 #include "../libframework/zerrno.h"
+#include "stream.h"
 
 
 #define log(_format_, _args_...) printf(_format_ "\n", ##_args_)
@@ -33,12 +34,14 @@ public:
   Handler(struct event_base *base,
           evutil_socket_t fd,
           const std::string server_host, unsigned short server_port,
-          const std::string client_host, unsigned short client_port)
+          const std::string client_host, unsigned short client_port,
+          Stream *stream)
       : base_(base)
       , fd_(fd)
       , timer_(base, this)
       , server_host_(server_host), server_port_(server_port)
       , client_host_(client_host), client_port_(client_port)
+      , stream_(stream)
   {
     assert(fd >= 0);
     assert(server_host.length() > 0);
@@ -63,7 +66,8 @@ public:
   // from `EventCallback`
   virtual void onRead(evutil_socket_t fd) override {
     log("onRead(%d)", fd);
-    int rv = (int) ::read(fd, buf_, sizeof(buf_));
+    // int rv = (int) ::read(fd, buf_, sizeof(buf_));
+    int rv = stream_->read(buf_, sizeof(buf_));
     if (0 == rv) {
       log("peer closed");
       close();
@@ -109,6 +113,7 @@ private:
   const unsigned short client_port_;
   char buf_[10 << 10];
   z::Timer timer_;
+  Stream *stream_;
 };
 
 class EchoHandler: public Handler {
@@ -117,7 +122,8 @@ public:
               evutil_socket_t fd,
               const std::string server_host, unsigned short server_port,
               const std::string client_host, unsigned short client_port)
-      : Handler(base, fd, server_host, server_port, client_host, client_port)
+      : Handler(base, fd, server_host, server_port, client_host, client_port,
+                new LayeredStream(fd, new TransparentLayer(nullptr)))
   {}
 
   typedef Handler super_;
@@ -130,6 +136,30 @@ public:
   }
 
 private:
+
+};
+
+// TODO: to be deleted
+class FixedHeaderHandler: public Handler {
+public:
+  FixedHeaderHandler(struct event_base *base,
+                     evutil_socket_t fd,
+                     const std::string server_host, unsigned short server_port,
+                     const std::string client_host, unsigned short client_port)
+      : Handler(base, fd, server_host, server_port, client_host, client_port,
+                new LayeredStream(fd, new TransparentLayer(nullptr)))
+  {}
+
+public:
+  virtual void onRead(evutil_socket_t fd, char *buf, int buf_len) override {
+    std::string s(buf, buf_len);
+    log("read: (%d, [%s]", buf_len, s.c_str());
+    ::write(fd, buf, buf_len);
+  }
+
+  virtual void onWrite(evutil_socket_t fd) override {
+    log("onWrite(%d)", fd);
+  }
 
 };
 

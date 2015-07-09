@@ -17,7 +17,7 @@ aux_source_directory(. SOURCE_FILES)
 add_executable(crawler crawler.cc)
 target_link_libraries(crawler framework event pthread)
 
-add_executable(demo main.cc strem.h strem.cc)
+add_executable(demo main.cc stream.h stream.cc)
 target_link_libraries(demo event pthread)
 
 # target_link_libraries (gw protobuf framework event_core jansson zlog pthread)
